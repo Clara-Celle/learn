@@ -59,6 +59,15 @@
   externe). Chaque touche stocke un n° MIDI ; `freq = 440·2^((midi-69)/12)`. Do central = Do4
   (MIDI 60). Oscillateur triangle + légère harmonique sine, enveloppe attaque rapide/déclin.
   Prévoir un toggle 🔊 pour couper le son.
+- **Jouer à deux mains sans instrument = séparer les mains sur 2 surfaces.** Le téléphone et le
+  clavier PC sont trop petits pour 2 mains (chevauchement). Solution livrée : **`lessons/bass-pad.html`**
+  = pad de basse plein écran, tactile, grosses touches (1 octave Do3-Si3, lib `octaves:1 computerKeys:false`),
+  à ouvrir sur le **téléphone (paysage) = main gauche**, pendant que la **main droite** joue les accords
+  sur l'ordi. Pas de connexion : chaque appareil sonne, on entend les deux dans la pièce. (Routage
+  audio/USB = pas utile, ne transmet pas les notes ; le vrai « lien » serait le MIDI plus tard.)
+  Lien depuis la Leçon 05. Mobile : touches élargies via `@media (pointer:coarse)` dans piano.css.
+  NB : pour ouvrir une page sur le téléphone, il faut servir le dossier sur le réseau local (Jeffy a
+  déjà une méthode pour voir les leçons sur mobile ; sinon proposer un petit serveur local).
 - **Limite clavier PC = ghosting** (max ~3-4 touches simultanées). Pour les leçons « mains ensemble »,
   toujours proposer un **mode accompagnement** : l'appli joue une main (auto, sur le temps 1) pendant
   que Jeffy joue l'autre → ≤3 touches à la fois. Pattern implémenté en Leçon 0005 (bouton « Tu joues » :

@@ -42,3 +42,6 @@
   border:1px solid #3a322d;background:#15110f;color:#f4ece4;padding:9px 16px;border-radius:9px;transition:.15s}
 .pk-btn:hover{border-color:#e8a04e;color:#e8a04e}
 .pk-btn.pk-on{background:#e8a04e;color:#1a1614;border-color:#e8a04e}
+
+/* Mobile / tactile : touches plus larges (meilleure cible du doigt) → défile horizontalement si besoin */
+@media (pointer:coarse){ .pk-wkey{min-width:46px} }

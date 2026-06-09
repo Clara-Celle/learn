@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Référence — Carte du clavier &amp; noms des notes</title>
+<style>
+  :root{--ink:#1c1a17;--accent:#b06a14;--accent2:#1d6b63;--line:#d8cfc0;--muted:#6b6258}
+  *{box-sizing:border-box}
+  body{margin:0;background:#f4efe6;color:var(--ink);
+    font-family:'Avenir Next','Segoe UI',system-ui,sans-serif;line-height:1.55}
+  .sheet{max-width:880px;margin:0 auto;background:#fffdf8;padding:40px 48px;
+    box-shadow:0 6px 30px rgba(0,0,0,.08);margin-top:24px;margin-bottom:24px}
+  h1{font-family:'Iowan Old Style',Georgia,serif;font-size:30px;margin:0 0 4px}
+  .sub{color:var(--muted);margin:0 0 26px;font-size:15px}
+  h2{font-family:'Iowan Old Style',Georgia,serif;font-size:20px;margin:30px 0 10px;
+    border-bottom:2px solid var(--line);padding-bottom:6px}
+  p{margin:0 0 12px}
+  .rule{background:#fbf4e6;border-left:4px solid var(--accent);padding:12px 16px;border-radius:6px;margin:14px 0}
+  table{border-collapse:collapse;width:100%;margin:10px 0;font-size:16px}
+  th,td{border:1px solid var(--line);padding:9px 12px;text-align:center}
+  th{background:#f0e8da;font-family:'Iowan Old Style',Georgia,serif}
+  .do{color:var(--accent);font-weight:700}.cde{color:var(--accent2);font-weight:700}
+
+  /* mini piano — fills the sheet width */
+  .pianowrap{position:relative;margin:26px 0 14px}
+  .piano{position:relative;height:150px;width:100%;display:flex;border:1px solid #aaa;border-top:none}
+  .w{position:relative;flex:1 1 0;height:150px;background:#fff;border:1px solid #c9bda9;border-top:none;
+    display:flex;flex-direction:column;justify-content:flex-end;align-items:center;padding-bottom:8px}
+  .w small{font-size:13px;line-height:1.25;text-align:center}
+  .w .s{color:var(--accent);font-weight:700;display:block}
+  .w .l{color:var(--accent2);font-weight:700;display:block}
+  .b{position:absolute;top:0;width:7.5%;height:92px;background:#222;z-index:2;border-radius:0 0 4px 4px}
+  .grp{position:absolute;top:-20px;font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.05em}
+  @media print{body{background:#fff}.sheet{box-shadow:none;margin:0;max-width:100%}.noprint{display:none}}
+  .noprint{text-align:center;color:var(--muted);font-size:13px;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="sheet">
+  <h1>🎹 Carte du clavier &amp; noms des notes</h1>
+  <p class="sub">Fiche de référence · Piano · à imprimer et garder près de l'instrument</p>
+
+  <h2>La règle d'or</h2>
+  <div class="rule"><b>Le Do (C)</b> est la touche blanche juste à <b>gauche</b> d'un groupe de
+  <b>2 touches noires</b>. Les touches noires vont toujours par <b>2, puis 3, puis 2, puis 3…</b>
+  Ce motif est ta boussole sur tout le clavier.</div>
+
+  <h2>Une octave (le motif qui se répète)</h2>
+  <div class="pianowrap">
+    <span class="grp" style="left:13%">groupe de 2</span>
+    <span class="grp" style="left:54%">groupe de 3</span>
+    <div class="piano">
+      <div class="w"><small><span class="s">Do</span></small></div>
+      <div class="w"><small><span class="s">Ré</span></small></div>
+      <div class="w"><small><span class="s">Mi</span></small></div>
+      <div class="w"><small><span class="s">Fa</span></small></div>
+      <div class="w"><small><span class="s">Sol</span></small></div>
+      <div class="w"><small><span class="s">La</span></small></div>
+      <div class="w"><small><span class="s">Si</span></small></div>
+      <div class="w"><small><span class="s">Do</span></small></div>
+      <!-- touches noires : centrées sur les frontières entre blanches -->
+      <div class="b" style="left:8.75%"></div>   <!-- Do# -->
+      <div class="b" style="left:21.25%"></div>  <!-- Ré# -->
+      <div class="b" style="left:46.25%"></div>  <!-- Fa# -->
+      <div class="b" style="left:58.75%"></div>  <!-- Sol# -->
+      <div class="b" style="left:71.25%"></div>  <!-- La# -->
+    </div>
+  </div>
+  <p style="text-align:center;color:var(--muted);font-size:14px">Le Do à gauche des 2 noires · le Fa à gauche des 3 noires.</p>
+
+  <h2>Les 7 notes (solfège)</h2>
+  <table>
+    <tr><th>Solfège (FR)</th><td class="do">Do</td><td class="do">Ré</td><td class="do">Mi</td><td class="do">Fa</td><td class="do">Sol</td><td class="do">La</td><td class="do">Si</td></tr>
+  </table>
+  <p style="font-size:14px;color:var(--muted)">On lit les partitions <b>uniquement</b> en Do Ré Mi.</p>
+
+  <details style="margin-top:6px">
+    <summary style="cursor:pointer;color:var(--muted);font-weight:600">Pour info : table de traduction des lettres (tu peux l'ignorer)</summary>
+    <table style="margin-top:10px">
+      <tr><th>Solfège</th><td class="do">Do</td><td class="do">Ré</td><td class="do">Mi</td><td class="do">Fa</td><td class="do">Sol</td><td class="do">La</td><td class="do">Si</td></tr>
+      <tr><th>Lettres</th><td class="cde">C</td><td class="cde">D</td><td class="cde">E</td><td class="cde">F</td><td class="cde">G</td><td class="cde">A</td><td class="cde">B</td></tr>
+    </table>
+    <p style="font-size:13px;color:var(--muted)">Utile seulement si tu croises une grille d'accords pop
+    en ligne (ex. <span class="cde">Dm</span> = Ré mineur, <span class="cde">F</span> = Fa majeur).
+    Attention : <b>B = Si</b>. Sinon, le prof te traduit tout.</p>
+  </details>
+
+  <h2>Vocabulaire (glossaire en construction)</h2>
+  <table style="font-size:15px">
+    <tr><th style="text-align:left">Terme</th><th style="text-align:left">Définition</th></tr>
+    <tr><td style="text-align:left"><b>Octave</b></td><td style="text-align:left">La distance d'un Do au Do suivant — une répétition complète du motif (12 touches).</td></tr>
+    <tr><td style="text-align:left"><b>Touche blanche</b></td><td style="text-align:left">Les 7 notes naturelles : Do Ré Mi Fa Sol La Si.</td></tr>
+    <tr><td style="text-align:left"><b>Touche noire</b></td><td style="text-align:left">Les dièses/bémols (♯/♭) — entre certaines blanches. Étudiées plus tard.</td></tr>
+    <tr><td style="text-align:left"><b>Do central</b></td><td style="text-align:left">Le Do le plus proche du milieu du piano. Notre point de repère pour lire les partitions.</td></tr>
+  </table>
+
+  <p class="noprint">Astuce : Ctrl/Cmd + P pour imprimer cette fiche.</p>
+</div>
+</body>
+</html>

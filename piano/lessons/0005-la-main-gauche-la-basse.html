@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leçon 05 — La main gauche : la basse</title>
+<link rel="stylesheet" href="../lib/piano.css">
+<style>
+  :root{
+    --bg:#1a1614; --panel:#241f1c; --ink:#f4ece4; --muted:#b3a596;
+    --accent:#e8a04e; --accent2:#5fb0a8; --good:#5cba6b; --bad:#e0625a; --violet:#a98cd8;
+    --line:#3a322d; --serif:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;
+    --sans:'Avenir Next','Segoe UI',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+    line-height:1.65;font-size:17px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .wrap{max-width:760px;margin:0 auto;padding:48px 24px 96px}
+  header.hero{margin-bottom:40px;border-bottom:1px solid var(--line);padding-bottom:28px}
+  .kicker{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 10px}
+  h1{font-family:var(--serif);font-size:38px;line-height:1.12;margin:0 0 14px;font-weight:600}
+  .mission{color:var(--muted);font-size:16px;margin:0}
+  .mission b{color:var(--ink)}
+  h2{font-family:var(--serif);font-size:26px;margin:48px 0 14px;font-weight:600}
+  p{margin:0 0 16px}
+  .lead{font-size:19px;color:var(--ink)}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:24px 0}
+  .tip{border-left:3px solid var(--accent);padding:4px 0 4px 18px;margin:20px 0;color:var(--muted)}
+  .tip b{color:var(--ink)}
+  .note{font-family:var(--sans);background:#15110f;border:1px solid var(--line);border-radius:6px;
+    padding:2px 8px;font-weight:700;font-size:.92em;color:var(--accent)}
+  .bass{color:var(--violet)}
+  a{color:var(--accent2);text-decoration:none;border-bottom:1px solid rgba(95,176,168,.4)}
+  a:hover{border-bottom-color:var(--accent2)}
+  ul{padding-left:22px}li{margin:7px 0}
+  table{border-collapse:collapse;width:100%}
+  th,td{border:1px solid var(--line);padding:9px 12px;text-align:center}
+  th{background:#1d1916;font-family:var(--serif);font-weight:600}
+  .chordname{font-family:var(--serif);color:var(--accent);font-weight:700}
+  details.aside{margin:18px 0;border:1px solid var(--line);border-radius:10px;background:#1d1916;padding:0 18px}
+  details.aside summary{cursor:pointer;color:var(--muted);font-weight:600;padding:14px 0;list-style:none}
+  details.aside summary::-webkit-details-marker{display:none}
+  details.aside summary::before{content:"▸ ";color:var(--accent)}
+  details.aside[open] summary::before{content:"▾ "}
+  details.aside p{font-size:15px;color:var(--muted)}
+
+  /* ---- atelier ---- */
+  .stage{background:var(--panel);border:1px solid var(--line);border-left:none;border-right:none;
+    border-radius:0;padding:24px clamp(16px,4vw,56px);margin:28px 0;width:100vw;margin-left:calc(50% - 50vw)}
+  .stage>.controls,.stage>.kbdhint,.stage>.metro{max-width:820px;margin-left:auto;margin-right:auto}
+  .controls{display:flex;flex-wrap:wrap;gap:10px;margin:14px auto;align-items:center}
+  button{font-family:var(--sans);font-weight:600;font-size:14px;cursor:pointer;border:1px solid var(--line);
+    background:#15110f;color:var(--ink);padding:9px 16px;border-radius:9px;transition:.15s}
+  button:hover{border-color:var(--accent);color:var(--accent)}
+  button.on{background:var(--accent);color:#1a1614;border-color:var(--accent)}
+  button.primary{background:var(--accent2);color:#10201e;border-color:var(--accent2)}
+  button.primary:hover{filter:brightness(1.1);color:#10201e}
+  .kbdhint{color:var(--muted);font-size:14px;text-align:center;margin:0 auto 14px}
+  .kbdhint b{color:var(--ink)}
+  .kbdhint .bk{color:var(--violet)}
+
+  .metro{background:#1d1916;border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:18px}
+  .metro-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  .tempo{display:flex;align-items:center;gap:8px;font-weight:700}
+  .tempo button{padding:6px 14px;font-size:18px;line-height:1}
+  .tempo #bpm{font-family:var(--serif);font-size:24px;color:var(--accent);min-width:46px;text-align:center;display:inline-block}
+  .bpmlab{color:var(--muted);font-size:13px}
+  .beatdots{display:flex;gap:12px;margin-top:18px}
+  .beatdot{width:42px;height:42px;border-radius:50%;border:2px solid var(--line);display:flex;align-items:center;
+    justify-content:center;font-weight:700;color:var(--muted);background:#15110f;transition:transform .04s, background .04s}
+  .beatdot.on{background:var(--accent2);color:#10201e;border-color:var(--accent2);transform:scale(1.1)}
+  .beatdot.on.accent{background:var(--accent);border-color:var(--accent);color:#1a1614}
+  .metro-chord{font-family:var(--serif);font-size:21px;color:var(--accent);margin-top:16px;min-height:30px}
+  .metro-chord .bass{color:var(--violet)}
+  .metro-chord small{color:var(--muted);font-family:var(--sans);font-size:14px}
+  .frise{margin-top:16px;width:100%;height:96px;display:block;background:#15110f;border:1px solid var(--line);border-radius:10px}
+  .friselegend{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin-top:8px;align-items:center}
+  .friselegend b{color:var(--ink)}
+  .swatch{display:inline-block;width:11px;height:11px;border-radius:50%;vertical-align:-1px;margin-right:5px}
+  /* la basse surlignée en violet pour la distinguer de l'accord (bleu) */
+  .pk-wkey.basst{box-shadow:inset 0 0 0 3px var(--violet)!important;background:linear-gradient(#efe7f6,#ddd0ec)!important}
+  .pk-bkey.basst{box-shadow:inset 0 0 0 3px var(--violet)!important}
+
+  footer{margin-top:56px;border-top:1px solid var(--line);padding-top:24px;color:var(--muted);font-size:15px}
+  .src{font-size:14px}
+  .ask{background:linear-gradient(135deg,#2a211a,#241f1c);border:1px solid var(--accent);border-radius:14px;padding:20px 24px;margin:32px 0}
+  .ask b{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <p class="kicker">Leçon 05 · Les deux mains</p>
+    <h1>La main gauche : la basse</h1>
+    <p class="mission">Jusqu'ici, tout se passe à la main droite. Maintenant on réveille la <b>main
+    gauche</b> : elle pose la <b>basse</b>, la fondation grave sous tes accords. C'est ce qui donne à
+    <i>The Scientist</i> sa profondeur et son émotion — et ta première vraie <b>coordination des deux
+    mains</b>.</p>
+  </header>
+
+  <p class="lead">Bonne nouvelle : la main gauche ne joue qu'<b>une seule note</b> par accord. Tu sais
+  déjà laquelle — sans le savoir.</p>
+
+  <h2>1. Deux mains, deux rôles</h2>
+  <p>Au piano, les mains se partagent le travail :</p>
+  <ul>
+    <li><b>Main droite</b> = les <b>accords</b> (la couleur, l'harmonie) — ce que tu fais depuis 3 leçons.</li>
+    <li><b>Main gauche</b> = la <b>basse</b> (la fondation, le grave) — une note profonde qui soutient tout.</li>
+  </ul>
+
+  <h2>2. La basse = la fondamentale</h2>
+  <p>La note de basse, c'est tout simplement la <b>fondamentale</b> de l'accord : <b>la note qui donne
+  son nom à l'accord</b>. Tu la connais donc déjà pour chaque accord de la chanson :</p>
+  <div class="card" style="padding:0;overflow:hidden">
+    <table>
+      <tr><th>Accord (main droite)</th><th>Basse (main gauche)</th></tr>
+      <tr><td><span class="chordname">Ré mineur</span></td><td><span class="note bass">Ré</span></td></tr>
+      <tr><td><span class="chordname">Si♭ majeur</span></td><td><span class="note bass">Si♭</span></td></tr>
+      <tr><td><span class="chordname">Fa majeur</span></td><td><span class="note bass">Fa</span></td></tr>
+      <tr><td><span class="chordname">Do majeur</span></td><td><span class="note bass">Do</span></td></tr>
+    </table>
+  </div>
+
+  <h2>3. Où la jouer : une octave plus bas</h2>
+  <p>La main gauche joue cette fondamentale <b>plus bas</b> (environ <b>une octave</b> sous l'accord),
+  dans le grave du clavier. Cet écart entre le grave (basse) et le médium (accord) crée un son <b>plein
+  et riche</b>. Sur le clavier de l'atelier, la basse s'allume en <b class="bass">violet</b> à gauche,
+  l'accord en <b style="color:var(--accent2)">bleu</b> au centre.</p>
+
+  <h2>4. La méthode : séparé, puis ensemble</h2>
+  <p>La coordination des deux mains se construit par étapes — ne saute pas les marches :</p>
+  <div class="card">
+    <ol style="margin:0;padding-left:20px">
+      <li><b>Main gauche seule</b> : joue les 4 basses en rythme (Ré → Si♭ → Fa → Do), une par mesure.</li>
+      <li><b>Main droite seule</b> : tes 4 accords (tu sais déjà).</li>
+      <li><b>Mains ensemble, très lentement</b> : sur chaque temps 1, frappe la basse <b>et</b> l'accord
+      <b>en même temps</b>. Tiens jusqu'au temps 1 suivant.</li>
+    </ol>
+  </div>
+  <div class="tip"><b>Le secret de la coordination :</b> ralentis jusqu'à ce que les deux mains tombent
+  <b>pile ensemble</b> sans y penser. La vitesse viendra. Si une main « traîne », c'est que le tempo est
+  trop rapide — descends d'un cran. La frise t'aide à voir si tu frappes pile sur le temps.</div>
+
+  <h2>5. À toi de jouer 🙌</h2>
+  <p>Active le guidage : à chaque mesure, la/les note(s) à jouer s'allument et le métronome te cale.
+  Le bouton <b>« Écouter »</b> te joue la chanson basse+accords pour entendre l'objectif.</p>
+
+  <div class="tip"><b>Difficile à deux mains sur ton clavier d'ordinateur ?</b> C'est normal : la plupart
+  des claviers PC ne gèrent pas 4 touches enfoncées en même temps. Le bouton <b>« Tu joues »</b> est ta
+  solution — il fait jouer <b>une main par l'appli</b> pendant que tu joues l'autre :
+  <ul style="margin:8px 0 0">
+    <li><b>Main droite (basse auto)</b> : tu joues juste l'accord, l'appli pose la basse.</li>
+    <li><b>Main gauche (accords auto)</b> : tu joues juste la basse (1 touche !), l'appli pose l'accord.</li>
+  </ul>
+  Tu entends quand même les deux mains ensemble, en rythme. (Sur une <b>tablette/écran tactile</b>, tu
+  peux carrément jouer les deux mains avec les doigts grâce au multi-touch.)</div>
+
+  <div class="stage">
+    <div class="metro">
+      <div class="metro-row">
+        <button id="btnMetro" class="primary">▶ Démarrer le métronome</button>
+        <div class="tempo">
+          <button id="tDown" aria-label="moins vite">−</button>
+          <span id="bpm">60</span><span class="bpmlab">BPM</span>
+          <button id="tUp" aria-label="plus vite">+</button>
+        </div>
+        <button id="btnMode">Tu joues : Mains ensemble</button>
+        <button id="btnGuide">🎹 Guide : OFF</button>
+        <button id="btnDemo">🔊 Écouter</button>
+      </div>
+      <div class="beatdots" id="beatdots"></div>
+      <div class="metro-chord" id="metroChord"><small>Active « Guide » pour jouer la progression.</small></div>
+      <canvas class="frise" id="frise"></canvas>
+      <div class="friselegend">
+        <span><span class="swatch" style="background:#5cba6b"></span>pile</span>
+        <span><span class="swatch" style="background:#e8a04e"></span>un peu décalé</span>
+        <span><span class="swatch" style="background:#e0625a"></span>franchement décalé</span>
+        <span>← <b>en avance</b> · <b>en retard</b> →</span>
+      </div>
+    </div>
+
+    <p class="kbdhint">⌨ Clavier sur 2 octaves (le raccourci est écrit sur chaque touche).
+    <b>Main droite</b> (médium) : <b>A Z E R T Y U</b> = blanches, <b>chiffres</b> au-dessus = noires.
+    <b>Main gauche</b> (graves) : <b class="bk">rangée du bas</b> = blanches, <b class="bk">S D G H J</b> au-dessus = noires
+    (le <b>Si♭ de basse = J</b>).</p>
+
+    <div class="controls" id="pk-controls"></div>
+
+    <div id="piano-mount"></div>
+  </div>
+
+  <details class="aside">
+    <summary>Pourquoi la basse change tout ?</summary>
+    <p>L'oreille s'accroche au grave pour « comprendre » l'harmonie : la basse dit clairement quel est
+    l'accord et où on en est dans la progression. Sans elle, les accords flottent ; avec elle, ça sonne
+    « fini », ancré. C'est aussi elle qui porte l'émotion dans les ballades comme <i>The Scientist</i>.</p>
+  </details>
+
+  <div class="ask">
+    <p style="margin:0"><b>Je suis ton prof — pose-moi des questions !</b> Les deux mains se télescopent ?
+    Une main traîne ? Dis-moi à quel tempo et quelle étape ça coince. <b>Quand tu tiens la progression
+    mains ensemble, lentement et régulièrement</b>, dis-le-moi : on travaillera le <b>motif rythmique de
+    la main droite</b> (les croches qui font le vrai « balancier » de la chanson). 🎶</p>
+  </div>
+
+  <h2>Comment t'entraîner</h2>
+  <ul>
+    <li><b>Étape 1</b> : « Main gauche seule » au métronome — les 4 basses, une par mesure.</li>
+    <li><b>Étape 2</b> : « Mains ensemble » à <b>tempo très lent</b> (45–55 BPM). Vise des pastilles vertes sur la frise.</li>
+    <li>Écoute souvent le bouton <b>« Écouter »</b> pour mémoriser le son cible.</li>
+    <li>Sans instrument ? Tout est jouable au clavier (raccourcis écrits sur les touches) :
+    <b class="bass">main gauche en bas</b> (blanches + noires S D G H J, dont le Si♭ = J),
+    <b>main droite sur A Z E R T Y U</b> + chiffres pour les noires.
+    <small>(Certains claviers PC bloquent au-delà de quelques touches simultanées — normal ; sinon utilise un mode « accompagnement » ci-dessus.)</small></li>
+  </ul>
+
+  <footer>
+    <p class="src"><b>Sources &amp; pour aller plus loin :</b></p>
+    <ul class="src">
+      <li><a href="https://www.hoffmanacademy.com/blog/music-theory-for-beginners" target="_blank">Hoffman Academy — Music Theory for Beginners</a> (basse, fondamentale, mains ensemble)</li>
+      <li><a href="https://www.pianote.com/blog/coldplay-the-scientist/" target="_blank">Pianote — Coldplay « The Scientist »</a></li>
+    </ul>
+    <p class="src" style="color:var(--muted)">Leçon 05 · Mission : jouer The Scientist, Happy Ending
+    &amp; Interstellar en comprenant ce qu'on joue.</p>
+  </footer>
+</div>
+
+<script src="../lib/piano.js"></script>
+<script src="../lib/nav.js"></script>
+<script>
+(function(){
+  // RH = accord (notes), bass = fondamentale grave (≈ une octave plus bas), root = nom
+  var CHORDS={
+    Rem:{name:'Ré mineur', notes:[62,65,69], bass:50, root:'Ré'},
+    Sib:{name:'Si♭ majeur',notes:[65,70,74], bass:58, root:'Si♭'},
+    Fa: {name:'Fa majeur', notes:[65,69,72], bass:53, root:'Fa'},
+    DoM:{name:'Do majeur', notes:[60,64,67], bass:48, root:'Do'}
+  };
+  var PROG=['Rem','Sib','Fa','DoM'];
+
+  // Piano 3 octaves (Do3..Do6) + clavier 2 octaves chromatiques (lib, identique partout).
+  var piano=PianoKeyboard.create({ mount:'#piano-mount', octaves:3, startOctave:3, keyboard:'2oct', onNote:onNote });
+  piano.mountControls('#pk-controls');
+
+  /* ----- beat dots ----- */
+  var beatdots=document.getElementById('beatdots');
+  for(var i=1;i<=4;i++){ var d=document.createElement('div'); d.className='beatdot'; d.textContent=i; beatdots.appendChild(d); }
+  var dots=beatdots.querySelectorAll('.beatdot');
+  function lightBeat(b){ dots.forEach(function(d){ d.classList.remove('on','accent'); }); dots[b].classList.add('on'); if(b===0) dots[b].classList.add('accent'); }
+  function clearBeats(){ dots.forEach(function(d){ d.classList.remove('on','accent'); }); }
+
+  /* ----- métronome (scheduler à lookahead, horloge audio) ----- */
+  var mctx=null, tempo=60, running=false;
+  var schedBeat=0, schedBar=0, nextNoteTime=0, schedTimer=null, rafId=null;
+  var queue=[];
+  var bpmEl=document.getElementById('bpm');
+  function clickAt(time, accent){
+    var o=mctx.createOscillator(), g=mctx.createGain();
+    o.frequency.value=accent?1500:1000;
+    g.gain.setValueAtTime(accent?0.5:0.28, time);
+    g.gain.exponentialRampToValueAtTime(0.0001, time+0.05);
+    o.connect(g).connect(mctx.destination); o.start(time); o.stop(time+0.06);
+  }
+  function scheduler(){
+    while(nextNoteTime < mctx.currentTime + 0.1){
+      clickAt(nextNoteTime, schedBeat===0);
+      queue.push({beat:schedBeat, bar:schedBar, time:nextNoteTime});
+      schedBeat=(schedBeat+1)%4; if(schedBeat===0) schedBar++;
+      nextNoteTime += 60.0/tempo;
+    }
+    schedTimer=setTimeout(scheduler, 25);
+  }
+  function draw(){
+    if(!running) return;
+    var now=mctx.currentTime;
+    while(queue.length && queue[0].time<=now){
+      var ev=queue.shift(); lightBeat(ev.beat);
+      if(guide && ev.beat===0) setBar(ev.bar, true);
+    }
+    drawFrise(now);
+    rafId=requestAnimationFrame(draw);
+  }
+  function startMetro(){
+    mctx=mctx||new (window.AudioContext||window.webkitAudioContext)();
+    if(mctx.state==='suspended') mctx.resume();
+    running=true; schedBeat=0; schedBar=0; queue=[]; nextNoteTime=mctx.currentTime+0.12;
+    btnMetro.textContent='■ Arrêter'; btnMetro.classList.remove('primary');
+    scheduler(); rafId=requestAnimationFrame(draw);
+    if(guide) setBar(0, false);
+  }
+  function stopMetro(){
+    running=false; clearTimeout(schedTimer); cancelAnimationFrame(rafId);
+    btnMetro.textContent='▶ Démarrer le métronome'; btnMetro.classList.add('primary');
+    clearBeats(); clearHighlights(); clearFrise();
+  }
+  var btnMetro=document.getElementById('btnMetro');
+  btnMetro.onclick=function(){ running?stopMetro():startMetro(); };
+  document.getElementById('tUp').onclick=function(){ tempo=Math.min(120,tempo+5); bpmEl.textContent=tempo; };
+  document.getElementById('tDown').onclick=function(){ tempo=Math.max(40,tempo-5); bpmEl.textContent=tempo; };
+
+  /* ----- play-along : tu joues tout, OU l'appli t'accompagne d'une main -----
+     Résout la limite du clavier PC (ghosting) : tu ne gères qu'une main à la fois. */
+  var guide=false, play='both', current=null, barSet=new Set();
+  var metroChord=document.getElementById('metroChord');
+  var btnGuide=document.getElementById('btnGuide');
+  var btnMode=document.getElementById('btnMode');
+  var PLAYS=['both','right','left'];
+  var PLAYLBL={both:'Mains ensemble', right:'Main droite (basse auto)', left:'Main gauche (accords auto)'};
+
+  function userNotes(c){ return play==='right'?c.notes : play==='left'?[c.bass] : c.notes.concat([c.bass]); }
+  function autoNotes(c){ return play==='right'?[c.bass] : play==='left'?c.notes : []; }
+  function clearHighlights(){ piano.clearClass('pk-target','pk-ok','basst'); }
+  function setBar(bar, doAuto){
+    var c=current=CHORDS[PROG[bar % PROG.length]]; barSet=new Set();
+    clearHighlights();
+    if(play!=='left')  piano.highlight(c.notes,'pk-target');   // accord (bleu) = à toi, sauf mode main gauche
+    if(play!=='right') piano.addClass(c.bass,'basst');         // basse (violet) = à toi, sauf mode main droite
+    var au=autoNotes(c);
+    if(doAuto && au.length){                                   // l'appli joue l'autre main sur le temps 1
+      piano.playChord(au);
+      au.forEach(function(m){ var el=piano.midiToEl(m); if(el){ el.classList.add('pk-press'); setTimeout(function(){ el.classList.remove('pk-press'); },160); } });
+    }
+    metroChord.innerHTML='Tu joues : '+(
+      play==='right' ? '<span class="chordname">'+c.name+'</span> <small>(basse '+c.root+' jouée par l\'appli)</small>' :
+      play==='left'  ? 'basse <span class="bass">'+c.root+'</span> <small>(accord '+c.name+' joué par l\'appli)</small>' :
+                       'basse <span class="bass">'+c.root+'</span> + <span class="chordname">'+c.name+'</span>');
+  }
+  function onNote(midi,el){
+    if(running) recordHit();
+    if(!guide||!current) return;
+    var t=userNotes(current);
+    if(t.indexOf(midi)!==-1 && !barSet.has(midi)){
+      barSet.add(midi);
+      el.classList.remove('pk-target','basst'); el.classList.add('pk-ok');
+    }
+  }
+  btnGuide.onclick=function(){
+    guide=!guide; btnGuide.classList.toggle('on',guide);
+    btnGuide.textContent='🎹 Guide : '+(guide?'ON':'OFF');
+    if(guide){ if(!running) startMetro(); else setBar(schedBar,false); }
+    else { current=null; clearHighlights(); metroChord.innerHTML='<small>Active « Guide » pour jouer la progression.</small>'; }
+  };
+  btnMode.onclick=function(){
+    play=PLAYS[(PLAYS.indexOf(play)+1)%PLAYS.length];
+    btnMode.textContent='Tu joues : '+PLAYLBL[play];
+    if(guide && current) setBar(schedBar,false);
+  };
+
+  /* ----- démo : joue la chanson (basse + accords) en rythme ----- */
+  document.getElementById('btnDemo').onclick=function(){
+    mctx=mctx||new (window.AudioContext||window.webkitAudioContext)();
+    if(mctx.state==='suspended') mctx.resume();
+    var barMs=(60/tempo)*4*1000, i=0;
+    (function step(){
+      if(i>=PROG.length) return;
+      var c=CHORDS[PROG[i]]; piano.playChord(c.notes.concat([c.bass])); i++;
+      setTimeout(step, barMs);
+    })();
+  };
+
+  /* ----- frise rythmique ----- */
+  var fcanvas=document.getElementById('frise'), fctx=fcanvas.getContext('2d');
+  var hits=[];
+  function setupCanvas(){ var dpr=window.devicePixelRatio||1; fcanvas.width=fcanvas.clientWidth*dpr; fcanvas.height=fcanvas.clientHeight*dpr; fctx.setTransform(dpr,0,0,dpr,0,0); }
+  window.addEventListener('resize',setupCanvas); setupCanvas();
+  function clearFrise(){ hits=[]; fctx.clearRect(0,0,fcanvas.clientWidth,fcanvas.clientHeight); }
+  function recordHit(){
+    var t=mctx.currentTime;
+    if(hits.length && t-hits[hits.length-1].time<0.07) return;
+    var spb=60/tempo, err=t-(Math.round((t-nextNoteTime)/spb)*spb + nextNoteTime), a=Math.abs(err);
+    hits.push({ time:t, color:(a<0.05?'#5cba6b':(a<0.12?'#e8a04e':'#e0625a')) });
+  }
+  function drawFrise(now){
+    var W=fcanvas.clientWidth, H=fcanvas.clientHeight; fctx.clearRect(0,0,W,H);
+    var spb=60/tempo, windowSec=8*spb, pxPerSec=W/windowSec, nowX=W*0.72;
+    function X(t){ return nowX + (t-now)*pxPerSec; }
+    var kStart=Math.floor((now-windowSec-nextNoteTime)/spb)-1, kEnd=Math.ceil((now+windowSec-nextNoteTime)/spb)+1;
+    for(var k=kStart;k<=kEnd;k++){
+      var x=X(nextNoteTime+k*spb); if(x<-5||x>W+5) continue;
+      var down=((((schedBeat+k)%4)+4)%4)===0;
+      fctx.strokeStyle=down?'#e8a04e':'#4a4038'; fctx.lineWidth=down?2:1;
+      fctx.beginPath(); fctx.moveTo(x, down?4:H*0.32); fctx.lineTo(x,H-4); fctx.stroke();
+    }
+    fctx.strokeStyle='#5fb0a8'; fctx.lineWidth=2; fctx.beginPath(); fctx.moveTo(nowX,0); fctx.lineTo(nowX,H); fctx.stroke();
+    hits=hits.filter(function(h){ return X(h.time)>-20; });
+    hits.forEach(function(h){ var x=X(h.time); if(x<-10||x>W+10) return; fctx.fillStyle=h.color; fctx.beginPath(); fctx.arc(x,H*0.5,6,0,Math.PI*2); fctx.fill(); });
+  }
+})();
+</script>
+</body>
+</html>

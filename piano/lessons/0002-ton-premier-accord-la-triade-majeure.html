@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leçon 02 — Ton premier accord : la triade majeure</title>
+<link rel="stylesheet" href="../lib/piano.css">
+<style>
+  :root{
+    --bg:#1a1614; --panel:#241f1c; --ink:#f4ece4; --muted:#b3a596;
+    --accent:#e8a04e; --accent2:#5fb0a8; --good:#5cba6b; --bad:#e0625a;
+    --line:#3a322d; --serif:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;
+    --sans:'Avenir Next','Segoe UI',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+    line-height:1.65;font-size:17px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .wrap{max-width:760px;margin:0 auto;padding:48px 24px 96px}
+  header.hero{margin-bottom:40px;border-bottom:1px solid var(--line);padding-bottom:28px}
+  .kicker{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 10px}
+  h1{font-family:var(--serif);font-size:38px;line-height:1.12;margin:0 0 14px;font-weight:600}
+  .mission{color:var(--muted);font-size:16px;margin:0}
+  .mission b{color:var(--ink)}
+  h2{font-family:var(--serif);font-size:26px;margin:48px 0 14px;font-weight:600}
+  p{margin:0 0 16px}
+  .lead{font-size:19px;color:var(--ink)}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:24px 0}
+  .tip{border-left:3px solid var(--accent);padding:4px 0 4px 18px;margin:20px 0;color:var(--muted)}
+  .tip b{color:var(--ink)}
+  .note{font-family:var(--sans);background:#15110f;border:1px solid var(--line);border-radius:6px;
+    padding:2px 8px;font-weight:700;font-size:.92em;color:var(--accent)}
+  a{color:var(--accent2);text-decoration:none;border-bottom:1px solid rgba(95,176,168,.4)}
+  a:hover{border-bottom-color:var(--accent2)}
+  ul{padding-left:22px}li{margin:7px 0}
+  .chordname{font-family:var(--serif);color:var(--accent);font-weight:700}
+  details.aside{margin:18px 0;border:1px solid var(--line);border-radius:10px;background:#1d1916;padding:0 18px}
+  details.aside summary{cursor:pointer;color:var(--muted);font-weight:600;padding:14px 0;list-style:none}
+  details.aside summary::-webkit-details-marker{display:none}
+  details.aside summary::before{content:"▸ ";color:var(--accent)}
+  details.aside[open] summary::before{content:"▾ "}
+  details.aside p{font-size:15px;color:var(--muted)}
+
+  /* ---- atelier (piano via lib/piano.css) ---- */
+  .stage{background:var(--panel);border:1px solid var(--line);border-left:none;border-right:none;
+    border-radius:0;padding:24px clamp(16px,4vw,56px);margin:28px 0;width:100vw;margin-left:calc(50% - 50vw)}
+  .stage>.controls,.stage>.legend,.stage>.trainer,.stage>.kbdhint{max-width:760px;margin-left:auto;margin-right:auto}
+  .controls{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px;align-items:center}
+  button{font-family:var(--sans);font-weight:600;font-size:14px;cursor:pointer;border:1px solid var(--line);
+    background:#15110f;color:var(--ink);padding:9px 16px;border-radius:9px;transition:.15s}
+  button:hover{border-color:var(--accent);color:var(--accent)}
+  button.on{background:var(--accent);color:#1a1614;border-color:var(--accent)}
+  button.primary{background:var(--accent2);color:#10201e;border-color:var(--accent2)}
+  button.primary:hover{filter:brightness(1.1);color:#10201e}
+  .kbdhint{color:var(--muted);font-size:14px;text-align:center;margin:0 auto 14px}
+  .kbdhint b{color:var(--ink)}
+  .trainer{margin-top:18px}
+  .chordbtns{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .chordbtns .lab{color:var(--muted);font-weight:600;margin-right:4px}
+  .tfeedback{margin-top:14px;min-height:28px;font-weight:700;font-size:18px}
+  .tfeedback.ok{color:var(--good)}
+  .tprompt{font-family:var(--serif);font-size:20px;margin-top:6px}
+  .tprompt b{color:var(--accent)}
+  .exhead{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:20px;border-top:1px solid var(--line);padding-top:18px}
+  .seq{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:14px 0}
+  .seq .arrow{color:var(--muted)}
+  .chip{padding:8px 16px;border-radius:999px;border:1px solid var(--line);background:#15110f;color:var(--muted);font-weight:700;font-size:15px;transition:.15s}
+  .chip.current{border-color:var(--accent);color:var(--accent);box-shadow:0 0 0 3px rgba(232,160,78,.22)}
+  .chip.done{border-color:var(--good);color:var(--good)}
+  .chip.done::before{content:"✓ "}
+  .exfeedback{min-height:26px;font-weight:700;font-size:17px;margin-top:6px}
+  .exfeedback.ok{color:var(--good)}
+  .extimer{font-family:var(--serif);font-size:26px;color:var(--accent);font-weight:700;margin-top:10px;min-height:32px}
+  .exhistory{font-size:13px;color:var(--muted);margin-top:4px}
+  .exhistory .att{display:inline-block}
+  .exhistory .att.best{color:var(--good);font-weight:700}
+  .legend{display:flex;gap:20px;flex-wrap:wrap;font-size:14px;color:var(--muted);margin-top:14px}
+  .legend span{display:inline-flex;align-items:center;gap:7px}
+  .dot{width:14px;height:14px;border-radius:4px;display:inline-block}
+  .hand{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+  .finger{background:#15110f;border:1px solid var(--line);border-radius:8px;padding:8px 12px;font-size:14px}
+  .finger b{color:var(--accent2)}
+
+  footer{margin-top:56px;border-top:1px solid var(--line);padding-top:24px;color:var(--muted);font-size:15px}
+  .src{font-size:14px}
+  .ask{background:linear-gradient(135deg,#2a211a,#241f1c);border:1px solid var(--accent);border-radius:14px;padding:20px 24px;margin:32px 0}
+  .ask b{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <p class="kicker">Leçon 02 · Les accords</p>
+    <h1>Ton premier accord : la triade majeure</h1>
+    <p class="mission">Un <b>accord</b>, c'est plusieurs notes jouées <b>ensemble</b>. <i>The Scientist</i>,
+    <i>Happy Ending</i>, <i>Interstellar</i> : sous la mélodie, ce ne sont que des accords. Apprends à
+    construire la <b>triade majeure</b> et tu tiens le squelette de tes trois morceaux. À la fin de cette
+    leçon, tu joueras <b>Fa majeur</b> et <b>Do majeur</b> — deux des quatre accords de <i>The Scientist</i>.</p>
+  </header>
+
+  <p class="lead">Rappel express de la Leçon 01 : tu sais trouver et nommer les touches blanches
+  (Do Ré Mi Fa Sol La Si). On va maintenant les <b>empiler</b>.</p>
+
+  <h2>1. C'est quoi un accord ?</h2>
+  <p>Une <b>note</b> seule, c'est un son. Un <b>accord</b>, c'est <b>au moins 3 notes</b> jouées en même
+  temps, qui sonnent bien ensemble. L'accord de base s'appelle une <b>triade</b> : exactement 3 notes.</p>
+
+  <h2>2. La forme magique : « saute une touche »</h2>
+  <p>Voici la recette d'une triade majeure sur les touches blanches. Pose un doigt sur une note, puis :</p>
+  <div class="card" style="text-align:center;font-size:20px">
+    <b>Note de départ → saute 1 blanche → joue → saute 1 blanche → joue.</b>
+    <p style="font-size:15px;color:var(--muted);margin:10px 0 0">Trois touches blanches, avec à chaque fois
+    une touche blanche sautée entre les deux.</p>
+  </div>
+  <p>Exemple à partir du <span class="note">Do</span> : Do — (on saute Ré) — <span class="note">Mi</span> —
+  (on saute Fa) — <span class="note">Sol</span>. Ça donne <span class="chordname">Do – Mi – Sol</span> =
+  l'accord de <b>Do majeur</b>. 🎉</p>
+
+  <h2>3. Tes trois premiers accords</h2>
+  <p>La même forme « saute une touche », appliquée à trois points de départ, donne trois accords tout en
+  touches blanches :</p>
+  <div class="card">
+    <ul style="margin:0;list-style:none;padding:0;font-size:18px">
+      <li>🎵 <span class="chordname">Do majeur</span> = Do · Mi · Sol</li>
+      <li>🎵 <span class="chordname">Fa majeur</span> = Fa · La · Do &nbsp;<span style="color:var(--muted);font-size:14px">← dans The Scientist</span></li>
+      <li>🎵 <span class="chordname">Sol majeur</span> = Sol · Si · Ré</li>
+    </ul>
+  </div>
+
+  <div class="tip"><b>Les doigts (main droite) :</b> joue la note grave avec le <b>pouce (1)</b>,
+  celle du milieu avec le <b>majeur (3)</b>, la plus aiguë avec l'<b>auriculaire (5)</b>. Cette position
+  <b>1–3–5</b> est la même pour les trois accords — ta main garde la même forme, tu la déplaces, c'est tout.
+  <div class="hand">
+    <span class="finger"><b>1</b> pouce</span>
+    <span class="finger"><b>2</b> index</span>
+    <span class="finger"><b>3</b> majeur</span>
+    <span class="finger"><b>4</b> annulaire</span>
+    <span class="finger"><b>5</b> auriculaire</span>
+  </div></div>
+
+  <h2>4. À toi de jouer 🎹</h2>
+  <p>Choisis un accord ci-dessous : les <b>3 touches cibles</b> s'entourent en bleu. Joue-les (souris ou
+  clavier d'ordinateur) — chaque bonne touche passe au vert. Quand les 3 sont vertes, tu entends ton accord !
+  Utilise <b>« Écouter »</b> pour entendre l'objectif d'abord.</p>
+
+  <div class="stage">
+    <div class="controls" id="pk-controls"></div>
+
+    <p class="kbdhint">⌨ Le raccourci clavier est écrit sur chaque touche. Blanches : <b>A Z E R T Y U</b>
+    (médium) ou la rangée du bas (graves) · noires : les <b>chiffres</b> (médium) ou <b>S D G H J</b> (graves).</p>
+
+    <div id="piano-mount"></div>
+
+    <div class="trainer">
+      <div class="chordbtns">
+        <span class="lab">Accord à construire :</span>
+        <button class="chordbtn" data-ch="Do">Do majeur</button>
+        <button class="chordbtn" data-ch="Fa">Fa majeur</button>
+        <button class="chordbtn" data-ch="Sol">Sol majeur</button>
+        <button id="btnListen" class="primary">🔊 Écouter</button>
+      </div>
+      <div class="tprompt" id="tprompt">Choisis un accord pour commencer.</div>
+      <div class="tfeedback" id="tfeedback"></div>
+
+      <div class="exhead">
+        <span class="lab">🎶 Exercice — enchaîne la progression :</span>
+        <button id="btnExercise" class="primary">▶ Démarrer l'enchaînement</button>
+      </div>
+      <div class="seq" id="seq"></div>
+      <div class="exfeedback" id="exfeedback"></div>
+      <div class="extimer" id="extimer"></div>
+      <div class="exhistory" id="exhistory"></div>
+    </div>
+
+    <div class="legend">
+      <span><span class="dot" style="background:#5fb0a8"></span> touche cible</span>
+      <span><span class="dot" style="background:#7fce8c"></span> trouvée</span>
+      <span>🔊 chaque touche joue sa note</span>
+    </div>
+  </div>
+
+  <h2>5. Le lien avec <i>The Scientist</i></h2>
+  <p>Tu viens de jouer <b>Fa majeur</b> et <b>Do majeur</b> : ce sont <b>2 des 4 accords</b> de
+  <i>The Scientist</i> (Ré mineur – Si♭ majeur – <b>Fa majeur</b> – <b>Do majeur</b>). Il te manque juste
+  l'accord <b>mineur</b> et un accord avec une touche noire — ce sera la prochaine leçon, et la chanson sera
+  à portée de doigts.</p>
+
+  <details class="aside">
+    <summary>Pour aller plus loin : pourquoi « majeur » ?</summary>
+    <p>« Majeur » décrit la couleur de l'accord : lumineux, joyeux. Plus tard tu verras le « mineur »
+    (plus sombre, mélancolique) — il suffit de baisser la note du milieu d'un demi-ton. Pour l'instant,
+    retiens juste la forme « saute une touche » et le son lumineux du majeur.</p>
+  </details>
+
+  <div class="ask">
+    <p style="margin:0"><b>Je suis ton prof — pose-moi des questions !</b> La forme « saute une touche »
+    te bloque ? Tu veux comprendre pourquoi ces 3 notes sonnent bien ensemble, ou comment on écrit un
+    accord sur une partition ? Demande-moi. <b>Quand tu enchaînes les 3 accords sans regarder les noms</b>
+    (masque-les avec le bouton), dis-le-moi : on attaque l'accord <b>mineur</b> et on assemble
+    <i>The Scientist</i>.</p>
+  </div>
+
+  <h2>Comment t'entraîner</h2>
+  <ul>
+    <li>Masque les noms (bouton <b>« Afficher les noms »</b>) et reconstruis les 3 accords de mémoire.</li>
+    <li>Joue chaque accord <b>3 fois</b>, puis enchaîne-les lentement : Do → Fa → Sol → Do.</li>
+    <li>Écoute la différence : un accord majeur sonne « ouvert / joyeux ». Mémorise cette couleur.</li>
+    <li>Sans instrument ? Le clavier de cette page suffit, ou <a href="https://virtualpiano.net/" target="_blank">virtualpiano.net</a>.</li>
+  </ul>
+
+  <footer>
+    <p class="src"><b>Sources &amp; pour aller plus loin :</b></p>
+    <ul class="src">
+      <li><a href="https://www.hoffmanacademy.com/blog/music-theory-for-beginners" target="_blank">Hoffman Academy — Music Theory for Beginners</a> (triades &amp; accords)</li>
+      <li><a href="https://www.pianote.com/blog/coldplay-the-scientist/" target="_blank">Pianote — Coldplay « The Scientist » : accords &amp; tuto</a></li>
+    </ul>
+    <p class="src" style="color:var(--muted)">Leçon 02 · Mission : jouer The Scientist, Happy Ending
+    &amp; Interstellar en comprenant ce qu'on joue.</p>
+  </footer>
+</div>
+
+<script src="../lib/piano.js"></script>
+<script src="../lib/nav.js"></script>
+<script>
+(function(){
+  var CHORDS={
+    Do: {name:'Do majeur', notes:[60,64,67], sol:['Do','Mi','Sol']},
+    Fa: {name:'Fa majeur', notes:[65,69,72], sol:['Fa','La','Do']},
+    Sol:{name:'Sol majeur',notes:[67,71,74], sol:['Sol','Si','Ré']}
+  };
+
+  var piano=PianoKeyboard.create({ mount:'#piano-mount', octaves:3, startOctave:3, keyboard:'2oct', onNote:notePlayed });
+  piano.mountControls('#pk-controls');
+
+  var currentChord=null, achieved=new Set();
+  var tprompt=document.getElementById('tprompt');
+  var tfeedback=document.getElementById('tfeedback');
+
+  function selectChord(key){
+    currentChord=key; achieved=new Set();
+    piano.clearClass('pk-target','pk-ok','pk-bad');
+    tfeedback.textContent=''; tfeedback.className='tfeedback';
+    var c=CHORDS[key];
+    piano.highlight(c.notes,'pk-target');
+    tprompt.innerHTML='Joue <b>'+c.name+'</b> : '+c.sol.join(' · ');
+    document.querySelectorAll('.chordbtn').forEach(function(b){ b.classList.toggle('on',b.dataset.ch===key); });
+  }
+  function notePlayed(midi,el){
+    if(!currentChord) return;
+    if(exerciseOn && !timerStarted) startClock();   // chrono lancé à la 1re note de l'enchaînement
+    var c=CHORDS[currentChord];
+    if(c.notes.indexOf(midi)!==-1){
+      if(!achieved.has(midi)){ achieved.add(midi); piano.removeClass(midi,'pk-target'); piano.addClass(midi,'pk-ok'); }
+      if(achieved.size===c.notes.length) chordCompleted(c);
+    } else {
+      piano.addClass(midi,'pk-bad'); setTimeout(function(){ piano.removeClass(midi,'pk-bad'); },320);
+    }
+  }
+  function chordCompleted(c){
+    if(exerciseOn){
+      currentChord=null;            // évite un re-déclenchement si on retape les mêmes touches
+      step++; renderSeq();
+      if(step>=PROG.length){ finishRun(); }
+      else {
+        exfeedback.textContent='✓ '+c.name+'  →  joue maintenant : '+CHORDS[PROG[step]].name;
+        exfeedback.className='exfeedback ok';
+        setTimeout(function(){ selectChord(PROG[step]); }, 650);
+      }
+    } else {
+      setTimeout(function(){ piano.playChord(c.notes); },120);
+      tfeedback.textContent='✓ Bravo ! Voilà '+c.name+'. Écoute-le sonner.';
+      tfeedback.className='tfeedback ok';
+    }
+  }
+  document.querySelectorAll('.chordbtn').forEach(function(b){
+    b.onclick=function(){ haltExercise(); selectChord(b.dataset.ch); };
+  });
+  document.getElementById('btnListen').onclick=function(){
+    if(currentChord) piano.playChord(CHORDS[currentChord].notes);
+    else { selectChord('Do'); setTimeout(function(){ piano.playChord(CHORDS['Do'].notes); },140); }
+  };
+
+  /* ----- exercice : enchaînement (chrono + historique + auto-restart) ----- */
+  var PROG=['Do','Fa','Sol','Do'];
+  var exerciseOn=false, step=0;
+  var attempts=[], startTime=0, rafId=null, restartTo=null, timerStarted=false;
+  var seqEl=document.getElementById('seq');
+  var exfeedback=document.getElementById('exfeedback');
+  var btnExercise=document.getElementById('btnExercise');
+  var extimer=document.getElementById('extimer');
+  var exhistory=document.getElementById('exhistory');
+
+  function fmt(ms){ return (ms/1000).toFixed(1)+' s'; }
+  function tickTimer(){ if(!exerciseOn||!timerStarted) return; extimer.textContent='⏱ '+fmt(performance.now()-startTime); rafId=requestAnimationFrame(tickTimer); }
+  function startClock(){ timerStarted=true; startTime=performance.now();
+    exfeedback.textContent=''; exfeedback.className='exfeedback';
+    cancelAnimationFrame(rafId); rafId=requestAnimationFrame(tickTimer); }
+  function renderHistory(){
+    if(!attempts.length){ exhistory.innerHTML=''; return; }
+    var best=Math.min.apply(null,attempts);
+    var recent=attempts.slice(-6), base=attempts.length-recent.length;
+    exhistory.innerHTML='Essais : '+recent.map(function(t,i){
+      return '<span class="att'+(t===best?' best':'')+'">#'+(base+i+1)+' '+fmt(t)+(t===best?' ⭐':'')+'</span>';
+    }).join(' · ')+' &nbsp;|&nbsp; record : '+fmt(best);
+  }
+  function renderSeq(){
+    seqEl.innerHTML='';
+    PROG.forEach(function(k,i){
+      if(i>0){ var a=document.createElement('span'); a.className='arrow'; a.textContent='→'; seqEl.appendChild(a); }
+      var chip=document.createElement('span'); chip.className='chip'; chip.textContent=CHORDS[k].name;
+      if(exerciseOn){ if(i<step) chip.classList.add('done'); else if(i===step) chip.classList.add('current'); }
+      seqEl.appendChild(chip);
+    });
+  }
+  function startExercise(){
+    if(restartTo){ clearTimeout(restartTo); restartTo=null; }
+    exerciseOn=true; step=0; timerStarted=false;
+    btnExercise.textContent='■ Arrêter'; renderSeq(); selectChord(PROG[0]);
+    extimer.textContent='⏱ 0.0 s';
+    exfeedback.textContent='Le chrono démarre à ta première note 🎵'; exfeedback.className='exfeedback';
+    cancelAnimationFrame(rafId);
+  }
+  function finishRun(){
+    var elapsed=performance.now()-startTime;
+    cancelAnimationFrame(rafId); extimer.textContent='⏱ '+fmt(elapsed);
+    var prevBest=attempts.length?Math.min.apply(null,attempts):Infinity;
+    attempts.push(elapsed); renderHistory();
+    var record=(elapsed<prevBest && attempts.length>1);
+    exfeedback.textContent='🎉 '+fmt(elapsed)+(record?' — nouveau record ! 🏆':'')+'  ·  on recommence…';
+    exfeedback.className='exfeedback ok'; tfeedback.textContent=''; tfeedback.className='tfeedback';
+    restartTo=setTimeout(startExercise, 1500);   // relance automatique pour enchaîner
+  }
+  function haltExercise(){
+    exerciseOn=false; timerStarted=false; btnExercise.textContent='▶ Démarrer l\'enchaînement';
+    cancelAnimationFrame(rafId); if(restartTo){ clearTimeout(restartTo); restartTo=null; }
+    exfeedback.textContent=''; exfeedback.className='exfeedback';
+  }
+  function stopExercise(){ haltExercise(); renderSeq(); }
+  btnExercise.onclick=function(){ exerciseOn?stopExercise():startExercise(); };
+
+  renderSeq();
+})();
+</script>
+</body>
+</html>

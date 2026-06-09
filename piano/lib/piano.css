@@ -1,0 +1,44 @@
+/* ============================================================
+   piano.css — affichage réutilisable du clavier (préfixe .pk-)
+   Utilisé par toutes les leçons via <link rel="stylesheet">.
+   Couleurs en dur (indépendant des variables des leçons).
+   ============================================================ */
+.pk-scroll{overflow-x:auto;padding-bottom:8px}
+.pk-piano{position:relative;display:flex;height:240px;width:100%;user-select:none;border-radius:0 0 8px 8px}
+
+.pk-wkey{position:relative;flex:1 1 0;min-width:30px;height:240px;
+  background:linear-gradient(#fffdf8,#efe7da);border:1px solid #c9bda9;border-top:none;border-radius:0 0 7px 7px;
+  display:flex;flex-direction:column;justify-content:flex-end;align-items:center;padding-bottom:12px;
+  cursor:pointer;transition:background .08s;z-index:1}
+.pk-wkey:active,.pk-wkey.pk-press{background:linear-gradient(#f3e9d6,#e2d4bd)}
+
+.pk-bkey{position:absolute;top:0;width:34px;height:150px;background:linear-gradient(#2a2421,#0d0b0a);
+  border:1px solid #000;border-radius:0 0 5px 5px;z-index:2;cursor:pointer;box-shadow:0 3px 4px rgba(0,0,0,.5)}
+.pk-bkey:active,.pk-bkey.pk-press{background:linear-gradient(#1a1614,#000)}
+
+.pk-lbl{font-family:'Avenir Next','Segoe UI',system-ui,sans-serif;font-weight:700;font-size:13px;
+  text-align:center;color:#3a322d;pointer-events:none}
+.pk-lbl .pk-s{color:#b06a14;display:block}
+
+/* états (entraîneur d'accords) */
+.pk-wkey.pk-target{box-shadow:inset 0 0 0 3px #5fb0a8;background:linear-gradient(#eaf6f4,#d7ece9)}
+.pk-bkey.pk-target{box-shadow:inset 0 0 0 3px #5fb0a8;background:linear-gradient(#1d4a46,#0b2b28)}
+.pk-wkey.pk-ok{background:linear-gradient(#bfeec6,#7fce8c)!important}
+.pk-bkey.pk-ok{background:linear-gradient(#7fce8c,#4ea85f)!important}
+.pk-wkey.pk-bad{background:linear-gradient(#f6c7c3,#e89992)!important}
+.pk-bkey.pk-bad{background:linear-gradient(#e89992,#c75d55)!important}
+
+/* badges des touches d'ordinateur */
+/* badge blanche EN BAS (au-dessus du nom de note), badge noire plus haut → même ordre vertical
+   que sur le clavier d'ordinateur (lettres des noires au-dessus de celles des blanches). */
+.pk-kkey{position:absolute;left:50%;transform:translateX(-50%);top:auto;bottom:34px;font-size:11px;font-weight:800;
+  font-family:'Avenir Next','Segoe UI',system-ui,sans-serif;color:#7c6f5f;background:#fffaf0;
+  border:1px solid #d9ccb6;border-radius:4px;padding:1px 6px;pointer-events:none}
+.pk-bkey .pk-kkey{bottom:10px;font-size:10px;padding:1px 4px;color:#e9dcc7;background:#15110f;border-color:#3a322d}
+.pk-piano.pk-hidekeys .pk-kkey{display:none}
+
+/* boutons standard injectés par mountControls() */
+.pk-btn{font-family:'Avenir Next','Segoe UI',system-ui,sans-serif;font-weight:600;font-size:14px;cursor:pointer;
+  border:1px solid #3a322d;background:#15110f;color:#f4ece4;padding:9px 16px;border-radius:9px;transition:.15s}
+.pk-btn:hover{border-color:#e8a04e;color:#e8a04e}
+.pk-btn.pk-on{background:#e8a04e;color:#1a1614;border-color:#e8a04e}

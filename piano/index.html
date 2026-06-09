@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Piano — Apprendre à jouer en comprenant ce qu'on joue</title>
+<style>
+  :root{
+    --bg:#1a1614; --panel:#241f1c; --ink:#f4ece4; --muted:#b3a596;
+    --accent:#e8a04e; --accent2:#5fb0a8; --good:#5cba6b; --bad:#e0625a;
+    --line:#3a322d; --serif:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;
+    --sans:'Avenir Next','Segoe UI',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+    line-height:1.65;font-size:17px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .wrap{max-width:780px;margin:0 auto;padding:48px 24px 96px}
+  .back{display:inline-block;color:var(--muted);font-size:14px;text-decoration:none;margin-bottom:28px;
+    border-bottom:1px solid transparent}
+  .back:hover{color:var(--accent);border-bottom-color:var(--accent)}
+  header.hero{margin-bottom:36px;border-bottom:1px solid var(--line);padding-bottom:28px}
+  .kicker{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 12px}
+  h1{font-family:var(--serif);font-size:44px;line-height:1.08;margin:0 0 16px;font-weight:600}
+  .mission{color:var(--muted);font-size:17px;margin:0;max-width:62ch}
+  .mission b{color:var(--ink)}
+  h2{font-family:var(--serif);font-size:26px;margin:48px 0 8px;font-weight:600}
+  .sub{color:var(--muted);margin:0 0 20px}
+  p{margin:0 0 16px}
+
+  /* morceaux cibles */
+  .songs{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:18px 0 8px}
+  .song{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .song h3{margin:0 0 4px;font-size:17px;font-family:var(--sans);font-weight:700}
+  .song p{margin:0;color:var(--muted);font-size:14px}
+
+  /* progression */
+  .progress{display:flex;align-items:center;gap:14px;margin:8px 0 4px;color:var(--muted);font-size:14px}
+  .bar{flex:1;height:8px;background:#15110f;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+  .bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#f0b667)}
+
+  /* leçons */
+  .lessons{list-style:none;padding:0;margin:18px 0 0;counter-reset:none}
+  .lessons li{margin:0 0 12px}
+  .lesson{display:flex;align-items:center;gap:18px;background:var(--panel);border:1px solid var(--line);
+    border-radius:14px;padding:18px 22px;text-decoration:none;color:inherit;transition:.15s;border-left:3px solid var(--accent)}
+  .lesson:hover{border-color:var(--accent);transform:translateY(-1px);background:#2a231d}
+  .lesson .num{font-family:var(--serif);font-size:30px;color:var(--accent);font-weight:600;min-width:46px;text-align:center}
+  .lesson .body{flex:1}
+  .lesson .t{font-weight:700;font-size:18px;margin:0 0 2px}
+  .lesson .d{color:var(--muted);font-size:14.5px;margin:0}
+  .lesson .go{color:var(--accent2);font-size:22px;opacity:.6;transition:.15s}
+  .lesson:hover .go{opacity:1;transform:translateX(3px)}
+
+  .refcard{display:inline-flex;align-items:center;gap:10px;margin-top:18px;background:#1d1916;
+    border:1px solid var(--line);border-radius:10px;padding:12px 18px;text-decoration:none;color:var(--accent2)}
+  .refcard:hover{border-color:var(--accent2)}
+
+  .ask{background:linear-gradient(135deg,#2a211a,#241f1c);border:1px solid var(--accent);
+    border-radius:14px;padding:20px 24px;margin:40px 0 0}
+  .ask b{color:var(--accent)}
+  footer{margin-top:48px;border-top:1px solid var(--line);padding-top:22px;color:var(--muted);font-size:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="back" href="../index.html">← Tous les cours</a>
+
+  <header class="hero">
+    <p class="kicker">Cours · Piano 🎹</p>
+    <h1>Apprendre le piano</h1>
+    <p class="mission">Objectif : pouvoir m'asseoir au piano et <b>jouer en entier trois morceaux qui me
+    touchent</b> — <i>The Scientist</i>, <i>Happy Ending</i> et le thème d'<i>Interstellar</i> — tout en
+    <b>comprenant ce que je joue</b> : lire la partition, reconnaître les accords, savoir pourquoi ça sonne
+    juste. Tout est enseigné en <b>solfège (Do Ré Mi)</b>, en français, à mon rythme.</p>
+  </header>
+
+  <div class="progress">
+    <span id="progress-label">—</span>
+    <div class="bar"><i id="progress-bar" style="width:0"></i></div>
+  </div>
+
+  <h2>Les morceaux cibles</h2>
+  <p class="sub">Le « pourquoi » de chaque leçon. Tout ce qu'on apprend sert à les jouer.</p>
+  <div class="songs">
+    <div class="song"><h3>🎹 The Scientist</h3><p>Coldplay · accords Ré m – Si♭ – Fa – Do. Le 1<sup>er</sup> objectif.</p></div>
+    <div class="song"><h3>🎹 Happy Ending</h3><p>Mika · ballade piano, travail des accords.</p></div>
+    <div class="song"><h3>🎹 Interstellar</h3><p>Hans Zimmer · l'arpège iconique, de mémoire.</p></div>
+  </div>
+
+  <h2>Les leçons</h2>
+  <p class="sub">Une leçon = une seule chose, avec un clavier interactif. Suis-les dans l'ordre.</p>
+  <ul class="lessons" id="lessons"></ul>
+
+  <a class="refcard" id="refcard" href="#">📄 <span>Fiche : carte du clavier</span></a>
+
+  <div class="ask">
+    <p style="margin:0"><b>Je suis ton prof — écris-moi quand tu veux.</b> Bloqué sur une leçon, envie d'un
+    quiz à l'oral, prêt pour la suivante, ou tu veux un guide d'achat pour un vrai piano ? Dis-le-moi
+    simplement dans le chat et on avance.</p>
+  </div>
+
+  <footer>
+    <p style="margin:0">Cours généré et suivi avec le skill <b>/learn</b>. Notation solfège, en français.</p>
+  </footer>
+</div>
+
+<!-- nav.js chargé UNIQUEMENT pour ses données (LessonNav.lessons) ; on n'affiche pas le sommaire flottant ici. -->
+<script>window.LNAV_NOMOUNT=true;</script>
+<script src="lib/nav.js"></script>
+<script>
+(function(){
+  var L = (window.LessonNav && window.LessonNav.lessons) || [];
+  var ul = document.getElementById('lessons');
+  L.forEach(function(les){
+    var a=document.createElement('a');
+    a.className='lesson'; a.href='lessons/'+les.f;
+    a.innerHTML='<span class="num">'+les.n+'</span>'
+      +'<span class="body"><p class="t">'+les.t+'</p><p class="d">'+(les.d||'')+'</p></span>'
+      +'<span class="go">→</span>';
+    var li=document.createElement('li'); li.appendChild(a); ul.appendChild(li);
+  });
+
+  // Fiche de référence (chemin relatif depuis lessons/ → ramené à la racine du cours)
+  var ref=window.LessonNav && window.LessonNav.ref;
+  if(ref){ var rc=document.getElementById('refcard'); rc.href=ref.f.replace('../',''); }
+
+  // Progression : on lit la dernière leçon ouverte (mémorisée par le clavier au fil des sessions),
+  // sinon on affiche simplement le total de leçons disponibles.
+  var total=L.length;
+  var lbl=document.getElementById('progress-label');
+  var bar=document.getElementById('progress-bar');
+  var doneRaw=localStorage.getItem('piano-lecons-vues');
+  var done=doneRaw?Math.min(parseInt(doneRaw,10)||0,total):0;
+  if(done>0){
+    lbl.textContent='Leçon '+done+' / '+total;
+    bar.style.width=Math.round(done/total*100)+'%';
+  } else {
+    lbl.textContent=total+' leçons';
+    bar.style.width='0';
+  }
+})();
+</script>
+</body>
+</html>

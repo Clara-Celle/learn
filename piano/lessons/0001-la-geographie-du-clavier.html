@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leçon 01 — La géographie du clavier</title>
+<link rel="stylesheet" href="../lib/piano.css">
+<style>
+  :root{
+    --bg:#1a1614; --panel:#241f1c; --ink:#f4ece4; --muted:#b3a596;
+    --accent:#e8a04e; --accent2:#5fb0a8; --good:#5cba6b; --bad:#e0625a;
+    --line:#3a322d; --serif:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;
+    --sans:'Avenir Next','Segoe UI',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+    line-height:1.65;font-size:17px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .wrap{max-width:760px;margin:0 auto;padding:48px 24px 96px}
+  header.hero{margin-bottom:40px;border-bottom:1px solid var(--line);padding-bottom:28px}
+  .kicker{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 10px}
+  h1{font-family:var(--serif);font-size:40px;line-height:1.1;margin:0 0 14px;font-weight:600}
+  .mission{color:var(--muted);font-size:16px;margin:0}
+  .mission b{color:var(--ink)}
+  h2{font-family:var(--serif);font-size:26px;margin:48px 0 14px;font-weight:600}
+  p{margin:0 0 16px}
+  .lead{font-size:19px;color:var(--ink)}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:24px 0}
+  .tip{border-left:3px solid var(--accent);padding:4px 0 4px 18px;margin:20px 0;color:var(--muted)}
+  .tip b{color:var(--ink)}
+  .note{font-family:var(--sans);background:#15110f;border:1px solid var(--line);border-radius:6px;
+    padding:2px 8px;font-weight:700;font-size:.92em;color:var(--accent)}
+  .note.do{color:#e8a04e}
+  a{color:var(--accent2);text-decoration:none;border-bottom:1px solid rgba(95,176,168,.4)}
+  a:hover{border-bottom-color:var(--accent2)}
+  ul{padding-left:22px}li{margin:6px 0}
+  details.aside{margin:18px 0;border:1px solid var(--line);border-radius:10px;background:#1d1916;padding:0 18px}
+  details.aside summary{cursor:pointer;color:var(--muted);font-weight:600;padding:14px 0;list-style:none}
+  details.aside summary::-webkit-details-marker{display:none}
+  details.aside summary::before{content:"▸ ";color:var(--accent)}
+  details.aside[open] summary::before{content:"▾ "}
+  details.aside p{font-size:15px;color:var(--muted)}
+
+  /* ---- mise en page de l'atelier (le piano vient de lib/piano.css) ---- */
+  .stage{background:var(--panel);border:1px solid var(--line);border-left:none;border-right:none;
+    border-radius:0;padding:24px clamp(16px,4vw,56px);margin:28px 0;width:100vw;margin-left:calc(50% - 50vw)}
+  .stage>.controls,.stage>.legend,.stage>.quizbar,.stage>.kbdhint{max-width:760px;margin-left:auto;margin-right:auto}
+  .controls{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px;align-items:center}
+  button{font-family:var(--sans);font-weight:600;font-size:14px;cursor:pointer;border:1px solid var(--line);
+    background:#15110f;color:var(--ink);padding:9px 16px;border-radius:9px;transition:.15s}
+  button:hover{border-color:var(--accent);color:var(--accent)}
+  button.primary{background:var(--accent2);color:#10201e;border-color:var(--accent2)}
+  button.primary:hover{filter:brightness(1.1);color:#10201e}
+  .kbdhint{color:var(--muted);font-size:14px;text-align:center;margin:0 auto 14px}
+  .kbdhint b{color:var(--ink)}
+  .legend{display:flex;gap:20px;flex-wrap:wrap;font-size:14px;color:var(--muted);margin-top:14px}
+  .legend span{display:inline-flex;align-items:center;gap:7px}
+  .dot{width:14px;height:14px;border-radius:4px;display:inline-block}
+  .quizbar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:16px;min-height:54px}
+  .prompt{font-family:var(--serif);font-size:22px}
+  .prompt b{color:var(--accent);font-size:30px}
+  .score{margin-left:auto;color:var(--muted);font-weight:600}
+  .feedback{font-weight:700;min-height:24px}
+  .feedback.ok{color:var(--good)}.feedback.no{color:var(--bad)}
+
+  footer{margin-top:56px;border-top:1px solid var(--line);padding-top:24px;color:var(--muted);font-size:15px}
+  .src{font-size:14px}
+  .ask{background:linear-gradient(135deg,#2a211a,#241f1c);border:1px solid var(--accent);
+    border-radius:14px;padding:20px 24px;margin:32px 0}
+  .ask b{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <p class="kicker">Leçon 01 · Les fondations</p>
+    <h1>La géographie du clavier</h1>
+    <p class="mission">Objectif de cette leçon : qu'on te dise <b>n'importe quelle note</b> et
+    que tu la trouves instantanément sur le clavier — partout. C'est la première brique pour jouer
+    <b>The Scientist</b>, <b>Happy Ending</b> et <b>Interstellar</b>. Tu ne peux pas jouer un accord
+    avant de savoir nommer ses touches.</p>
+  </header>
+
+  <p class="lead">Un clavier de piano a l'air intimidant : 88 touches, une mer de noir et blanc.
+  Mais c'est une <b>illusion</b>. En réalité, il n'y a qu'un seul petit motif qui se répète encore
+  et encore. Apprends-le une fois, et tout le clavier s'ouvre.</p>
+
+  <h2>1. Le secret : les touches noires vont par 2 et par 3</h2>
+  <p>Regarde les touches noires (sur le piano plus bas). Elles ne sont pas réparties au hasard :
+  elles forment toujours des <b>groupes de 2</b>, puis des <b>groupes de 3</b>, en alternance, sans
+  fin. Ce motif <b>2–3–2–3…</b> est ta boussole. C'est lui qui te dit où tu es.</p>
+
+  <div class="tip"><b>Pourquoi ça compte :</b> sans repère, toutes les touches blanches se
+  ressemblent. Les paquets de touches noires sont des panneaux de signalisation.</div>
+
+  <h2>2. Trouver le Do : la touche à gauche des 2 noires</h2>
+  <p>Voici LA règle à retenir pour toute ta vie de pianiste :</p>
+  <div class="card">
+    <p style="margin:0;font-size:19px"><b>Le <span class="note do">Do</span> est la touche
+    blanche située juste à <b>gauche</b> d'un groupe de <b>2 touches noires</b>.</b></p>
+  </div>
+  <p>Appuie sur le bouton <b>« Montre les Do »</b> sous le piano : tu verras qu'il y a plusieurs Do,
+  un par groupe de 2 noires. Chaque répétition du motif s'appelle une <b>octave</b>.</p>
+
+  <h2>3. Nommer les 7 touches blanches</h2>
+  <p>À partir du Do, les touches blanches se nomment dans l'ordre, en montant vers la droite —
+  exactement comme tu les liras sur une partition :</p>
+  <div class="card" style="text-align:center;font-size:24px;line-height:2;letter-spacing:.03em">
+    <span class="note do">Do</span> <span class="note do">Ré</span> <span class="note do">Mi</span>
+    <span class="note do">Fa</span> <span class="note do">Sol</span> <span class="note do">La</span>
+    <span class="note do">Si</span>
+    <p style="font-size:14px;color:var(--muted);margin:10px 0 0">…puis ça recommence au Do suivant : c'est une <b>octave</b>.</p>
+  </div>
+  <details class="aside">
+    <summary>Pour info : l'équivalent en lettres (tu peux l'ignorer)</summary>
+    <p>Les partitions se lisent <b>uniquement</b> en Do Ré Mi — tu n'as pas besoin des lettres.
+    Elles n'apparaissent que dans les <b>grilles d'accords</b> pop en ligne (ex. certains tutos de
+    <i>The Scientist</i>). Si tu en croises, voici la traduction — et de toute façon je te les
+    traduirai toujours en solfège :</p>
+    <p style="text-align:center;font-size:16px">
+    Do=C&nbsp;·&nbsp;Ré=D&nbsp;·&nbsp;Mi=E&nbsp;·&nbsp;Fa=F&nbsp;·&nbsp;Sol=G&nbsp;·&nbsp;La=A&nbsp;·&nbsp;<b>Si=B</b></p>
+  </details>
+
+  <h2>4. À toi de jouer 🎹</h2>
+  <p>Voici un vrai clavier interactif. Commence en mode <b>Explorer</b> (les noms sont affichés),
+  clique partout, repère le motif. Quand tu te sens prêt, lance le <b>Quiz</b> : je te nomme une
+  note, tu cliques la bonne touche. Feedback immédiat.</p>
+
+  <div class="stage">
+    <div class="controls" id="pk-controls">
+      <button id="btnDo">Montre les Do</button>
+      <button id="btnQuiz" class="primary">▶ Lancer le Quiz</button>
+    </div>
+
+    <p class="kbdhint">⌨ Le raccourci clavier est écrit sur chaque touche. Blanches : <b>A Z E R T Y U</b>
+    (médium) ou la rangée du bas (graves) · noires : les <b>chiffres</b> (médium) ou <b>S D G H J</b> (graves).</p>
+
+    <div id="piano-mount"></div>
+
+    <div class="legend">
+      <span><span class="dot" style="background:#e8a04e"></span> Do Ré Mi (solfège)</span>
+      <span><span class="dot" style="background:#7fce8c"></span> bonne réponse</span>
+      <span><span class="dot" style="background:#e89992"></span> erreur</span>
+      <span>🔊 clique une touche pour entendre sa note</span>
+    </div>
+
+    <div class="quizbar" id="quizbar" style="display:none">
+      <div class="prompt">Clique sur le <b id="target">—</b></div>
+      <div class="feedback" id="feedback"></div>
+      <div class="score" id="score">0 / 0</div>
+    </div>
+  </div>
+
+  <div class="ask">
+    <p style="margin:0"><b>Je suis ton prof — pose-moi des questions !</b> Bloqué sur un point ?
+    Tu veux que je réexplique le motif 2–3, que je te fasse un quiz à l'oral, ou que je t'aide à
+    choisir un piano à acheter ? Réponds-moi simplement dans le chat. Quand tu trouves <b>9 ou 10
+    notes sur 10</b> au quiz sans hésiter, dis-le-moi : on passera à la <b>construction de ton
+    premier accord</b> (l'accord de <b>Fa majeur</b> de <i>The Scientist</i>).</p>
+  </div>
+
+  <h2>Comment t'entraîner sans piano</h2>
+  <p>Tu n'as pas encore d'instrument — aucun souci pour cette leçon. En plus du clavier ci-dessus :</p>
+  <ul>
+    <li>Ouvre <a href="https://virtualpiano.net/" target="_blank">virtualpiano.net</a> ou
+    <a href="https://pianist.me/" target="_blank">pianist.me</a> : des pianos virtuels gratuits,
+    jouables à la souris ou au clavier d'ordinateur.</li>
+    <li>Jeu express (30 s, plusieurs fois par jour) : pointe un Do, puis nomme à voix haute en
+    montant — <i>Do, Ré, Mi…</i></li>
+    <li>Plus tard : on parlera d'un vrai <b>piano numérique 88 touches lestées</b> dès que tu veux
+    franchir le pas — demande-moi un guide d'achat.</li>
+  </ul>
+
+  <footer>
+    <p class="src"><b>Sources &amp; pour aller plus loin :</b></p>
+    <ul class="src">
+      <li><a href="https://www.hoffmanacademy.com/blog/music-theory-for-beginners" target="_blank">Hoffman Academy — Music Theory for Beginners</a> (notes &amp; clavier)</li>
+      <li><a href="https://www.flowkey.com/en/piano-guide/read-sheet-music" target="_blank">flowkey — How to Read Sheet Music</a></li>
+      <li><a href="https://www.pianote.com/blog/coldplay-the-scientist/" target="_blank">Pianote — Coldplay « The Scientist » (notre 1er morceau cible)</a></li>
+    </ul>
+    <p class="src" style="color:var(--muted)">Leçon 01 · Mission : jouer The Scientist, Happy Ending
+    &amp; Interstellar en comprenant ce qu'on joue.</p>
+  </footer>
+</div>
+
+<script src="../lib/piano.js"></script>
+<script src="../lib/nav.js"></script>
+<script>
+(function(){
+  var piano=PianoKeyboard.create({ mount:'#piano-mount', octaves:3, startOctave:3, keyboard:'2oct', onNote:onNote });
+  piano.mountControls('#pk-controls');   // 🔊 Son · Afficher les noms · ⌨ Touches PC
+
+  /* ----- « Montre les Do » : surligne brièvement tous les Do ----- */
+  document.getElementById('btnDo').onclick=function(){
+    piano.whites.forEach(function(w){
+      if(w.dataset.letter==='C'){ w.classList.add('pk-target');
+        setTimeout(function(){ w.classList.remove('pk-target'); },1400); }
+    });
+  };
+
+  /* ----- Quiz : « clique sur le [note] » ----- */
+  var SOL=['Do','Ré','Mi','Fa','Sol','La','Si'];
+  var LET=['C','D','E','F','G','A','B'];
+  var quizOn=false, target=null, total=0, correct=0, locked=false;
+  var quizbar=document.getElementById('quizbar');
+  var tEl=document.getElementById('target');
+  var fEl=document.getElementById('feedback');
+  var sEl=document.getElementById('score');
+  var btnQuiz=document.getElementById('btnQuiz');
+
+  function newQuestion(){
+    locked=false; fEl.textContent=''; fEl.className='feedback';
+    var i=Math.floor(Math.random()*7);
+    target={letter:LET[i], solfege:SOL[i]};
+    tEl.textContent=target.solfege;
+  }
+  function startQuiz(){
+    quizOn=true; total=0; correct=0; locked=false;
+    piano.setLabels(false);
+    quizbar.style.display='flex'; btnQuiz.textContent='■ Arrêter le Quiz'; sEl.textContent='0 / 0';
+    newQuestion();
+  }
+  function stopQuiz(){
+    quizOn=false; quizbar.style.display='none'; btnQuiz.textContent='▶ Lancer le Quiz';
+    piano.setLabels(true); piano.clearClass('pk-ok','pk-bad');
+  }
+  btnQuiz.onclick=function(){ quizOn?stopQuiz():startQuiz(); };
+
+  function onNote(midi,el){
+    if(!quizOn||locked) return;
+    locked=true; total++;
+    var ok=(el.dataset.letter===target.letter);
+    if(ok){ correct++; el.classList.add('pk-ok'); fEl.textContent='✓ Bravo !'; fEl.className='feedback ok'; }
+    else{
+      el.classList.add('pk-bad');
+      var right=piano.whites.filter(function(k){ return k.dataset.letter===target.letter; })[0];
+      if(right) right.classList.add('pk-ok');
+      fEl.textContent='✗ C\'était le '+target.solfege; fEl.className='feedback no';
+    }
+    sEl.textContent=correct+' / '+total;
+    setTimeout(function(){
+      piano.clearClass('pk-ok','pk-bad');
+      if(total>=10){
+        tEl.textContent='Terminé !';
+        fEl.textContent='Score : '+correct+'/10 — '+(correct>=9?'🎉 Prêt pour les accords ! Dis-le à ton prof.':(correct>=7?'Bien ! Refais un tour pour viser 9+.':'Continue, le motif vient vite.'));
+        fEl.className='feedback '+(correct>=9?'ok':'');
+        setTimeout(function(){ if(quizOn){ total=0; correct=0; sEl.textContent='0 / 0'; newQuestion(); } },2600);
+      } else newQuestion();
+    }, ok?650:1500);
+  }
+})();
+</script>
+</body>
+</html>

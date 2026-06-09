@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bonus — Le Canon de Pachelbel</title>
+<link rel="stylesheet" href="../lib/piano.css">
+<style>
+  :root{
+    --bg:#1a1614; --panel:#241f1c; --ink:#f4ece4; --muted:#b3a596;
+    --accent:#e8a04e; --accent2:#5fb0a8; --good:#5cba6b; --bad:#e0625a; --violet:#a98cd8;
+    --line:#3a322d; --serif:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;
+    --sans:'Avenir Next','Segoe UI',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+    line-height:1.65;font-size:17px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .wrap{max-width:760px;margin:0 auto;padding:48px 24px 96px}
+  header.hero{margin-bottom:40px;border-bottom:1px solid var(--line);padding-bottom:28px}
+  .kicker{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--violet);font-weight:700;margin:0 0 10px}
+  h1{font-family:var(--serif);font-size:38px;line-height:1.12;margin:0 0 14px;font-weight:600}
+  .mission{color:var(--muted);font-size:16px;margin:0}
+  .mission b{color:var(--ink)}
+  h2{font-family:var(--serif);font-size:26px;margin:48px 0 14px;font-weight:600}
+  p{margin:0 0 16px}
+  .lead{font-size:19px;color:var(--ink)}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:24px 0}
+  .tip{border-left:3px solid var(--accent);padding:4px 0 4px 18px;margin:20px 0;color:var(--muted)}
+  .tip b{color:var(--ink)}
+  .note{font-family:var(--sans);background:#15110f;border:1px solid var(--line);border-radius:6px;
+    padding:2px 8px;font-weight:700;font-size:.92em;color:var(--accent)}
+  .sharp{color:var(--violet)}
+  a{color:var(--accent2);text-decoration:none;border-bottom:1px solid rgba(95,176,168,.4)}
+  a:hover{border-bottom-color:var(--accent2)}
+  ul{padding-left:22px}li{margin:7px 0}
+  table{border-collapse:collapse;width:100%}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:center;font-size:15px}
+  th{background:#1d1916;font-family:var(--serif);font-weight:600}
+  .chordname{font-family:var(--serif);color:var(--accent);font-weight:700}
+  details.aside{margin:18px 0;border:1px solid var(--line);border-radius:10px;background:#1d1916;padding:0 18px}
+  details.aside summary{cursor:pointer;color:var(--muted);font-weight:600;padding:14px 0;list-style:none}
+  details.aside summary::-webkit-details-marker{display:none}
+  details.aside summary::before{content:"▸ ";color:var(--accent)}
+  details.aside[open] summary::before{content:"▾ "}
+  details.aside p{font-size:15px;color:var(--muted)}
+
+  /* ---- atelier (piano via lib/piano.css) ---- */
+  .stage{background:var(--panel);border:1px solid var(--line);border-left:none;border-right:none;
+    border-radius:0;padding:24px clamp(16px,4vw,56px);margin:28px 0;width:100vw;margin-left:calc(50% - 50vw)}
+  .stage>.controls,.stage>.legend,.stage>.trainer,.stage>.kbdhint{max-width:820px;margin-left:auto;margin-right:auto}
+  .controls{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px;align-items:center}
+  button{font-family:var(--sans);font-weight:600;font-size:14px;cursor:pointer;border:1px solid var(--line);
+    background:#15110f;color:var(--ink);padding:9px 16px;border-radius:9px;transition:.15s}
+  button:hover{border-color:var(--accent);color:var(--accent)}
+  button.on{background:var(--accent);color:#1a1614;border-color:var(--accent)}
+  button.primary{background:var(--accent2);color:#10201e;border-color:var(--accent2)}
+  button.primary:hover{filter:brightness(1.1);color:#10201e}
+  .kbdhint{color:var(--muted);font-size:14px;text-align:center;margin:0 auto 14px}
+  .kbdhint b{color:var(--ink)}
+  .trainer{margin-top:18px}
+  .chordbtns{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .chordbtns .lab{color:var(--muted);font-weight:600;margin-right:4px}
+  .tfeedback{margin-top:14px;min-height:28px;font-weight:700;font-size:18px}
+  .tfeedback.ok{color:var(--good)}
+  .tprompt{font-family:var(--serif);font-size:20px;margin-top:6px}
+  .tprompt b{color:var(--accent)}
+  .exhead{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:20px;border-top:1px solid var(--line);padding-top:18px}
+  .seq{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:14px 0}
+  .seq .arrow{color:var(--muted)}
+  .chip{padding:7px 12px;border-radius:999px;border:1px solid var(--line);background:#15110f;color:var(--muted);font-weight:700;font-size:14px;transition:.15s}
+  .chip.current{border-color:var(--accent);color:var(--accent);box-shadow:0 0 0 3px rgba(232,160,78,.22)}
+  .chip.done{border-color:var(--good);color:var(--good)}
+  .chip.done::before{content:"✓ "}
+  .exfeedback{min-height:26px;font-weight:700;font-size:17px;margin-top:6px}
+  .exfeedback.ok{color:var(--good)}
+  .extimer{font-family:var(--serif);font-size:26px;color:var(--accent);font-weight:700;margin-top:10px;min-height:32px}
+  .exhistory{font-size:13px;color:var(--muted);margin-top:4px}
+  .exhistory .att.best{color:var(--good);font-weight:700}
+  .legend{display:flex;gap:20px;flex-wrap:wrap;font-size:14px;color:var(--muted);margin-top:14px}
+  .legend span{display:inline-flex;align-items:center;gap:7px}
+  .dot{width:14px;height:14px;border-radius:4px;display:inline-block}
+
+  footer{margin-top:56px;border-top:1px solid var(--line);padding-top:24px;color:var(--muted);font-size:15px}
+  .src{font-size:14px}
+  .ask{background:linear-gradient(135deg,#2a211a,#241f1c);border:1px solid var(--violet);border-radius:14px;padding:20px 24px;margin:32px 0}
+  .ask b{color:var(--violet)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <p class="kicker">Bonus · Pachelbel</p>
+    <h1>Le Canon de Pachelbel</h1>
+    <p class="mission">Une récompense : avec tout ce que tu sais déjà (accords majeurs, mineurs, basse,
+    enchaînement), tu peux jouer l'une des progressions les plus célèbres de la musique — le
+    <b>Canon en Ré de Pachelbel</b>. C'est aussi la « recette secrète » derrière des centaines de
+    chansons pop.</p>
+  </header>
+
+  <p class="lead">8 accords, en boucle. Tu en connais déjà toute la mécanique.</p>
+
+  <h2>1. La progression</h2>
+  <p>Le Canon est en <b>Ré majeur</b> et tourne sur ces 8 accords (avec leur basse, comme à la Leçon 05) :</p>
+  <div class="card" style="padding:0;overflow:hidden">
+    <table>
+      <tr><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr>
+      <tr>
+        <td><span class="chordname">Ré</span></td><td><span class="chordname">La</span></td>
+        <td><span class="chordname">Si m</span></td><td><span class="chordname">Fa♯ m</span></td>
+        <td><span class="chordname">Sol</span></td><td><span class="chordname">Ré</span></td>
+        <td><span class="chordname">Sol</span></td><td><span class="chordname">La</span></td>
+      </tr>
+      <tr style="color:var(--violet);font-size:13px">
+        <td>basse Ré</td><td>La</td><td>Si</td><td>Fa♯</td><td>Sol</td><td>Ré</td><td>Sol</td><td>La</td>
+      </tr>
+    </table>
+  </div>
+
+  <h2>2. Nouveauté : la tonalité de Ré (avec des dièses)</h2>
+  <p>Ré majeur amène deux <b>touches noires</b> récurrentes : <span class="note sharp">Fa♯</span> et
+  <span class="note sharp">Do♯</span>. Tu les rencontres dans :</p>
+  <ul>
+    <li><span class="chordname">Ré majeur</span> = Ré · <span class="note sharp">Fa♯</span> · La</li>
+    <li><span class="chordname">La majeur</span> = La · <span class="note sharp">Do♯</span> · Mi</li>
+    <li><span class="chordname">Si mineur</span> = Si · Ré · <span class="note sharp">Fa♯</span></li>
+    <li><span class="chordname">Fa♯ mineur</span> = <span class="note sharp">Fa♯</span> · La · <span class="note sharp">Do♯</span></li>
+    <li><span class="chordname">Sol majeur</span> = Sol · Si · Ré &nbsp;<span style="color:var(--muted);font-size:14px">(tout blanc)</span></li>
+  </ul>
+  <div class="tip">Rappel : une touche noire en montant = <b>dièse ♯</b>. <span class="sharp">Fa♯</span> est
+  la noire juste à droite de Fa ; <span class="sharp">Do♯</span> la noire juste à droite de Do.</div>
+
+  <h2>3. À toi de jouer 🎻</h2>
+  <p>Construis chaque accord (cible bleue → joue les 3 notes), puis lance <b>« Enchaîne le Canon »</b>
+  pour la progression complète, chronométrée. <b>« Écouter le Canon »</b> te joue le tout, basse comprise.</p>
+
+  <div class="stage">
+    <div class="controls" id="pk-controls"></div>
+
+    <p class="kbdhint">⌨ Le raccourci clavier est écrit sur chaque touche. Blanches : <b>A Z E R T Y U</b>
+    (médium) · noires (les dièses !) : les <b>chiffres</b>.</p>
+
+    <div id="piano-mount"></div>
+
+    <div class="trainer">
+      <div class="chordbtns">
+        <span class="lab">Accord :</span>
+        <button class="chordbtn" data-ch="D">Ré maj</button>
+        <button class="chordbtn" data-ch="A">La maj</button>
+        <button class="chordbtn" data-ch="Bm">Si min</button>
+        <button class="chordbtn" data-ch="Fim">Fa♯ min</button>
+        <button class="chordbtn" data-ch="G">Sol maj</button>
+        <button id="btnListen" class="primary">🔊 Écouter l'accord</button>
+        <button id="btnDemo" class="primary">🔊 Écouter le Canon</button>
+      </div>
+      <div class="tprompt" id="tprompt">Choisis un accord pour commencer.</div>
+      <div class="tfeedback" id="tfeedback"></div>
+
+      <div class="exhead">
+        <span class="lab">🎻 Exercice — enchaîne le Canon :</span>
+        <button id="btnExercise" class="primary">▶ Démarrer l'enchaînement</button>
+      </div>
+      <div class="seq" id="seq"></div>
+      <div class="exfeedback" id="exfeedback"></div>
+      <div class="extimer" id="extimer"></div>
+      <div class="exhistory" id="exhistory"></div>
+    </div>
+
+    <div class="legend">
+      <span><span class="dot" style="background:#5fb0a8"></span> touche cible</span>
+      <span><span class="dot" style="background:#7fce8c"></span> trouvée</span>
+      <span>🔊 chaque touche joue sa note (reste appuyé = ça tient)</span>
+    </div>
+  </div>
+
+  <details class="aside">
+    <summary>Pourquoi cette progression est partout ?</summary>
+    <p>L'enchaînement de Pachelbel descend doucement par paliers et « tombe » naturellement de l'un à
+    l'autre — l'oreille adore. On le retrouve (parfois transposé) dans une foule de chansons pop. Une
+    fois dans les doigts, tu « entends » la structure de plein de morceaux d'un coup.</p>
+  </details>
+
+  <div class="ask">
+    <p style="margin:0"><b>Je suis ton prof — pose-moi des questions !</b> Les dièses (Fa♯, Do♯) te
+    bloquent ? Tu veux la version avec la <b>basse à la main gauche</b> (comme la L5), ou le célèbre
+    <b>thème mélodique</b> par-dessus ? Demande-moi et je te prépare l'étape suivante. 🎶</p>
+  </div>
+
+  <h2>Comment t'entraîner</h2>
+  <ul>
+    <li>Repère bien <span class="sharp">Fa♯</span> et <span class="sharp">Do♯</span> (les noires) avant de jouer.</li>
+    <li>Construis les 5 accords sans regarder les noms (bouton « Afficher les noms »).</li>
+    <li>Enchaîne le Canon lentement, puis baisse ton chrono petit à petit.</li>
+  </ul>
+
+  <footer>
+    <p class="src"><b>Sources &amp; pour aller plus loin :</b></p>
+    <ul class="src">
+      <li><a href="https://en.wikipedia.org/wiki/Pachelbel%27s_Canon" target="_blank">Pachelbel's Canon — Wikipedia</a> (la progression &amp; la basse obstinée)</li>
+      <li><a href="https://www.hoffmanacademy.com/blog/music-theory-for-beginners" target="_blank">Hoffman Academy — Music Theory for Beginners</a> (dièses, tonalités)</li>
+    </ul>
+    <p class="src" style="color:var(--muted)">Bonus · Cours de piano — au-delà de la mission The Scientist.</p>
+  </footer>
+</div>
+
+<script src="../lib/piano.js"></script>
+<script src="../lib/nav.js"></script>
+<script>
+(function(){
+  // Voicings dans la plage clavier (60–76) ; basse une octave plus bas.
+  var CHORDS={
+    D:  {name:'Ré majeur',  notes:[62,66,69], bass:50},   // Ré Fa# La
+    A:  {name:'La majeur',  notes:[61,64,69], bass:57},   // Do# Mi La
+    Bm: {name:'Si mineur',  notes:[62,66,71], bass:59},   // Ré Fa# Si
+    Fim:{name:'Fa♯ mineur', notes:[66,69,73], bass:54},   // Fa# La Do#
+    G:  {name:'Sol majeur', notes:[67,71,74], bass:55}    // Sol Si Ré
+  };
+  var PROG=['D','A','Bm','Fim','G','D','G','A'];
+
+  var piano=PianoKeyboard.create({ mount:'#piano-mount', octaves:3, startOctave:3, keyboard:'2oct', onNote:notePlayed });
+  piano.mountControls('#pk-controls');
+
+  /* ----- entraîneur d'accords ----- */
+  var currentChord=null, achieved=new Set();
+  var tprompt=document.getElementById('tprompt');
+  var tfeedback=document.getElementById('tfeedback');
+
+  function selectChord(key){
+    currentChord=key; achieved=new Set();
+    piano.clearClass('pk-target','pk-ok','pk-bad');
+    tfeedback.textContent=''; tfeedback.className='tfeedback';
+    var c=CHORDS[key];
+    piano.highlight(c.notes,'pk-target');
+    tprompt.innerHTML='Joue <b>'+c.name+'</b>';
+    document.querySelectorAll('.chordbtn').forEach(function(b){ b.classList.toggle('on',b.dataset.ch===key); });
+  }
+  function notePlayed(midi,el){
+    if(exerciseOn && !timerStarted) startClock();   // chrono lancé à la 1re note
+    if(!currentChord) return;
+    var c=CHORDS[currentChord];
+    if(c.notes.indexOf(midi)!==-1){
+      if(!achieved.has(midi)){ achieved.add(midi); piano.removeClass(midi,'pk-target'); piano.addClass(midi,'pk-ok'); }
+      if(achieved.size===c.notes.length) chordCompleted(c);
+    } else { piano.addClass(midi,'pk-bad'); setTimeout(function(){ piano.removeClass(midi,'pk-bad'); },320); }
+  }
+  function chordCompleted(c){
+    if(exerciseOn){
+      currentChord=null;
+      step++; renderSeq();
+      if(step>=PROG.length){ finishRun(); }
+      else {
+        exfeedback.textContent='✓ '+c.name+'  →  '+CHORDS[PROG[step]].name;
+        exfeedback.className='exfeedback ok';
+        setTimeout(function(){ selectChord(PROG[step]); }, 600);
+      }
+    } else {
+      setTimeout(function(){ piano.playChord(c.notes); },120);
+      tfeedback.textContent='✓ '+c.name+' !'; tfeedback.className='tfeedback ok';
+    }
+  }
+  document.querySelectorAll('.chordbtn').forEach(function(b){
+    b.onclick=function(){ haltExercise(); selectChord(b.dataset.ch); };
+  });
+  document.getElementById('btnListen').onclick=function(){
+    if(currentChord) piano.playChord(CHORDS[currentChord].notes);
+    else { selectChord('D'); setTimeout(function(){ piano.playChord(CHORDS['D'].notes); },140); }
+  };
+  document.getElementById('btnDemo').onclick=function(){
+    var ctx=piano.context(), bar=1.1, t0=ctx.currentTime+0.1;   // planifié sur l'horloge audio
+    for(var i=0;i<PROG.length;i++){ var c=CHORDS[PROG[i]]; piano.playChord(c.notes.concat([c.bass]), t0+i*bar); }
+  };
+
+  /* ----- exercice : enchaîne le Canon (chrono + historique + auto-restart) ----- */
+  var exerciseOn=false, step=0;
+  var attempts=[], startTime=0, rafId=null, restartTo=null, timerStarted=false;
+  var seqEl=document.getElementById('seq');
+  var exfeedback=document.getElementById('exfeedback');
+  var btnExercise=document.getElementById('btnExercise');
+  var extimer=document.getElementById('extimer');
+  var exhistory=document.getElementById('exhistory');
+
+  function fmt(ms){ return (ms/1000).toFixed(1)+' s'; }
+  function tickTimer(){ if(!exerciseOn||!timerStarted) return; extimer.textContent='⏱ '+fmt(performance.now()-startTime); rafId=requestAnimationFrame(tickTimer); }
+  function startClock(){ timerStarted=true; startTime=performance.now();
+    exfeedback.textContent=''; exfeedback.className='exfeedback';
+    cancelAnimationFrame(rafId); rafId=requestAnimationFrame(tickTimer); }
+  function renderHistory(){
+    if(!attempts.length){ exhistory.innerHTML=''; return; }
+    var best=Math.min.apply(null,attempts);
+    var recent=attempts.slice(-6), base=attempts.length-recent.length;
+    exhistory.innerHTML='Essais : '+recent.map(function(t,i){
+      return '<span class="att'+(t===best?' best':'')+'">#'+(base+i+1)+' '+fmt(t)+(t===best?' ⭐':'')+'</span>';
+    }).join(' · ')+' &nbsp;|&nbsp; record : '+fmt(best);
+  }
+  function renderSeq(){
+    seqEl.innerHTML='';
+    PROG.forEach(function(k,i){
+      if(i>0){ var a=document.createElement('span'); a.className='arrow'; a.textContent='→'; seqEl.appendChild(a); }
+      var chip=document.createElement('span'); chip.className='chip'; chip.textContent=CHORDS[k].name;
+      if(exerciseOn){ if(i<step) chip.classList.add('done'); else if(i===step) chip.classList.add('current'); }
+      seqEl.appendChild(chip);
+    });
+  }
+  function startExercise(){
+    if(restartTo){ clearTimeout(restartTo); restartTo=null; }
+    exerciseOn=true; step=0; timerStarted=false;
+    btnExercise.textContent='■ Arrêter'; renderSeq(); selectChord(PROG[0]);
+    extimer.textContent='⏱ 0.0 s';
+    exfeedback.textContent='Le chrono démarre à ta première note 🎵'; exfeedback.className='exfeedback';
+    cancelAnimationFrame(rafId);
+  }
+  function finishRun(){
+    var elapsed=performance.now()-startTime;
+    cancelAnimationFrame(rafId); extimer.textContent='⏱ '+fmt(elapsed);
+    var prevBest=attempts.length?Math.min.apply(null,attempts):Infinity;
+    attempts.push(elapsed); renderHistory();
+    var record=(elapsed<prevBest && attempts.length>1);
+    exfeedback.textContent='🎉 '+fmt(elapsed)+(record?' — nouveau record ! 🏆':'')+'  ·  on recommence…';
+    exfeedback.className='exfeedback ok'; tfeedback.textContent=''; tfeedback.className='tfeedback';
+    restartTo=setTimeout(startExercise, 1500);
+  }
+  function haltExercise(){
+    exerciseOn=false; timerStarted=false; btnExercise.textContent='▶ Démarrer l\'enchaînement';
+    cancelAnimationFrame(rafId); if(restartTo){ clearTimeout(restartTo); restartTo=null; }
+    exfeedback.textContent=''; exfeedback.className='exfeedback';
+  }
+  function stopExercise(){ haltExercise(); renderSeq(); }
+  btnExercise.onclick=function(){ exerciseOn?stopExercise():startExercise(); };
+
+  renderSeq();
+})();
+</script>
+</body>
+</html>

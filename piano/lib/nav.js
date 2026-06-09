@@ -17,7 +17,13 @@
     {n:'04', t:'Le rythme : jouer en mesure',      f:'0004-le-rythme-jouer-en-mesure.html',
      d:"Tenir le tempo et jouer en place avec le métronome."},
     {n:'05', t:'La main gauche : la basse',         f:'0005-la-main-gauche-la-basse.html',
-     d:"Ajouter la basse à la main gauche sous tes accords."}
+     d:"Ajouter la basse à la main gauche sous tes accords."},
+    {n:'06', t:'Le balancier : main droite en croches', f:'0006-le-balancier-main-droite-croches.html',
+     d:"Faire « respirer » l'accord en croches — le vrai mouvement de la chanson."},
+    {n:'07', t:'The Scientist : tout assembler',    f:'0007-the-scientist-assemblage-mains-ensemble.html',
+     d:"Mains ensemble + pédale : jouer The Scientist en entier."},
+    {n:'★', t:'Bonus : Canon de Pachelbel',        f:'bonus-canon-pachelbel.html',
+     d:"Jouer la célèbre progression du Canon en Ré — révision en tonalité de Ré."}
   ];
   var REF={t:'Fiche : carte du clavier', f:'../reference/keyboard-map.html'};
   var HUB={t:'Tous les cours', f:'../index.html'};       // retour au hub

@@ -44,10 +44,13 @@
   l'horloge audio (plus de `setTimeout` → plus d'arpège parasite).
 - **Sustain (notes tenues) :** la lib expose `noteOn(midi)` / `noteOff(midi)`. Les appuis
   (souris/tactile via pointerdown/up/leave, clavier via keydown/keyup) tiennent la note tant que
-  pressée et la relâchent au lâcher (release douce ~0,2 s). `blur` → `releaseAll` (anti-touche
-  bloquée). `playNote`/`playChord` restent en one-shot pour la lecture programmée (accords/démo).
-  Toute leçon qui gère ses propres touches (ex. rangée de basse de la 0005) doit appeler
-  `piano.noteOn`/`noteOff` + écouter `keyup`.
+  pressée et la relâchent au lâcher (extinction douce, `cancelAndHoldAtTime` pour éviter le saut de
+  volume). `blur` → `releaseAll`. `playNote`/`playChord` restent one-shot (lecture programmée).
+- **Pédale de sustain :** `setPedal/togglePedal/isPedal`. Activable par le bouton **🎶 Pédale**
+  (ajouté par `mountControls` → présent dans toutes les leçons, verrou ON/OFF) ET par la **barre
+  Espace** (momentanée, maintenue = pédale baissée, comme un vrai piano ; gérée globalement dans
+  la lib donc marche partout, même sans `computerKeys`). Pédale baissée : le relâchement de touche
+  ne coupe plus la note (ajoutée à `pedaled`) ; pédale levée → `stopVoice` sur toutes les `pedaled`.
 - **Sommaire de navigation : `lib/nav.js`** (auto-monté, injecte son propre CSS, repliable,
   état mémorisé en localStorage, masqué à l'impression). Inclure `<script src="../lib/nav.js">`
   dans chaque leçon. Liste des leçons codée en dur dans nav.js → la compléter à chaque nouvelle leçon.
@@ -94,6 +97,9 @@
    → 4 accords de The Scientist (Ré m – Si♭ – Fa – Do) avec exercice d'enchaînement — Leçon 0003.
 4. ✅ Rythme : pulsation, mesure 4/4, tempo, métronome + play-along — Leçon 0004.
 5. ✅ Main gauche (basse = fondamentale) + coordination mains ensemble — Leçon 0005.
-6. Motif rythmique main droite (croches, le « balancier ») → le vrai feel de The Scientist.
-7. Lecture de la portée (clé de Sol), trouver Do central.
-8. Arpèges (accords « cassés ») → lien direct vers Interstellar & The Scientist.
+6. ✅ Balancier main droite (croches / subdivision) — Leçon 0006.
+7. ✅ Assemblage The Scientist mains ensemble + pédale — Leçon 0007. 🎯 1er morceau assemblé !
+   (+ Bonus ★ Canon de Pachelbel.)
+8. Au choix : fignoler The Scientist (accord cassé + mélodie) OU démarrer **Interstellar**
+   (arpèges en La mineur → introduit les arpèges + la lecture). Demander à Jeffy.
+9. Lecture de la portée (clé de Sol), trouver Do central.

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leçon 07 — The Scientist : l'assemblage (mains ensemble)</title>
+<link rel="stylesheet" href="../lib/piano.css">
+<style>
+  :root{
+    --bg:#1a1614; --panel:#241f1c; --ink:#f4ece4; --muted:#b3a596;
+    --accent:#e8a04e; --accent2:#5fb0a8; --good:#5cba6b; --bad:#e0625a; --violet:#a98cd8;
+    --line:#3a322d; --serif:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;
+    --sans:'Avenir Next','Segoe UI',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+    line-height:1.65;font-size:17px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .wrap{max-width:760px;margin:0 auto;padding:48px 24px 96px}
+  header.hero{margin-bottom:40px;border-bottom:1px solid var(--line);padding-bottom:28px}
+  .kicker{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 10px}
+  h1{font-family:var(--serif);font-size:34px;line-height:1.14;margin:0 0 14px;font-weight:600}
+  .mission{color:var(--muted);font-size:16px;margin:0}
+  .mission b{color:var(--ink)}
+  h2{font-family:var(--serif);font-size:26px;margin:48px 0 14px;font-weight:600}
+  p{margin:0 0 16px}
+  .lead{font-size:19px;color:var(--ink)}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:24px 0}
+  .tip{border-left:3px solid var(--accent);padding:4px 0 4px 18px;margin:20px 0;color:var(--muted)}
+  .tip b{color:var(--ink)}
+  .note{font-family:var(--sans);background:#15110f;border:1px solid var(--line);border-radius:6px;padding:2px 8px;font-weight:700;font-size:.92em;color:var(--accent)}
+  .bass{color:var(--violet)}
+  a{color:var(--accent2);text-decoration:none;border-bottom:1px solid rgba(95,176,168,.4)}
+  a:hover{border-bottom-color:var(--accent2)}
+  ul{padding-left:22px}li{margin:7px 0}
+  .chordname{font-family:var(--serif);color:var(--accent);font-weight:700}
+  details.aside{margin:18px 0;border:1px solid var(--line);border-radius:10px;background:#1d1916;padding:0 18px}
+  details.aside summary{cursor:pointer;color:var(--muted);font-weight:600;padding:14px 0;list-style:none}
+  details.aside summary::-webkit-details-marker{display:none}
+  details.aside summary::before{content:"▸ ";color:var(--accent)}
+  details.aside[open] summary::before{content:"▾ "}
+  details.aside p{font-size:15px;color:var(--muted)}
+
+  .stage{background:var(--panel);border:1px solid var(--line);border-left:none;border-right:none;
+    border-radius:0;padding:24px clamp(16px,4vw,56px);margin:28px 0;width:100vw;margin-left:calc(50% - 50vw)}
+  .stage>.controls,.stage>.kbdhint,.stage>.metro{max-width:820px;margin-left:auto;margin-right:auto}
+  .controls{display:flex;flex-wrap:wrap;gap:10px;margin:14px auto;align-items:center}
+  button{font-family:var(--sans);font-weight:600;font-size:14px;cursor:pointer;border:1px solid var(--line);
+    background:#15110f;color:var(--ink);padding:9px 16px;border-radius:9px;transition:.15s}
+  button:hover{border-color:var(--accent);color:var(--accent)}
+  button.on{background:var(--accent);color:#1a1614;border-color:var(--accent)}
+  button.primary{background:var(--accent2);color:#10201e;border-color:var(--accent2)}
+  button.primary:hover{filter:brightness(1.1);color:#10201e}
+  .kbdhint{color:var(--muted);font-size:14px;text-align:center;margin:0 auto 14px}
+  .kbdhint b{color:var(--ink)} .kbdhint .bk{color:var(--violet)}
+
+  .metro{background:#1d1916;border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:18px}
+  .metro-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  .tempo{display:flex;align-items:center;gap:8px;font-weight:700}
+  .tempo button{padding:6px 14px;font-size:18px;line-height:1}
+  .tempo #bpm{font-family:var(--serif);font-size:24px;color:var(--accent);min-width:46px;text-align:center;display:inline-block}
+  .bpmlab{color:var(--muted);font-size:13px}
+  .beatdots{display:flex;gap:9px;margin-top:18px;align-items:center}
+  .beatdot{width:40px;height:40px;border-radius:50%;border:2px solid var(--line);display:flex;align-items:center;
+    justify-content:center;font-weight:700;color:var(--muted);background:#15110f;transition:transform .04s, background .04s}
+  .beatdot.amp{width:28px;height:28px;font-size:12px;opacity:.8}
+  .beatdot.on{background:var(--accent2);color:#10201e;border-color:var(--accent2);transform:scale(1.12)}
+  .beatdot.on.accent{background:var(--accent);border-color:var(--accent);color:#1a1614}
+  .metro-chord{font-family:var(--serif);font-size:20px;color:var(--accent);margin-top:16px;min-height:30px}
+  .metro-chord .bass{color:var(--violet)}
+  .metro-chord small{color:var(--muted);font-family:var(--sans);font-size:14px}
+  .frise{margin-top:16px;width:100%;height:96px;display:block;background:#15110f;border:1px solid var(--line);border-radius:10px}
+  .friselegend{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin-top:8px;align-items:center}
+  .friselegend b{color:var(--ink)}
+  .swatch{display:inline-block;width:11px;height:11px;border-radius:50%;vertical-align:-1px;margin-right:5px}
+  .pk-wkey.basst{box-shadow:inset 0 0 0 3px var(--violet)!important;background:linear-gradient(#efe7f6,#ddd0ec)!important}
+  .pk-bkey.basst{box-shadow:inset 0 0 0 3px var(--violet)!important}
+
+  footer{margin-top:56px;border-top:1px solid var(--line);padding-top:24px;color:var(--muted);font-size:15px}
+  .src{font-size:14px}
+  .ask{background:linear-gradient(135deg,#2a211a,#241f1c);border:1px solid var(--accent);border-radius:14px;padding:20px 24px;margin:32px 0}
+  .ask b{color:var(--accent)}
+  .win{background:linear-gradient(135deg,#23301f,#1d2a1b);border:1px solid var(--good);border-radius:14px;padding:20px 24px;margin:24px 0}
+  .win b{color:var(--good)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <p class="kicker">Leçon 07 · Assemblage</p>
+    <h1>The Scientist : tout assembler (mains ensemble)</h1>
+    <p class="mission">Le grand moment. On réunit tout : la <b>basse</b> (main gauche, L5), le
+    <b>balancier en croches</b> (main droite, L6), le <b>tempo</b> (L4) et la <b>pédale</b>. À la fin de
+    cette leçon, tu joueras <i>The Scientist</i> <b>en entier</b> — le premier des trois morceaux de ta
+    mission. 🎯</p>
+  </header>
+
+  <p class="lead">Rien de neuf à apprendre : juste à <b>empiler</b> ce que tu sais déjà, lentement.</p>
+
+  <h2>1. Le plan : qui fait quoi</h2>
+  <div class="card">
+    <ul style="margin:0">
+      <li><b>Main gauche</b> : la <span class="bass">basse</span> (la fondamentale), une note sur le
+      <b>temps 1</b> de chaque mesure, tenue.</li>
+      <li><b>Main droite</b> : l'<span class="chordname">accord</span> en <b>croches</b> (le balancier,
+      8 par mesure).</li>
+      <li><b>Pédale</b> : appuie sur le <b>temps 1</b> (bouton 🎶 Pédale ou barre <b>Espace</b>), relâche
+      et ré-appuie au changement d'accord → ça lie le son sans tout mélanger.</li>
+    </ul>
+    <p style="margin:12px 0 0;text-align:center;font-size:16px">
+      <span class="bass">Ré</span>+<span class="chordname">Ré m</span> →
+      <span class="bass">Si♭</span>+<span class="chordname">Si♭</span> →
+      <span class="bass">Fa</span>+<span class="chordname">Fa</span> →
+      <span class="bass">Do</span>+<span class="chordname">Do</span> …
+    </p>
+  </div>
+
+  <h2>2. La méthode par couches (ne saute pas d'étape)</h2>
+  <p>La coordination se construit en empilant, très lentement. Utilise le bouton <b>« Tu joues »</b> pour
+  faire jouer une main par l'appli pendant que tu travailles l'autre :</p>
+  <div class="card">
+    <ol style="margin:0;padding-left:20px">
+      <li><b>Main gauche (accords auto)</b> : tu fais juste la basse sur le temps 1, l'appli joue le balancier.</li>
+      <li><b>Main droite (basse auto)</b> : tu fais le balancier en croches, l'appli pose la basse.</li>
+      <li><b>Mains ensemble</b>, à tempo <b>très lent</b> (45–55 BPM) : basse sur le 1, croches par-dessus.</li>
+    </ol>
+  </div>
+  <div class="tip"><b>Le secret :</b> la basse main gauche tombe <b>pile en même temps</b> que la
+  <b>première croche</b> de la main droite (sur le temps 1). Cale ces deux-là, le reste suit. Ralentis
+  jusqu'à ce que ce soit fluide — la frise t'aide à viser le temps 1.</div>
+
+  <h2>3. À toi de jouer 🎹🙌</h2>
+  <p>Choisis ton mode avec <b>« Tu joues »</b>, active <b>« Guide »</b>, et avance couche par couche.
+  N'oublie pas la <b>pédale</b> (Espace). <b>« Écouter »</b> te joue la chanson complète.</p>
+
+  <div class="stage">
+    <div class="metro">
+      <div class="metro-row">
+        <button id="btnMetro" class="primary">▶ Démarrer le métronome</button>
+        <div class="tempo">
+          <button id="tDown" aria-label="moins vite">−</button>
+          <span id="bpm">55</span><span class="bpmlab">BPM</span>
+          <button id="tUp" aria-label="plus vite">+</button>
+        </div>
+        <button id="btnMode">Tu joues : Mains ensemble</button>
+        <button id="btnGuide">🎹 Guide : OFF</button>
+        <button id="btnDemo">🔊 Écouter</button>
+      </div>
+      <div class="beatdots" id="beatdots"></div>
+      <div class="metro-chord" id="metroChord"><small>Active « Guide » pour jouer la chanson.</small></div>
+      <canvas class="frise" id="frise"></canvas>
+      <div class="friselegend">
+        <span><span class="swatch" style="background:#5cba6b"></span>pile</span>
+        <span><span class="swatch" style="background:#e8a04e"></span>un peu décalé</span>
+        <span><span class="swatch" style="background:#e0625a"></span>décalé</span>
+        <span>┃ orange = temps · ┊ fin = « et »</span>
+      </div>
+    </div>
+
+    <p class="kbdhint">⌨ <b>Main droite</b> : <b>A Z E R T Y U</b> + chiffres (noires) ·
+    <b class="bk">main gauche</b> : rangée du bas + <b class="bk">S D G H J</b> (noires, Si♭=J) ·
+    <b>pédale = barre Espace</b>.</p>
+
+    <div class="controls" id="pk-controls"></div>
+
+    <div id="piano-mount"></div>
+  </div>
+
+  <div class="win">
+    <p style="margin:0"><b>🏆 Objectif mission :</b> jouer la progression de <i>The Scientist</i>
+    <b>mains ensemble</b>, lentement et sans t'arrêter, avec la pédale. Le jour où tu y arrives :
+    <b>ton premier morceau est dans les doigts.</b> Tu peux aussi le faire en « deux surfaces »
+    (📱 <a href="bass-pad.html" target="_blank">Pad de basse</a> sur le téléphone = main gauche).</p>
+  </div>
+
+  <details class="aside">
+    <summary>Et pour que ça sonne encore plus comme le disque ?</summary>
+    <p>Deux finitions, plus tard : « casser » l'accord de la main droite (note grave sur le temps, aigus
+    sur le « et »), et ajouter la petite mélodie chantée par-dessus. Mais joué comme ici — basse + croches
+    + pédale — on reconnaît déjà <i>The Scientist</i> sans hésiter.</p>
+  </details>
+
+  <div class="ask">
+    <p style="margin:0"><b>Je suis ton prof — pose-moi des questions !</b> Une main décroche ? La pédale
+    embrouille le son ? Dis-moi à quel tempo et quelle couche ça coince. <b>Quand tu tiens la chanson
+    mains ensemble</b>, dis-le-moi : on pourra fignoler <i>The Scientist</i>, ou attaquer le morceau
+    suivant — <b>Interstellar</b> et ses arpèges. 🎶</p>
+  </div>
+
+  <h2>Comment t'entraîner</h2>
+  <ul>
+    <li>Toujours dans l'ordre : <b>1)</b> accords-auto (tu fais la basse) → <b>2)</b> basse-auto (tu fais les croches) → <b>3)</b> mains ensemble.</li>
+    <li>Tempo très lent d'abord (45–55 BPM). Vise la basse <b>pile</b> sur le temps 1 (frise).</li>
+    <li>Ajoute la <b>pédale</b> (Espace) une fois les notes en place, pas avant.</li>
+    <li>2 tours sans erreur = tu montes le tempo de 5 BPM.</li>
+  </ul>
+
+  <footer>
+    <p class="src"><b>Sources &amp; pour aller plus loin :</b></p>
+    <ul class="src">
+      <li><a href="https://www.pianote.com/blog/coldplay-the-scientist/" target="_blank">Pianote — Coldplay « The Scientist »</a></li>
+      <li><a href="https://www.skoove.com/blog/piano-tutorial-the-scientist/" target="_blank">Skoove — How to play The Scientist</a></li>
+    </ul>
+    <p class="src" style="color:var(--muted)">Leçon 07 · Mission : jouer The Scientist (✓ en cours), Happy Ending &amp; Interstellar.</p>
+  </footer>
+</div>
+
+<script src="../lib/piano.js"></script>
+<script src="../lib/nav.js"></script>
+<script>
+(function(){
+  var CHORDS={
+    Rem:{name:'Ré mineur', notes:[62,65,69], bass:50, root:'Ré'},
+    Sib:{name:'Si♭ majeur',notes:[65,70,74], bass:58, root:'Si♭'},
+    Fa: {name:'Fa majeur', notes:[65,69,72], bass:53, root:'Fa'},
+    DoM:{name:'Do majeur', notes:[60,64,67], bass:48, root:'Do'}
+  };
+  var PROG=['Rem','Sib','Fa','DoM'];
+
+  var piano=PianoKeyboard.create({ mount:'#piano-mount', octaves:3, startOctave:3, keyboard:'2oct', onNote:onNote });
+  piano.mountControls('#pk-controls');
+
+  /* 8 pastilles : 1 & 2 & 3 & 4 & */
+  var beatdots=document.getElementById('beatdots'); var LBL=['1','&','2','&','3','&','4','&'];
+  for(var i=0;i<8;i++){ var d=document.createElement('div'); d.className='beatdot'+(i%2?' amp':''); d.textContent=LBL[i]; beatdots.appendChild(d); }
+  var dots=beatdots.querySelectorAll('.beatdot');
+  function lightEighth(e){ dots.forEach(function(d){ d.classList.remove('on','accent'); }); dots[e].classList.add('on'); if(e===0) dots[e].classList.add('accent'); }
+  function clearBeats(){ dots.forEach(function(d){ d.classList.remove('on','accent'); }); }
+
+  /* ----- métronome en croches ----- */
+  var mctx=null, tempo=55, running=false;
+  var schedEighth=0, schedBar=0, nextTime=0, schedTimer=null, rafId=null, queue=[];
+  var bpmEl=document.getElementById('bpm');
+  function spe(){ return (60/tempo)/2; }
+  function clickAt(time, level){
+    var o=mctx.createOscillator(), g=mctx.createGain();
+    o.frequency.value = level==='accent'?1500 : level==='quarter'?1100 : 760;
+    var vol = level==='accent'?0.5 : level==='quarter'?0.3 : 0.16;
+    g.gain.setValueAtTime(vol, time); g.gain.exponentialRampToValueAtTime(0.0001, time+0.05);
+    o.connect(g).connect(mctx.destination); o.start(time); o.stop(time+0.06);
+  }
+  function scheduler(){
+    while(nextTime < mctx.currentTime + 0.1){
+      var quarter=(schedEighth%2===0), down=(schedEighth===0);
+      clickAt(nextTime, down?'accent':(quarter?'quarter':'off'));
+      queue.push({eighth:schedEighth, bar:schedBar, time:nextTime});
+      schedEighth=(schedEighth+1)%8; if(schedEighth===0) schedBar++;
+      nextTime += spe();
+    }
+    schedTimer=setTimeout(scheduler, 25);
+  }
+  function draw(){
+    if(!running) return;
+    var now=mctx.currentTime;
+    while(queue.length && queue[0].time<=now){
+      var ev=queue.shift(); lightEighth(ev.eighth);
+      if(guide){
+        if(ev.eighth===0) setBar(ev.bar, true);                       // temps 1 : maj accord + basse auto
+        if(play==='left' && current) piano.playChord(current.notes);  // accords auto : balancier chaque croche
+      }
+    }
+    drawFrise(now);
+    rafId=requestAnimationFrame(draw);
+  }
+  function startMetro(){
+    mctx=piano.context();
+    running=true; schedEighth=0; schedBar=0; queue=[]; nextTime=mctx.currentTime+0.12;
+    btnMetro.textContent='■ Arrêter'; btnMetro.classList.remove('primary');
+    scheduler(); rafId=requestAnimationFrame(draw);
+    if(guide) setBar(0,false);
+  }
+  function stopMetro(){
+    running=false; clearTimeout(schedTimer); cancelAnimationFrame(rafId);
+    btnMetro.textContent='▶ Démarrer le métronome'; btnMetro.classList.add('primary');
+    clearBeats(); piano.clearClass('pk-target','basst'); clearFrise();
+  }
+  var btnMetro=document.getElementById('btnMetro');
+  btnMetro.onclick=function(){ running?stopMetro():startMetro(); };
+  document.getElementById('tUp').onclick=function(){ tempo=Math.min(120,tempo+5); bpmEl.textContent=tempo; };
+  document.getElementById('tDown').onclick=function(){ tempo=Math.max(40,tempo-5); bpmEl.textContent=tempo; };
+
+  /* ----- play-along : basse + balancier, avec accompagnement ----- */
+  var guide=false, play='both', current=null;
+  var metroChord=document.getElementById('metroChord');
+  var btnGuide=document.getElementById('btnGuide');
+  var btnMode=document.getElementById('btnMode');
+  var PLAYS=['both','right','left'];
+  var PLAYLBL={both:'Mains ensemble', right:'Main droite (basse auto)', left:'Main gauche (accords auto)'};
+
+  function setBar(bar, doAuto){
+    current=CHORDS[PROG[bar % PROG.length]];
+    piano.clearClass('pk-target','basst');
+    if(play!=='left')  piano.highlight(current.notes,'pk-target');  // accord = à toi (sauf accords-auto)
+    if(play!=='right') piano.addClass(current.bass,'basst');        // basse = à toi (sauf basse-auto)
+    if(doAuto && play==='right') piano.playChord([current.bass]);   // basse jouée par l'appli, sur le temps 1
+    metroChord.innerHTML = play==='right'
+        ? 'Croches : <span class="chordname">'+current.name+'</span> ×8 <small>(basse '+current.root+' auto)</small>'
+      : play==='left'
+        ? 'Basse : <span class="bass">'+current.root+'</span> <small>(accord '+current.name+' auto)</small>'
+        : '<span class="bass">'+current.root+'</span> + <span class="chordname">'+current.name+'</span> ×8';
+  }
+  function onNote(midi,el){ if(running) recordHit(); }
+  btnGuide.onclick=function(){
+    guide=!guide; btnGuide.classList.toggle('on',guide);
+    btnGuide.textContent='🎹 Guide : '+(guide?'ON':'OFF');
+    if(guide){ if(!running) startMetro(); else setBar(schedBar,false); }
+    else { current=null; piano.clearClass('pk-target','basst'); metroChord.innerHTML='<small>Active « Guide » pour jouer la chanson.</small>'; }
+  };
+  btnMode.onclick=function(){
+    play=PLAYS[(PLAYS.indexOf(play)+1)%PLAYS.length];
+    btnMode.textContent='Tu joues : '+PLAYLBL[play];
+    if(guide && current) setBar(schedBar,false);
+  };
+
+  /* ----- démo : la chanson complète (basse + balancier) ----- */
+  document.getElementById('btnDemo').onclick=function(){
+    var ctx=piano.context(), s=spe();
+    // si le métronome tourne, on démarre PILE sur son prochain temps 1 (sinon, maintenant)
+    var t0 = running ? (nextTime + ((8-schedEighth)%8)*s) : (ctx.currentTime+0.1);
+    for(var e=0;e<PROG.length*8;e++){
+      var when=t0+e*s, c=CHORDS[PROG[Math.floor(e/8)%PROG.length]];
+      piano.playChord(c.notes, when);
+      if(e%8===0) piano.playNote(c.bass, when);
+    }
+  };
+
+  /* ----- frise (grille en croches) ----- */
+  var fcanvas=document.getElementById('frise'), fctx=fcanvas.getContext('2d');
+  var hits=[];
+  function setupCanvas(){ var dpr=window.devicePixelRatio||1; fcanvas.width=fcanvas.clientWidth*dpr; fcanvas.height=fcanvas.clientHeight*dpr; fctx.setTransform(dpr,0,0,dpr,0,0); }
+  window.addEventListener('resize',setupCanvas); setupCanvas();
+  function clearFrise(){ hits=[]; fctx.clearRect(0,0,fcanvas.clientWidth,fcanvas.clientHeight); }
+  function recordHit(){
+    var t=mctx.currentTime;
+    if(hits.length && t-hits[hits.length-1].time<0.05) return;
+    var s=spe(), err=t-(Math.round((t-nextTime)/s)*s + nextTime), a=Math.abs(err);
+    hits.push({ time:t, color:(a<0.05?'#5cba6b':(a<0.10?'#e8a04e':'#e0625a')) });
+  }
+  function drawFrise(now){
+    var W=fcanvas.clientWidth, H=fcanvas.clientHeight; fctx.clearRect(0,0,W,H);
+    var s=spe(), windowSec=12*s, pxPerSec=W/windowSec, nowX=W*0.72;
+    function X(t){ return nowX + (t-now)*pxPerSec; }
+    var kStart=Math.floor((now-windowSec-nextTime)/s)-1, kEnd=Math.ceil((now+windowSec-nextTime)/s)+1;
+    for(var k=kStart;k<=kEnd;k++){
+      var x=X(nextTime+k*s); if(x<-5||x>W+5) continue;
+      var idx=((((schedEighth+k)%8)+8)%8); var down=(idx===0), quarter=(idx%2===0);
+      fctx.strokeStyle=down?'#e8a04e':(quarter?'#6b5d4e':'#3a322d'); fctx.lineWidth=down?2:1;
+      fctx.beginPath(); fctx.moveTo(x, down?4:(quarter?H*0.28:H*0.42)); fctx.lineTo(x,H-4); fctx.stroke();
+    }
+    fctx.strokeStyle='#5fb0a8'; fctx.lineWidth=2; fctx.beginPath(); fctx.moveTo(nowX,0); fctx.lineTo(nowX,H); fctx.stroke();
+    hits=hits.filter(function(h){ return X(h.time)>-20; });
+    hits.forEach(function(h){ var x=X(h.time); if(x<-10||x>W+10) return; fctx.fillStyle=h.color; fctx.beginPath(); fctx.arc(x,H*0.5,6,0,Math.PI*2); fctx.fill(); });
+  }
+})();
+</script>
+</body>
+</html>

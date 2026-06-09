@@ -261,8 +261,7 @@
     rafId=requestAnimationFrame(draw);
   }
   function startMetro(){
-    mctx=mctx||new (window.AudioContext||window.webkitAudioContext)();
-    if(mctx.state==='suspended') mctx.resume();
+    mctx=piano.context();
     running=true; schedBeat=0; schedBar=0; queue=[];
     nextNoteTime=mctx.currentTime+0.12;
     btnMetro.textContent='■ Arrêter'; btnMetro.classList.remove('primary');

@@ -289,8 +289,7 @@
     rafId=requestAnimationFrame(draw);
   }
   function startMetro(){
-    mctx=mctx||new (window.AudioContext||window.webkitAudioContext)();
-    if(mctx.state==='suspended') mctx.resume();
+    mctx=piano.context();
     running=true; schedBeat=0; schedBar=0; queue=[]; nextNoteTime=mctx.currentTime+0.12;
     btnMetro.textContent='■ Arrêter'; btnMetro.classList.remove('primary');
     scheduler(); rafId=requestAnimationFrame(draw);
@@ -356,14 +355,9 @@
 
   /* ----- démo : joue la chanson (basse + accords) en rythme ----- */
   document.getElementById('btnDemo').onclick=function(){
-    mctx=mctx||new (window.AudioContext||window.webkitAudioContext)();
-    if(mctx.state==='suspended') mctx.resume();
-    var barMs=(60/tempo)*4*1000, i=0;
-    (function step(){
-      if(i>=PROG.length) return;
-      var c=CHORDS[PROG[i]]; piano.playChord(c.notes.concat([c.bass])); i++;
-      setTimeout(step, barMs);
-    })();
+    var ctx=piano.context(), spb=60/tempo, bar=spb*4;
+    var t0 = running ? (nextNoteTime + ((4-schedBeat)%4)*spb) : (ctx.currentTime+0.1);   // pile sur le prochain temps 1
+    for(var i=0;i<PROG.length;i++){ var c=CHORDS[PROG[i]]; piano.playChord(c.notes.concat([c.bass]), t0+i*bar); }
   };
 
   /* ----- frise rythmique ----- */

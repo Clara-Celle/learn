@@ -84,18 +84,30 @@
         o.start(t); o2.start(t); o.stop(t+1.35); o2.stop(t+1.35);
       }catch(e){}
     }
-    // Toutes les notes partent EXACTEMENT au même instant (pas de setTimeout → pas d'arpège).
-    function playChord(notes){
+    // Toutes les notes partent au MÊME instant. `when` (optionnel) = planif. sur l'horloge audio.
+    function playChord(notes, when){
       if(!soundOn) return;
-      try{ ensureCtx(); var t0=actx.currentTime+0.02; notes.forEach(function(m){ playNote(m,t0); }); }catch(e){}
+      try{ ensureCtx(); var t0=(when!=null?when:actx.currentTime+0.02); notes.forEach(function(m){ playNote(m,t0); }); }catch(e){}
     }
 
-    /* ----- notes TENUES (sustain) : noteOn quand on presse, noteOff quand on relâche ----- */
-    var voices={};
+    /* ----- notes tenues + PÉDALE de sustain ----- */
+    var voices={}, pedaled={}, pedalLocked=false, pedalSpace=false, pedalOn=false;
+    function stopVoice(midi){                                 // éteint réellement une note
+      var v=voices[midi]; if(!v) return;
+      delete voices[midi]; delete pedaled[midi];
+      try{
+        clearTimeout(v.off);
+        var t=actx.currentTime, g=v.g.gain;
+        if(g.cancelAndHoldAtTime) g.cancelAndHoldAtTime(t);  // fige la valeur sans saut de volume
+        else { var cur=g.value; g.cancelScheduledValues(t); g.setValueAtTime(cur,t); }
+        g.setTargetAtTime(0.0001, t, 0.16);                  // extinction ~0,6-0,8 s
+        v.o.stop(t+1.4); v.o2.stop(t+1.4);
+      }catch(e){}
+    }
     function noteOn(midi){
       if(!soundOn) return;
       try{
-        ensureCtx(); noteOff(midi);                          // retrigger propre
+        ensureCtx(); delete pedaled[midi]; stopVoice(midi);  // retrigger propre
         var t=actx.currentTime, f=midiToFreq(midi);
         var o=actx.createOscillator(), o2=actx.createOscillator(), g=actx.createGain(), og2=actx.createGain();
         o.type='triangle'; o.frequency.value=f; o2.type='sine'; o2.frequency.value=f*2; og2.gain.value=0.18;
@@ -105,23 +117,24 @@
         g.gain.exponentialRampToValueAtTime(0.12,t+0.18);    // petite chute
         g.gain.exponentialRampToValueAtTime(0.0008,t+8);     // long déclin TANT QUE tenu
         o.start(t); o2.start(t);
-        voices[midi]={o:o,o2:o2,g:g, off:setTimeout(function(){ noteOff(midi); },8500)}; // sécurité anti-fuite
+        voices[midi]={o:o,o2:o2,g:g, off:setTimeout(function(){ stopVoice(midi); },9000)};
       }catch(e){}
     }
-    function noteOff(midi){
-      var v=voices[midi]; if(!v) return; delete voices[midi];
-      try{
-        clearTimeout(v.off);
-        var t=actx.currentTime, g=v.g.gain;
-        // Fige la valeur ACTUELLE sans saut (cancelScheduledValues ferait remonter le volume),
-        // puis éteint nettement plus vite que la tenue.
-        if(g.cancelAndHoldAtTime) g.cancelAndHoldAtTime(t);
-        else { var cur=g.value; g.cancelScheduledValues(t); g.setValueAtTime(cur,t); }
-        g.setTargetAtTime(0.0001, t, 0.16);                  // release ~0,6-0,8 s, décroissant
-        v.o.stop(t+1.4); v.o2.stop(t+1.4);
-      }catch(e){}
+    function noteOff(midi){                                   // touche relâchée
+      if(pedalOn){ pedaled[midi]=true; return; }             // la pédale garde la note qui sonne
+      stopVoice(midi);
     }
-    function releaseAll(){ Object.keys(voices).forEach(function(m){ noteOff(Number(m)); }); }
+    function refreshPedal(){
+      var on=pedalLocked||pedalSpace;
+      if(on===pedalOn) return;
+      pedalOn=on;
+      if(!on){ Object.keys(pedaled).forEach(function(m){ stopVoice(Number(m)); }); pedaled={}; } // pédale levée → on coupe
+    }
+    function setPedal(v){ pedalLocked=!!v; refreshPedal(); }
+    function releaseAll(){ Object.keys(voices).forEach(function(m){ stopVoice(Number(m)); }); pedaled={}; }
+    // Barre Espace = pédale momentanée (maintenue), comme une vraie pédale de piano.
+    window.addEventListener('keydown',function(e){ if(e.code==='Space'){ e.preventDefault(); if(!e.repeat){ pedalSpace=true; refreshPedal(); } } });
+    window.addEventListener('keyup',function(e){ if(e.code==='Space'){ e.preventDefault(); pedalSpace=false; refreshPedal(); } });
 
     /* ----- construction des touches ----- */
     var whites=[], blacks=[], midiToEl={};
@@ -196,7 +209,10 @@
       whites:whites, blacks:blacks,
       midiToEl:function(m){ return midiToEl[m]; },
       playNote:playNote, playChord:playChord,
+      context:function(){ return ensureCtx(); },             // AudioContext partagé (clics + notes = 1 horloge)
+      now:function(){ return ensureCtx().currentTime; },
       noteOn:noteOn, noteOff:noteOff,
+      setPedal:setPedal, togglePedal:function(){ setPedal(!pedalLocked); return pedalLocked; }, isPedal:function(){ return pedalLocked; },
       setLabels:setLabels, toggleLabels:function(){ setLabels(!labelsOn); return labelsOn; },
       setSound:setSound, toggleSound:function(){ soundOn=!soundOn; return soundOn; }, isSound:function(){ return soundOn; },
       setKeysVisible:setKeysVisible, toggleKeys:function(){ var hidden=piano.classList.toggle('pk-hidekeys'); return !hidden; },
@@ -208,11 +224,13 @@
       mountControls:function(target,o){
         o=o||{};
         target=(typeof target==='string')?document.querySelector(target):target;
-        function mk(label,onClick){ var b=document.createElement('button'); b.className='pk-btn pk-on'; b.textContent=label;
+        function mk(label,onClick,on){ var b=document.createElement('button'); b.className='pk-btn'+(on===false?'':' pk-on'); b.textContent=label;
           b.onclick=function(){ onClick(b); }; target.appendChild(b); return b; }
         if(o.sound!==false) mk('🔊 Son', function(b){ var on=api.toggleSound(); b.classList.toggle('pk-on',on); b.textContent=on?'🔊 Son':'🔇 Son coupé'; if(on) api.playNote(60); });
         if(o.labels!==false) mk('Afficher les noms', function(b){ var on=api.toggleLabels(); b.classList.toggle('pk-on',on); b.textContent=on?'Afficher les noms':'Noms masqués'; });
         if(o.keys!==false) mk('⌨ Touches PC', function(b){ var on=api.toggleKeys(); b.classList.toggle('pk-on',on); });
+        if(o.pedal!==false){ var pb=mk('🎶 Pédale', function(b){ var on=api.togglePedal(); b.classList.toggle('pk-on',on); b.textContent=on?'🎶 Pédale ON':'🎶 Pédale'; }, false);
+          pb.title='Pédale de sustain — clique pour bloquer, ou maintiens la barre Espace'; }
       }
     };
     return api;

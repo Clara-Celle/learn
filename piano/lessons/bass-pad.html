@@ -40,7 +40,7 @@
 <div class="wrap">
   <header>
     <h1>🎚️ Pad de basse — main gauche</h1>
-    <a class="back" href="0005-la-main-gauche-la-basse.html">← Leçon 05</a>
+    <a class="back" href="main-gauche-la-basse.html">← Retour à la leçon</a>
   </header>
   <p class="sub">Tiens ton téléphone en <b>paysage</b> dans la main gauche (ou pose-le) et joue la
   <b>basse</b> ici, pendant que ta main droite joue les <b>accords</b> sur l'ordinateur. Les deux sons se
@@ -61,8 +61,8 @@
 <script src="../lib/piano.js"></script>
 <script>
 (function(){
-  // 1 octave grave (Do3..Si3), tactile, grosses touches, sans clavier d'ordinateur.
-  var piano=PianoKeyboard.create({ mount:'#mount', octaves:1, startOctave:3, extraC:false, computerKeys:false });
+  // 1 octave grave (Do3..Si3), tactile, grosses touches.
+  var piano=PianoKeyboard.create({ mount:'#mount', octaves:1, startOctave:3, extraC:false });
 
   // marque les 4 basses de The Scientist : Do3(48) Ré3(50) Fa3(53) Si♭3(58)
   [48,50,53,58].forEach(function(m){ var el=piano.midiToEl(m); if(el) el.classList.add('songbass'); });

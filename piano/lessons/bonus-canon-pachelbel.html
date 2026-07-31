@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bonus — Le Canon de Pachelbel</title>
+<link rel="stylesheet" href="../lib/lesson.css">
 <link rel="stylesheet" href="../lib/piano.css">
 <style>
   :root{
@@ -61,10 +62,6 @@
   .trainer{margin-top:18px}
   .chordbtns{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
   .chordbtns .lab{color:var(--muted);font-weight:600;margin-right:4px}
-  .tfeedback{margin-top:14px;min-height:28px;font-weight:700;font-size:18px}
-  .tfeedback.ok{color:var(--good)}
-  .tprompt{font-family:var(--serif);font-size:20px;margin-top:6px}
-  .tprompt b{color:var(--accent)}
   .exhead{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:20px;border-top:1px solid var(--line);padding-top:18px}
   .seq{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:14px 0}
   .seq .arrow{color:var(--muted)}
@@ -72,11 +69,6 @@
   .chip.current{border-color:var(--accent);color:var(--accent);box-shadow:0 0 0 3px rgba(232,160,78,.22)}
   .chip.done{border-color:var(--good);color:var(--good)}
   .chip.done::before{content:"✓ "}
-  .exfeedback{min-height:26px;font-weight:700;font-size:17px;margin-top:6px}
-  .exfeedback.ok{color:var(--good)}
-  .extimer{font-family:var(--serif);font-size:26px;color:var(--accent);font-weight:700;margin-top:10px;min-height:32px}
-  .exhistory{font-size:13px;color:var(--muted);margin-top:4px}
-  .exhistory .att.best{color:var(--good);font-weight:700}
   .legend{display:flex;gap:20px;flex-wrap:wrap;font-size:14px;color:var(--muted);margin-top:14px}
   .legend span{display:inline-flex;align-items:center;gap:7px}
   .dot{width:14px;height:14px;border-radius:4px;display:inline-block}
@@ -91,7 +83,7 @@
 <div class="wrap">
 
   <header class="hero">
-    <p class="kicker">Bonus · Pachelbel</p>
+    <p class="kicker" data-lnum></p>
     <h1>Le Canon de Pachelbel</h1>
     <p class="mission">Une récompense : avec tout ce que tu sais déjà (accords majeurs, mineurs, basse,
     enchaînement), tu peux jouer l'une des progressions les plus célèbres de la musique — le
@@ -102,7 +94,7 @@
   <p class="lead">8 accords, en boucle. Tu en connais déjà toute la mécanique.</p>
 
   <h2>1. La progression</h2>
-  <p>Le Canon est en <b>Ré majeur</b> et tourne sur ces 8 accords (avec leur basse, comme à la Leçon 05) :</p>
+  <p>Le Canon est en <b>Ré majeur</b> et tourne sur ces 8 accords (avec leur basse, comme dans la leçon sur la main gauche) :</p>
   <div class="card" style="padding:0;overflow:hidden">
     <table>
       <tr><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr>
@@ -138,8 +130,7 @@
   <div class="stage">
     <div class="controls" id="pk-controls"></div>
 
-    <p class="kbdhint">⌨ Le raccourci clavier est écrit sur chaque touche. Blanches : <b>A Z E R T Y U</b>
-    (médium) · noires (les dièses !) : les <b>chiffres</b>.</p>
+    <p class="kbdhint">🎹 Joue sur ton clavier — ou clique les touches à l'écran. Les boutons <b>🎯 Guide</b> et <b>✋ Doigtés</b> affichent ou masquent les prochaines touches et le numéro du doigt.</p>
 
     <div id="piano-mount"></div>
 
@@ -183,18 +174,19 @@
 
   <div class="ask">
     <p style="margin:0"><b>Je suis ton prof — pose-moi des questions !</b> Les dièses (Fa♯, Do♯) te
-    bloquent ? Tu veux la version avec la <b>basse à la main gauche</b> (comme la L5), ou le célèbre
+    bloquent ? Tu veux la version avec la <b>basse à la main gauche</b> (comme la L8), ou le célèbre
     <b>thème mélodique</b> par-dessus ? Demande-moi et je te prépare l'étape suivante. 🎶</p>
   </div>
 
   <h2>Comment t'entraîner</h2>
   <ul>
     <li>Repère bien <span class="sharp">Fa♯</span> et <span class="sharp">Do♯</span> (les noires) avant de jouer.</li>
-    <li>Construis les 5 accords sans regarder les noms (bouton « Afficher les noms »).</li>
+    <li>Construis les 5 accords sans regarder les noms (bouton <b>🎵 Noms des notes</b>).</li>
     <li>Enchaîne le Canon lentement, puis baisse ton chrono petit à petit.</li>
   </ul>
 
   <footer>
+    <nav data-lprevnext></nav>
     <p class="src"><b>Sources &amp; pour aller plus loin :</b></p>
     <ul class="src">
       <li><a href="https://en.wikipedia.org/wiki/Pachelbel%27s_Canon" target="_blank">Pachelbel's Canon — Wikipedia</a> (la progression &amp; la basse obstinée)</li>
@@ -218,7 +210,7 @@
   };
   var PROG=['D','A','Bm','Fim','G','D','G','A'];
 
-  var piano=PianoKeyboard.create({ mount:'#piano-mount', octaves:3, startOctave:3, keyboard:'2oct', onNote:notePlayed });
+  var piano=PianoKeyboard.create({ mount:'#piano-mount', octaves:3, startOctave:3, onNote:notePlayed });
   piano.mountControls('#pk-controls');
 
   /* ----- entraîneur d'accords ----- */
@@ -231,7 +223,7 @@
     piano.clearClass('pk-target','pk-ok','pk-bad');
     tfeedback.textContent=''; tfeedback.className='tfeedback';
     var c=CHORDS[key];
-    piano.highlight(c.notes,'pk-target');
+    piano.guide(c.notes);
     tprompt.innerHTML='Joue <b>'+c.name+'</b>';
     document.querySelectorAll('.chordbtn').forEach(function(b){ b.classList.toggle('on',b.dataset.ch===key); });
   }

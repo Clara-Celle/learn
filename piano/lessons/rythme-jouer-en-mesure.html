@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Leçon 04 — Le rythme : jouer en mesure</title>
+<title>Le rythme : jouer en mesure</title>
+<link rel="stylesheet" href="../lib/lesson.css">
 <link rel="stylesheet" href="../lib/piano.css">
 <style>
   :root{
@@ -84,7 +85,7 @@
 <div class="wrap">
 
   <header class="hero">
-    <p class="kicker">Leçon 04 · Le rythme</p>
+    <p class="kicker" data-lnum></p>
     <h1>Le rythme : joue <i>The Scientist</i> en mesure</h1>
     <p class="mission">Tu connais les bons accords. Mais une chanson, ce n'est pas que des notes
     justes — c'est des notes justes <b>au bon moment</b>. Cette leçon ajoute la <b>pulsation</b> :
@@ -160,8 +161,7 @@
       </div>
     </div>
 
-    <p class="kbdhint">⌨ Le raccourci clavier est écrit sur chaque touche. Blanches : <b>A Z E R T Y U</b>
-    (médium) ou la rangée du bas (graves) · noires : les <b>chiffres</b> (médium) ou <b>S D G H J</b> (graves).</p>
+    <p class="kbdhint">🎹 Joue sur ton clavier — ou clique les touches à l'écran. Les boutons <b>🎯 Guide</b> et <b>✋ Doigtés</b> affichent ou masquent les prochaines touches et le numéro du doigt.</p>
 
     <div class="controls" id="pk-controls"></div>
 
@@ -191,12 +191,13 @@
   </ul>
 
   <footer>
+    <nav data-lprevnext></nav>
     <p class="src"><b>Sources &amp; pour aller plus loin :</b></p>
     <ul class="src">
       <li><a href="https://www.hoffmanacademy.com/blog/music-theory-for-beginners" target="_blank">Hoffman Academy — Music Theory for Beginners</a> (temps, mesure, rythme)</li>
       <li><a href="https://www.pianote.com/blog/coldplay-the-scientist/" target="_blank">Pianote — Coldplay « The Scientist »</a></li>
     </ul>
-    <p class="src" style="color:var(--muted)">Leçon 04 · Mission : jouer The Scientist, Happy Ending
+    <p class="src" style="color:var(--muted)"><span data-lnum="n"></span> · Mission : jouer The Scientist, Happy Ending
     &amp; Interstellar en comprenant ce qu'on joue.</p>
   </footer>
 </div>
@@ -213,7 +214,7 @@
   };
   var PROG=['Rem','Sib','Fa','DoM'];
 
-  var piano=PianoKeyboard.create({ mount:'#piano-mount', octaves:3, startOctave:3, keyboard:'2oct', onNote:onNote });
+  var piano=PianoKeyboard.create({ mount:'#piano-mount', octaves:3, startOctave:3, onNote:onNote });
   piano.mountControls('#pk-controls');
 
   /* ----- beat dots ----- */
@@ -286,7 +287,7 @@
   function setBarChord(bar){
     var key=PROG[bar % PROG.length];
     current=CHORDS[key]; barSet=new Set();
-    piano.clearClass('pk-target','pk-ok'); piano.highlight(current.notes,'pk-target');
+    piano.clearClass('pk-target','pk-ok'); piano.guide(current.notes);
     metroChord.innerHTML='Joue : <span class="chordname">'+current.name+'</span>';
   }
   function onNote(midi,el){

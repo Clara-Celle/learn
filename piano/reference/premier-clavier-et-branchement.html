@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Référence — Premier clavier : achat &amp; branchement</title>
+<link rel="stylesheet" href="../lib/sheet.css">
+<style>
+  /* comparatif : la colonne retenue est mise en avant */
+  .pick{background:#f4faf8}
+  .pick th{background:#dcece8}
+  .verdict{font-size:13px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;font-weight:700}
+  .steps{counter-reset:s;list-style:none;padding-left:0}
+  .steps li{counter-increment:s;position:relative;padding-left:38px;margin-bottom:14px}
+  .steps li::before{content:counter(s);position:absolute;left:0;top:-1px;width:26px;height:26px;
+    border-radius:50%;background:var(--accent);color:#fff;font-weight:700;
+    display:flex;align-items:center;justify-content:center;font-size:14px}
+</style>
+</head>
+<body>
+<div class="sheet">
+  <h1>🎹 Premier clavier : achat &amp; branchement</h1>
+  <p class="sub">Fiche de référence · décision de juillet 2026 · à garder pour la commande et le jour du déballage</p>
+
+  <h2>La décision</h2>
+  <div class="rule ok">
+    <b>Nektar Impact GXP61</b> — <span class="price">206 €</span> (B-stock dès 189 €).<br>
+    Contrainte qui tranche : <b>1 m de large maximum</b> → un 88 touches lesté (132 cm) ne rentre pas.
+    Dans cette largeur et à ce budget, c'est le meilleur <i>toucher</i> disponible.
+  </div>
+
+  <h2>Pourquoi lui et pas l'Arturia</h2>
+  <table>
+    <tr><th class="l">Critère</th><th class="pick">Nektar Impact GXP61</th><th>Arturia KeyLab Ess. 61 mk3</th></tr>
+    <tr><td class="l">Prix</td><td class="pick"><span class="price">206 €</span></td><td><span class="price">215 €</span></td></tr>
+    <tr><td class="l">Toucher</td><td class="pick"><b>Semi-lesté</b> + aftertouch</td><td>Synth-action (non lesté)</td></tr>
+    <tr><td class="l">Entrées pédale</td><td class="pick"><b>2 sustain + 1 expression</b></td><td>1 jack</td></tr>
+    <tr><td class="l">Largeur</td><td class="pick">96,5 cm</td><td>89 cm</td></tr>
+    <tr><td class="l">Son tout seul</td><td class="pick">Non</td><td>Non</td></tr>
+    <tr><td class="l">Logiciels</td><td class="pick">Cubase LE + Retrologue</td><td>Ableton Live Lite, Analog Lab, UVI Model D</td></tr>
+    <tr><td class="l verdict">Verdict</td><td class="pick verdict">Retenu</td><td class="verdict">Fait pour produire, pas pour apprendre</td></tr>
+  </table>
+  <p>Les 9 faders, 9 potards, 8 pads et l'arpégiateur de l'Arturia servent à composer de la musique
+  électronique dans un DAW. Rien de tout ça ne sert à apprendre le piano — alors que le toucher
+  semi-lesté et la deuxième entrée de pédale, si.</p>
+
+  <h2>Ce qu'il faut commander <i>en plus</i></h2>
+  <div class="rule warn"><b>La pédale de sustain n'est PAS dans la boîte.</b> Le carton contient
+  le clavier, un câble USB, Cubase LE et Retrologue — rien d'autre. Or tu utilises déjà la pédale
+  (la barre Espace la simule dans les leçons). Sans elle, <i>The Scientist</i> sonne sec.</div>
+  <ul class="check">
+    <li><b>Pédale de sustain</b> — Nektar NP-2, <span class="price">17,90 €</span>. Polarité
+      commutable : si la pédale agit à l'envers (son tenu au repos, coupé quand tu appuies),
+      c'est ce petit interrupteur qu'il faut basculer.</li>
+    <li><b>Un casque</b> (si tu en as déjà un, il fait l'affaire) — le son sort de l'ordi, pas du clavier.</li>
+    <li><b>Un support ou une table stable</b> à hauteur de coudes, avant-bras à l'horizontale.</li>
+  </ul>
+  <p><b>Total :</b> <span class="price">~224 €</span> (ou ~207 € en B-stock).</p>
+
+  <h2>Le clavier ne fait aucun son — comment en avoir</h2>
+  <p>Un contrôleur MIDI envoie « la touche Do4 a été enfoncée à telle force », pas du son.
+  C'est l'ordinateur qui fabrique le son. Trois routes, de la plus simple à la plus belle :</p>
+
+  <ol class="steps">
+    <li><b>Tes propres leçons (rien à installer).</b> Les leçons de ce cours jouent déjà le son
+      elles-mêmes (Web Audio). Une fois branché, on les connecte au vrai clavier via la
+      <b>Web MIDI API</b> → les leçons réagissent à tes vraies touches.
+      <i>Condition : les servir en <code>localhost</code></i> (le navigateur exige un contexte
+      sécurisé pour le MIDI) — je te monterai le petit serveur local ce jour-là.</li>
+    <li><b>Splice INSTRUMENT (ex-Spitfire LABS), gratuit.</b> Contient <b>Soft Piano</b>, un piano
+      feutré très proche du son de <i>The Scientist</i>. S'utilise <b>en autonome</b>, sans DAW —
+      c'est la route « je m'assois et je joue ».</li>
+    <li><b>Cubase LE</b>, fourni dans la boîte. Plus lourd à ouvrir, mais utile le jour où tu
+      voudras t'enregistrer.</li>
+  </ol>
+
+  <div class="rule"><b>La latence</b> = le retard entre l'appui et le son. Au-delà de ~20 ms,
+  c'est injouable. Si ça traîne sous Windows : installer <b>ASIO4ALL</b> (gratuit) et le
+  sélectionner comme pilote audio, ou utiliser le pilote ASIO de ta carte son.</div>
+
+  <h2>Jour du déballage — dans l'ordre</h2>
+  <ul class="check">
+    <li>Brancher le câble USB clavier → ordi. Il s'allume seul (alimenté par l'USB), pas d'adaptateur à acheter.</li>
+    <li>Brancher la pédale dans une des deux prises <b>sustain</b> (pas dans « expression »).</li>
+    <li>Ouvrir Splice INSTRUMENT, charger <b>Soft Piano</b>, jouer une note. Si rien : vérifier le
+      périphérique MIDI d'entrée dans les réglages du logiciel.</li>
+    <li>Tester la pédale : note tenue quand j'appuie ? Sinon → inverser la polarité sur la pédale.</li>
+    <li>Régler la hauteur du siège : <b>avant-bras horizontaux</b>, poignets ni cassés ni levés.</li>
+    <li>Trouver le <b>Do central</b> (Do4) et vérifier avec la <a href="keyboard-map.html">carte du clavier</a>.
+      Sur 61 touches, il est proche du milieu — le bouton <b>Octave</b> décale toute la plage si besoin.</li>
+  </ul>
+
+  <h2>Ce que ce clavier ne te donnera pas</h2>
+  <p>À savoir dès maintenant, pour ne pas croire plus tard que tu joues mal :</p>
+  <ul>
+    <li><b>Pas de mécanique à marteaux.</b> Semi-lesté = ressorts fermes, pas le poids réel d'un
+      marteau. Ta force de doigts et ton contrôle des nuances se travailleront <i>partiellement</i>.
+      Sur un vrai piano, tout te paraîtra plus lourd — c'est normal, pas un recul.</li>
+    <li><b>61 touches.</b> Suffisant pour <i>The Scientist</i> et <i>Happy Ending</i>. Pour
+      <i>Interstellar</i>, on utilisera le bouton Octave pour atteindre les graves.</li>
+  </ul>
+  <div class="rule"><b>Quand upgrader ?</b> Le jour où tu as la place pour 132 cm, ou quand tu
+  sens que le toucher te limite. Cible : <b>Casio CDP-S110</b> (299 €, 88 touches à marteaux,
+  haut-parleurs) ou <b>Roland FP-10</b> (398 €, meilleure mécanique). Le GXP61 restera utile
+  comme clavier maître.</div>
+
+  <h2>Sources</h2>
+  <p style="font-size:14px">
+    <a href="https://www.thomann.fr/nektar_impact_gxp61.htm">Thomann — Nektar Impact GXP61</a> ·
+    <a href="https://www.thomann.fr/arturia_keylab_essential_61_mk3_white.htm">Thomann — Arturia KeyLab Essential 61 mk3</a> ·
+    <a href="https://www.thomann.fr/nektar_np_2.htm">Thomann — Nektar NP-2</a> ·
+    <a href="https://nektartech.com/impact-gxp88-gxp61-gxp49-midi-controller-keyboard-2/">Nektar — page produit officielle</a> ·
+    <a href="https://splice.com/instrument">Splice INSTRUMENT (ex-Spitfire LABS)</a> ·
+    <a href="https://www.thomann.fr/casio_cdp_s110_bk.htm">Thomann — Casio CDP-S110</a> ·
+    <a href="https://www.thomann.fr/roland_fp_10.htm">Thomann — Roland FP-10</a>
+  </p>
+
+  <p class="noprint">Une question sur cette fiche ? Demande à ton prof (l'agent) — c'est fait pour ça.
+  Et pour un avis humain avant de payer : <a href="https://www.reddit.com/r/pianolearning/">r/pianolearning</a>.</p>
+</div>
+</body>
+</html>

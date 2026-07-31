@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le passage du pouce</title>
+<link rel="stylesheet" href="../lib/lesson.css">
+<link rel="stylesheet" href="../lib/piano.css">
+<style>
+  .seq{display:flex;gap:5px;justify-content:center;flex-wrap:wrap;margin:16px auto 6px;max-width:660px}
+  .seq .s{background:#15110f;border:1px solid var(--line);border-radius:9px;padding:8px 0 6px;width:54px;text-align:center}
+  .seq .s .d{font-family:var(--serif);font-size:20px;color:var(--accent2);display:block;line-height:1.1}
+  .seq .s .n{font-size:11.5px;color:var(--muted);display:block}
+  .seq .s.now{border-color:var(--accent);background:#2a211a;transform:translateY(-3px)}
+  .seq .s.now .d{color:var(--accent)}
+  .seq .s.done{opacity:.4} .seq .s.done .d{color:var(--good)}
+  .seq .s.pivot{border-color:var(--violet);border-width:2px}
+  .seq .s.pivot .d{color:var(--violet)}
+
+  .hidden{display:none}
+  .pivotname{color:var(--violet);font-weight:700}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <p class="kicker" data-lnum></p>
+    <h1>Le passage du pouce</h1>
+    <p class="mission">Tu as cinq doigts et le clavier en a quatre-vingt-huit. Voici le mouvement
+    qui fait sortir ta main de son camp de base <b>sans qu'on l'entende</b> — la porte d'entrée des
+    gammes, et de l'arpège d'<i>Interstellar</i>.</p>
+  </header>
+
+  <p class="lead">Dans la <a href="cinq-doigts-et-premier-accord.html">leçon précédente</a>, ta main ne
+  bougeait pas. C'était le but. Maintenant on va la déplacer — et le seul problème, c'est de le
+  faire <b>sans trou dans le son</b>.</p>
+
+  <h2>1. Le problème</h2>
+  <p>Joue Do–Ré–Mi–Fa–Sol avec 1-2-3-4-5. Arrivé au Sol, tu es coincé : plus de doigts. Pour
+  continuer vers La, Si, Do, il faut ramener la main plus haut. La solution naïve — soulever toute
+  la main et la reposer plus loin — produit un <b>trou audible</b>. Le son s'arrête.</p>
+
+  <div class="tip"><b>La vraie contrainte n'est pas la distance, c'est la continuité.</b> Une
+  mélodie doit sonner liée. Il faut donc déplacer la main <i>pendant</i> qu'une autre note sonne
+  encore — et le seul doigt capable de passer discrètement sous les autres, c'est le <b>pouce</b>,
+  parce qu'il est plus court et articulé sur le côté.</div>
+
+  <h2>2. Le mouvement</h2>
+  <div class="card">
+    <ol style="margin:0">
+      <li>Tu joues Do(1) – Ré(2) – <b>Mi(3)</b>.</li>
+      <li><b>Pendant que le Mi sonne</b>, ton pouce passe <b>sous</b> la paume, vers le Fa.
+        La main ne saute pas : elle se déroule.</li>
+      <li>Le pouce joue <span class="pivotname">Fa (1)</span> — c'est le <b>pivot</b>.</li>
+      <li>La main est maintenant en position plus haute : Sol(2), La(3), Si(4), Do(5).</li>
+    </ol>
+  </div>
+
+  <p>La montée complète d'une gamme de Do se doigte donc&nbsp;:</p>
+  <div class="seq" id="ref">
+    <div class="s"><span class="d">1</span><span class="n">Do</span></div>
+    <div class="s"><span class="d">2</span><span class="n">Ré</span></div>
+    <div class="s"><span class="d">3</span><span class="n">Mi</span></div>
+    <div class="s pivot"><span class="d">1</span><span class="n">Fa</span></div>
+    <div class="s"><span class="d">2</span><span class="n">Sol</span></div>
+    <div class="s"><span class="d">3</span><span class="n">La</span></div>
+    <div class="s"><span class="d">4</span><span class="n">Si</span></div>
+    <div class="s"><span class="d">5</span><span class="n">Do</span></div>
+  </div>
+  <p style="text-align:center;color:var(--muted);font-size:14px;margin-top:2px">
+    <span class="pivotname">Le 4e degré est le pivot</span> — c'est là que le pouce passe.</p>
+
+  <div class="tip"><b>Le coude ne bouge pas, le poignet s'incline à peine.</b> Le mouvement vient
+  du pouce, pas du bras. Si ton coude part vers l'extérieur, tu compenses avec le mauvais muscle —
+  et la main saute au lieu de se dérouler.</div>
+
+  <details class="aside">
+    <summary>Pourquoi pas un autre doigt ?</summary>
+    <p>Parce que le pouce est le seul qui s'articule <b>sur le côté</b> de la main, sous la paume.
+    Les quatre autres ne peuvent que passer <i>par-dessus</i> — c'est le mouvement inverse, utilisé
+    à la <b>descente</b> (le 3 passe par-dessus le pouce). Même logique, sens opposé.</p>
+  </details>
+
+  <h2>3. L'exercice : sans trou</h2>
+  <p>Joue la gamme montante. L'appli vérifie les notes <b>et mesure le trou</b> au moment du
+  pivot : le silence entre le Mi et le Fa. C'est la seule chose qui compte ici.</p>
+  <ul>
+    <li><b>Moins de 60 ms</b> → lié, on n'entend pas la jointure.</li>
+    <li><b>Plus de 150 ms</b> → la main a sauté. Prépare le pouce plus tôt, dès le Ré.</li>
+  </ul>
+
+  <div id="ex"></div>
+
+  <div class="win hidden" id="win">
+    <p style="margin:0"><b>Trois gammes liées. 🎯</b> Ta main sait sortir de son camp de base.
+    C'est la technique qui débloque <i>Au clair de la lune</i> en entier — et l'arpège
+    d'<i>Interstellar</i>, qui n'est rien d'autre qu'un passage du pouce répété.</p>
+  </div>
+
+  <h2>4. Le test à l'oreille</h2>
+  <p>Ferme les yeux et joue la gamme lentement. Tu dois entendre <b>huit notes égales</b>. Si tu
+  entends « trois notes — petite hésitation — cinq notes », le pouce arrive trop tard. Ralentis
+  jusqu'à ce que la jointure disparaisse, <i>puis</i> accélère. Jamais l'inverse.</p>
+
+  <div class="ask">
+    <p style="margin:0 0 8px"><b>Source à consulter :</b>
+    <a href="https://app.hoffmanacademy.com/lessons/piano/finger-numbers/video/">Hoffman Academy</a>
+    pour la numérotation, et la
+    <a href="https://www.hoffmanacademy.com/store/learning-and-teaching-resources/pentascale-guide">fiche PDF des pentascales</a>
+    pour voir où se place le pivot dans chaque tonalité.</p>
+    <p style="margin:0"><b>Une question ?</b> Demande-moi. Si ton poignet se tord ou que ça tire
+    dans l'avant-bras, arrête et dis-le-moi : c'est presque toujours le coude qui compense.</p>
+  </div>
+
+  <footer>
+    <nav data-lprevnext></nav>
+    <p>Fiches : <a href="../reference/position-des-doigts.html">position des doigts</a> ·
+    <a href="../reference/keyboard-map.html">carte du clavier</a></p>
+    <p class="src">Doigté de la gamme de Do d'après
+    <a href="https://app.hoffmanacademy.com/lessons/piano/finger-numbers/video/">Hoffman Academy</a>.</p>
+  </footer>
+</div>
+
+<script src="../lib/piano.js"></script>
+<script src="../lib/exercise.js"></script>
+<script src="../lib/nav.js"></script>
+<script>
+var UP  ={notes:[60,62,64,65,67,69,71,72], doigts:[1,2,3,1,2,3,4,5], pivot:3, lab:'↑ Montée',
+          noms:['Do','Ré','Mi','Fa','Sol','La','Si','Do']};
+var DOWN={notes:[72,71,69,67,65,64,62,60], doigts:[5,4,3,2,1,3,2,1], pivot:5, lab:'↓ Descente',
+          noms:['Do','Si','La','Sol','Fa','Mi','Ré','Do']};
+// à la descente c'est le 3 qui passe PAR-DESSUS le pouce : le pivot est au Mi (index 5).
+
+var ex=Exercise.create({mount:'#ex',
+  hint:'Main droite, à partir du <b>Do central</b>. Le pivot est signalé en violet.'});
+var kb=PianoKeyboard.create({mount:ex.pianoMount, octaves:3, startOctave:3, onNote:onNote});
+ex.attach(kb); ex.showPanel(true);
+
+var winBox=document.getElementById('win');
+var dir=UP, running=false, pos=0, streak=0, tPrev=null, gapMs=null;
+
+function draw(){
+  ex.panel.innerHTML='<div class="seq">'+dir.notes.map(function(m,k){
+    var cls='s'+(k<pos?' done':'')+(k===pos&&running?' now':'')+(k===dir.pivot?' pivot':'');
+    return '<div class="'+cls+'"><span class="d">'+dir.doigts[k]+'</span><span class="n">'+dir.noms[k]+'</span></div>';
+  }).join('')+'</div>';
+}
+function goLabel(){ return running?'■ Arrêter':(dir===UP?'▶ Monter la gamme':'▶ Descendre la gamme'); }
+function reset(){ pos=0; tPrev=null; gapMs=null; ex.reset(); draw(); }
+
+var bGo=ex.button('▶ Monter la gamme', function(b){
+  running=!running; b.innerHTML=goLabel(); b.classList.toggle('primary',!running);
+  reset();
+  if(running){ ex.target(dir.notes, dir.doigts); ex.prompt(dir.lab,'Joue la gamme, lentement et lié.'); }
+  else { ex.clearKeys(); ex.prompt('','En pause.'); }
+}, {primary:true});
+
+ex.button('↑ Montée', function(b){
+  dir=(dir===UP)?DOWN:UP; b.innerHTML=dir.lab;
+  streak=0; ex.streak(0,3,'Gammes liées'); reset(); bGo.innerHTML=goLabel();
+  if(running) ex.target(dir.notes, dir.doigts);
+});
+
+ex.button('🔊 Écouter', function(){
+  var t=kb.now();
+  dir.notes.forEach(function(m,k){ kb.playNote(m, t+k*0.38); });
+});
+
+function onNote(midi){
+  if(!running) return;
+  var want=dir.notes[pos], now=performance.now();
+  if(midi!==want){
+    ex.miss(midi);
+    ex.verdict('no','Non','On attend <b>'+dir.noms[pos]+'</b>, doigt <b>'+dir.doigts[pos]+'</b>'
+      +(pos===dir.pivot?' — c\'est le pivot : le pouce passe sous la main.':'.'));
+    return;
+  }
+  if(pos===dir.pivot && tPrev!=null) gapMs=Math.round(now-tPrev);   // le trou qui compte
+  tPrev=now; ex.hit(midi); pos++;
+
+  if(pos<dir.notes.length){
+    ex.verdict('ok','✓', dir.noms.slice(0,pos).join(' '));
+    draw();
+    return;
+  }
+
+  running=false; draw(); bGo.innerHTML=goLabel(); bGo.classList.add('primary'); ex.clearKeys();
+
+  if(gapMs==null){ ex.verdict('','Gamme complète','Rejoue-la d\'un trait pour mesurer le passage.'); return; }
+  if(gapMs<60){
+    streak++;
+    ex.measure('ok', gapMs+' ms', 'trou au passage du pouce — <b>lié</b>, on n\'entend pas la jointure.');
+  }else if(gapMs<150){
+    streak=0;
+    ex.measure('meh', gapMs+' ms', 'ça s\'entend un peu — glisse le pouce dès le <b>Ré</b>, pas au dernier moment.');
+  }else{
+    streak=0;
+    ex.measure('no', gapMs+' ms', 'la main a sauté — garde le '+(dir===UP?'Mi':'Sol')
+      +' enfoncé pendant que le pouce se déplace.');
+  }
+  ex.streak(streak,3,'Gammes liées');
+  if(streak>=3) winBox.classList.remove('hidden');
+}
+
+ex.streak(0,3,'Gammes liées'); reset();
+</script>
+</body>
+</html>

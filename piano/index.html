@@ -93,7 +93,7 @@
   <p class="sub">Une leçon = une seule chose, avec un clavier interactif. Suis-les dans l'ordre.</p>
   <ul class="lessons" id="lessons"></ul>
 
-  <a class="refcard" id="refcard" href="#">📄 <span>Fiche : carte du clavier</span></a>
+  <div id="refcards" style="display:flex;flex-wrap:wrap;gap:12px"></div>
 
   <div class="ask">
     <p style="margin:0"><b>Je suis ton prof — écris-moi quand tu veux.</b> Bloqué sur une leçon, envie d'un
@@ -122,9 +122,15 @@
     var li=document.createElement('li'); li.appendChild(a); ul.appendChild(li);
   });
 
-  // Fiche de référence (chemin relatif depuis lessons/ → ramené à la racine du cours)
-  var ref=window.LessonNav && window.LessonNav.ref;
-  if(ref){ var rc=document.getElementById('refcard'); rc.href=ref.f.replace('../',''); }
+  // Fiches de référence (chemins relatifs depuis lessons/ → ramenés à la racine du cours)
+  var rcBox=document.getElementById('refcards');
+  [window.LessonNav && window.LessonNav.ref, window.LessonNav && window.LessonNav.ref2]
+    .forEach(function(R){
+      if(!R) return;
+      var a=document.createElement('a'); a.className='refcard';
+      a.href=R.f.replace('../',''); a.innerHTML='📄 <span>'+R.t+'</span>';
+      rcBox.appendChild(a);
+    });
 
   // Progression : on lit la dernière leçon ouverte (mémorisée par le clavier au fil des sessions),
   // sinon on affiche simplement le total de leçons disponibles.

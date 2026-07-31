@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Les renversements : changer d'accord sans bouger la main</title>
+<link rel="stylesheet" href="../lib/lesson.css">
+<link rel="stylesheet" href="../lib/piano.css">
+<style>
+  .inv{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:18px 0}
+  .inv .c{background:#15110f;border:1px solid var(--line);border-radius:12px;padding:14px 18px;text-align:center;min-width:150px}
+  .inv .c .t{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:8px}
+  .inv .c .v{font-family:var(--serif);font-size:19px;color:var(--accent);display:block;line-height:1.5}
+  .inv .c .f{font-size:12.5px;color:var(--muted);display:block;margin-top:6px}
+
+  .cyc{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:16px auto 4px;max-width:680px}
+  .cyc .c{background:#15110f;border:1px solid var(--line);border-radius:10px;padding:10px 14px;text-align:center;min-width:118px}
+  .cyc .c.now{border-color:var(--accent);background:#2a211a;transform:translateY(-3px)}
+  .cyc .c.done{opacity:.45}
+  .cyc .c .n{font-family:var(--serif);font-size:17px;color:var(--accent);display:block}
+  .cyc .c .d{font-size:12px;color:var(--muted);display:block;margin-top:3px}
+  .cyc .c .mv{font-size:12.5px;color:var(--accent2);display:block;margin-top:4px;font-weight:700}
+
+  .meter{background:#1d1916;border:1px solid var(--line);border-radius:12px;padding:16px 18px;
+    margin:14px auto;text-align:center;max-width:560px}
+  .meter .v{font-family:var(--serif);font-size:34px;display:block;line-height:1.1}
+  .meter .v.ok{color:var(--good)} .meter .v.no{color:var(--bad)} .meter .v.meh{color:var(--accent)}
+  .meter .l{color:var(--muted);font-size:13.5px}
+  .bench{display:flex;gap:18px;justify-content:center;margin-top:10px;font-size:13px;color:var(--muted);flex-wrap:wrap}
+  .bench b{font-family:var(--serif);font-size:16px}
+  .bench .g{color:var(--good)} .bench .r{color:var(--bad)}
+
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <p class="kicker" data-lnum></p>
+    <h1>Les renversements : changer d'accord sans bouger la main</h1>
+    <p class="mission">Ta question exacte : « je dois lever la main pour passer d'un accord à
+    l'autre ? » <b>Non.</b> Et ce qui t'y oblige aujourd'hui, ce n'est pas le piano — c'est la
+    façon dont tu empiles tes accords.</p>
+  </header>
+
+  <p class="lead">Un accord n'est pas une <b>forme</b>. C'est un <b>ensemble de notes</b>. Tu peux
+  les empiler dans l'ordre que tu veux : c'est toujours le même accord. Cette liberté, c'est tout
+  ce dont tu as besoin pour arrêter de sauter.</p>
+
+  <h2>1. Le même accord, trois visages</h2>
+  <p>Do majeur, c'est <b>trois notes</b> : <b>Do</b>, <b>Mi</b>, <b>Sol</b>. Voilà toute la
+  définition. L'accord ne dit <i>pas</i> dans quel ordre les empiler.</p>
+
+  <div class="card">
+    <p style="margin:0 0 10px"><b>Fais-le avec les doigts, tu vas comprendre en dix secondes :</b></p>
+    <ol style="margin:0">
+      <li>Joue <b>Do – Mi – Sol</b> (doigts 1-3-5). C'est Do majeur.</li>
+      <li>Maintenant <b>enlève le Do d'en bas et remets-le tout en haut</b> :
+        il reste <b>Mi – Sol – Do</b>.</li>
+      <li>Écoute. <b>C'est toujours Do majeur.</b> Tu n'as ni ajouté ni enlevé de note —
+        tu en as déplacé une d'une octave.</li>
+    </ol>
+    <p style="margin:10px 0 0">Recommence : enlève le Mi d'en bas, remets-le en haut →
+    <b>Sol – Do – Mi</b>. Toujours Do majeur.</p>
+  </div>
+
+  <p>Ces trois façons d'empiler les mêmes notes s'appellent des <b>renversements</b> :</p>
+  <div class="inv">
+    <div class="c"><span class="t">Position fondamentale</span>
+      <span class="v">Do · Mi · Sol</span><span class="f">doigté 1 – 3 – 5</span></div>
+    <div class="c"><span class="t">1<sup>er</sup> renversement</span>
+      <span class="v">Mi · Sol · Do</span><span class="f">doigté 1 – 2 – 5</span></div>
+    <div class="c"><span class="t">2<sup>e</sup> renversement</span>
+      <span class="v">Sol · Do · Mi</span><span class="f">doigté 1 – 2 – 5</span></div>
+  </div>
+  <div class="tip"><b>Va voir sur le clavier plus bas :</b> le mode <b>« ① Découvrir »</b> te montre
+  les trois, l'un après l'autre, avec <b>un rond numéroté sur chaque touche</b> pour te dire quel
+  doigt va où. Écoute-les : ils sonnent pareil, plus ou moins graves.</div>
+
+  <div class="tip"><b>Pourquoi c'est utile ?</b> Parce que ça te donne <b>trois endroits</b> où
+  jouer le même accord. Quand tu enchaînes, tu prends celui qui est <b>le plus près de ta main</b>.
+  C'est tout. C'est pour ça qu'on n'a plus besoin de sauter.</div>
+
+  <div class="tip"><b>Tu en fais déjà un sans le savoir.</b> Le Si♭ que tu joues depuis
+  <a href="accord-mineur-et-the-scientist.html">la leçon sur l'accord mineur</a> (Fa · Si♭ · Ré)
+  n'est pas en position fondamentale — c'est un renversement. C'est pour ça que son doigté est
+  <b>1-2-5</b> et pas 1-3-5 : l'écart entre les doigts est plus large.</div>
+
+  <h2>2. La règle : ce qui est commun ne bouge pas</h2>
+  <p>Deux accords voisins partagent presque toujours des notes. <span class="chordname">Ré mineur</span>
+  (Ré-Fa-La) et <span class="chordname">Si♭ majeur</span> (Si♭-Ré-Fa) ont <b>Ré et Fa</b> en commun.</p>
+  <div class="card">
+    <p style="margin:0 0 8px"><b>Le principe, en une phrase :</b> les notes communes restent sous
+    leur doigt, et les autres se déplacent <b>du plus petit intervalle possible</b>.</p>
+    <p style="margin:0">Ré m = <b>Ré · Fa · La</b> → Si♭ = <b>Ré · Fa · Si♭</b>.
+    Deux doigts ne bougent pas du tout. Le troisième monte d'<b>un demi-ton</b> (La → Si♭).
+    Ta main reste exactement où elle est.</p>
+  </div>
+  <div class="tip">C'est la différence entre un débutant et quelqu'un qui a l'air de savoir jouer.
+  Pas la vitesse : <b>l'économie</b>. Le pianiste qui semble ne rien faire est celui qui a trouvé
+  les bons renversements.</div>
+
+  <h2>3. Le cycle de <i>The Scientist</i>, version économique</h2>
+  <p>Voici les quatre accords enchaînés avec un déplacement minimal. La main tient dans une seule
+  position, du Do central au Si♭ au-dessus.</p>
+  <div class="cyc" id="ref"></div>
+  <div class="meter" style="max-width:520px">
+    <span class="v ok">12</span>
+    <span class="l">demi-tons parcourus sur un tour complet — contre <b>52</b> en position fondamentale partout</span>
+  </div>
+
+  <h2>4. L'exercice : parcours le moins de chemin</h2>
+  <p>L'appli te nomme les accords dans l'ordre. Tu les joues — <b>n'importe quel renversement est
+  accepté</b>, c'est le même accord. Elle mesure la seule chose qui compte ici : <b>combien de
+  demi-tons tes doigts ont parcourus</b> depuis l'accord précédent.</p>
+
+  <div id="ex"></div>
+
+  <div class="win hidden" id="win">
+    <p style="margin:0"><b>Cycle bouclé sous 20 demi-tons. 🎯</b> Ta main ne saute plus.
+    Rejoue maintenant <i>The Scientist</i> avec ces renversements : c'est la même chanson, mais
+    tu vas entendre les accords se <b>lier</b> au lieu de se succéder.</p>
+  </div>
+
+  <h2>5. Et la main gauche ?</h2>
+  <p>Elle, elle bouge — et c'est normal. La basse joue la <b>fondamentale</b> de chaque accord
+  (Ré, Si♭, Fa, Do), donc elle se déplace forcément. C'est même la division du travail habituelle :
+  <b>la main gauche annonce l'accord</b> en se déplaçant, <b>la main droite reste sur place</b> et
+  ne change que le strict nécessaire.</p>
+
+  <details class="aside">
+    <summary>Comment je choisis le bon renversement ?</summary>
+    <p>Tu ne le choisis pas à l'avance, tu le <b>trouves</b> : regarde où est ta main, regarde les
+    notes du prochain accord, et prends la version la plus proche. Avec l'habitude, la main y va
+    seule. La méthode marche pour n'importe quelle suite d'accords — c'est ce qui te permettra de
+    déchiffrer une grille pop tout seul, l'objectif de ta mission.</p>
+  </details>
+
+  <div class="ask">
+    <p style="margin:0 0 8px"><b>Source à consulter :</b>
+    <a href="https://www.pianote.com/blog/piano-chord-inversions/">Pianote — Piano Chord Inversions</a>
+    (schémas clairs des trois positions), et la
+    <a href="../reference/position-des-doigts.html">fiche « position des doigts »</a> qui récapitule
+    les doigtés.</p>
+    <p style="margin:0"><b>Une question ?</b> Demande-moi. Si un renversement te paraît injouable
+    à cause d'un écart trop large pour ta main, dis-le-moi : il y a presque toujours une autre
+    version.</p>
+  </div>
+
+  <footer>
+    <nav data-lprevnext></nav>
+    <p>Fiches : <a href="../reference/position-des-doigts.html">position des doigts</a> ·
+    <a href="../reference/keyboard-map.html">carte du clavier</a></p>
+    <p class="src">Renversements et conduite des voix d'après
+    <a href="https://www.pianote.com/blog/piano-chord-inversions/">Pianote</a>.</p>
+  </footer>
+</div>
+
+<script src="../lib/piano.js"></script>
+<script src="../lib/exercise.js"></script>
+<script src="../lib/nav.js"></script>
+<script>
+/* Les 3 renversements de Do majeur — pour COMPRENDRE (mode ①) */
+var DISCOVER=[
+  {name:'Do majeur — position fondamentale', notes:[60,64,67], dg:[1,3,5], noms:'Do · Mi · Sol',
+   det:'Les trois notes dans l\'ordre, Do tout en bas.'},
+  {name:'Do majeur — 1<sup>er</sup> renversement', notes:[64,67,72], dg:[1,2,5], noms:'Mi · Sol · Do',
+   det:'On a pris le <b>Do</b> d\'en bas et on l\'a remis <b>tout en haut</b>. Mêmes notes.'},
+  {name:'Do majeur — 2<sup>e</sup> renversement', notes:[67,72,76], dg:[1,2,5], noms:'Sol · Do · Mi',
+   det:'On recommence : le <b>Mi</b> d\'en bas passe en haut. Toujours le même accord.'}
+];
+
+/* Voicings liés : chaque accord choisi pour être le plus proche du précédent (mode ②).
+   Cycle complet = 12 demi-tons, contre 52 si tout est joué en position fondamentale. */
+var CYCLE=[
+  {name:'Ré mineur',  notes:[62,65,69], dg:[1,3,5], noms:'Ré · Fa · La',  pos:'fondamentale'},
+  {name:'Si♭ majeur', notes:[62,65,70], dg:[1,2,5], noms:'Ré · Fa · Si♭', pos:'1<sup>er</sup> renv.'},
+  {name:'Fa majeur',  notes:[60,65,69], dg:[1,2,5], noms:'Do · Fa · La',  pos:'2<sup>e</sup> renv.'},
+  {name:'Do majeur',  notes:[60,64,67], dg:[1,3,5], noms:'Do · Mi · Sol', pos:'fondamentale'}
+];
+
+function move(a,b){   // distance en demi-tons entre deux accords, notes triées
+  var x=a.slice().sort(function(p,q){return p-q;}), y=b.slice().sort(function(p,q){return p-q;});
+  var s=0; for(var i=0;i<Math.min(x.length,y.length);i++) s+=Math.abs(y[i]-x[i]);
+  return s;
+}
+function pcs(l){ return l.map(function(m){ return ((m%12)+12)%12; }).sort(function(a,b){return a-b;}).join(','); }
+
+/* tableau de référence en haut de page */
+document.getElementById('ref').innerHTML=CYCLE.map(function(c,i){
+  var m=(i===0)?0:move(CYCLE[i-1].notes,c.notes);
+  return '<div class="c"><span class="n">'+c.name+'</span><span class="d">'+c.noms+'<br>'+c.pos
+    +' · '+c.dg.join('-')+'</span><span class="mv">'+(i===0?'départ':'+'+m+' demi-ton'+(m>1?'s':''))+'</span></div>';
+}).join('');
+
+var ex=Exercise.create({mount:'#ex',
+  hint:'Main droite seule. Les <b>ronds numérotés</b> sur les touches disent quel doigt va où '
+      +'(1 = pouce … 5 = auriculaire).'});
+var kb=PianoKeyboard.create({mount:ex.pianoMount, octaves:3, startOctave:3, onNote:onNote});
+ex.attach(kb); ex.showPanel(true);
+
+var winBox=document.getElementById('win');
+var mode='decouvrir', dPos=0;
+var running=false, pos=0, total=0, prev=null, buf=[], timer=null;
+
+var bDec=ex.button('① Découvrir', function(){ setMode('decouvrir'); });
+var bCyc=ex.button('② Le cycle',  function(){ setMode('cycle'); });
+var bGo =ex.button('▶ Commencer', onGo, {primary:true});
+var bHear=ex.button('🔊 Écouter', onHear);
+
+function setMode(m){
+  mode=m; running=false; pos=0; total=0; prev=null; buf=[]; dPos=0;
+  bDec.classList.toggle('on', m==='decouvrir');
+  bCyc.classList.toggle('on', m==='cycle');
+  bGo.innerHTML=(m==='decouvrir')?'→ Renversement suivant':'▶ Commencer le cycle';
+  bGo.classList.add('primary');
+  ex.reset(); winBox.classList.add('hidden');
+  if(m==='decouvrir') showDiscover();
+  else { drawCycle(); ex.prompt('','Clique sur « Commencer le cycle ».'); ex.score(''); }
+}
+
+/* ---------- mode ① : découvrir ---------- */
+function showDiscover(){
+  var d=DISCOVER[dPos];
+  ex.showPanel(true);
+  ex.panel.innerHTML='<div class="cyc">'+DISCOVER.map(function(x,k){
+    return '<div class="c'+(k===dPos?' now':'')+'"><span class="n">'+['fondamentale','1er renv.','2e renv.'][k]+'</span></div>';
+  }).join('')+'</div>';
+  ex.prompt(d.name, d.noms+' — doigté '+d.dg.join(' – '));
+  ex.target(d.notes, d.dg);                       // guide + ronds de doigté, TOUJOURS visibles
+  ex.verdict('', 'Les mêmes trois notes', d.det+' Appuie sur 🔊 Écouter : c\'est le même accord.');
+  ex.score('Renversement '+(dPos+1)+' / 3');
+}
+
+/* ---------- mode ② : le cycle ---------- */
+function drawCycle(){
+  ex.showPanel(true);
+  ex.panel.innerHTML='<div class="cyc">'+CYCLE.map(function(c,k){
+    return '<div class="c'+(k<pos?' done':'')+(k===pos&&running?' now':'')+'">'
+      +'<span class="n">'+c.name+'</span></div>';
+  }).join('')+'</div>';
+}
+function askChord(){
+  var c=CYCLE[pos];
+  ex.prompt(c.name, c.noms+' — doigté '+c.dg.join(' – ')+' · '+c.pos);
+  ex.target(c.notes, c.dg);                       // le guide ne disparaît plus jamais
+  drawCycle();
+}
+function showTotal(kind,det){
+  ex.measure(kind, total, det||'demi-tons parcourus · <b>12</b> = optimal, <b>52</b> = tout en fondamentale');
+}
+
+function onGo(b){
+  if(mode==='decouvrir'){
+    dPos=(dPos+1)%DISCOVER.length; showDiscover();
+    return;
+  }
+  running=!running;
+  b.innerHTML=running?'■ Arrêter':'▶ Commencer le cycle'; b.classList.toggle('primary',!running);
+  pos=0; total=0; prev=null; buf=[]; winBox.classList.add('hidden');
+  if(running){ askChord(); showTotal('', 'demi-tons parcourus — on part de zéro.'); }
+  else { ex.reset(); ex.prompt('','En pause.'); drawCycle(); }
+}
+function onHear(){
+  if(mode==='decouvrir'){ kb.playChord(DISCOVER[dPos].notes); return; }
+  var t=kb.now();
+  CYCLE.forEach(function(c,k){ kb.playChord(c.notes, t+k*0.9); });
+}
+
+function onNote(midi){
+  if(mode!=='cycle' || !running) return;
+  buf.push(midi); clearTimeout(timer); timer=setTimeout(evaluate, 400);
+}
+
+function evaluate(){
+  if(!running) return;
+  var uniq=buf.filter(function(m,i){ return buf.indexOf(m)===i; });
+  buf=[];
+  if(uniq.length<3) return;
+
+  var want=CYCLE[pos];
+  if(pcs(uniq)!==pcs(want.notes)){
+    uniq.forEach(function(m){ if(want.notes.indexOf(m)<0) ex.miss(m); });
+    ex.verdict('no','Ce n\'est pas '+want.name,
+      'Il te faut ces trois notes : '+want.noms+'. Les ronds numérotés sur le clavier te disent quel doigt mettre où.');
+    return;
+  }
+  uniq.forEach(function(m){ ex.hit(m); });
+
+  var step=(prev===null)?0:move(prev,uniq);
+  total+=step; prev=uniq; pos++;
+
+  if(pos<CYCLE.length){
+    showTotal(step<=3?'ok':step<=6?'meh':'no',
+      (step===0?'accord de départ'
+        :'<b>+'+step+' demi-ton'+(step>1?'s':'')+'</b> — '
+          +(step<=3?'excellent, ta main est restée sur place.'
+           :step<=6?'correct, mais il existe plus proche : cherche les notes communes.'
+           :'ta main a sauté — deux de ces notes étaient déjà sous tes doigts.'))
+      +' · Maintenant : <b>'+CYCLE[pos].name+'</b>');
+    setTimeout(function(){ if(running) askChord(); }, 700);
+    return;
+  }
+
+  total+=move(prev,CYCLE[0].notes);               // retour au premier accord
+  running=false; drawCycle(); ex.clearKeys();
+  bGo.innerHTML='▶ Refaire le cycle'; bGo.classList.add('primary');
+  ex.prompt('Cycle complet','');
+  showTotal(total<=20?'ok':'no',
+    'demi-tons sur un tour complet (retour au Ré mineur compris) · '
+    +(total<=20?'c\'est le jeu d\'un pianiste qui ne saute pas.'
+               :'l\'optimum est <b>12</b> — réessaie en cherchant les notes déjà sous tes doigts.'));
+  if(total<=20) winBox.classList.remove('hidden');
+}
+
+setMode('decouvrir');
+</script>
+</body>
+</html>

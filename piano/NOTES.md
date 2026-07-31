@@ -15,12 +15,45 @@
 - **Décision (juin 2026) : on continue SANS achat pour l'instant.** Jeffy a buté sur le
   placement des doigts au clavier PC (normal : disposition décalée, non transférable). Lui ai
   expliqué que le clavier PC sert au SAVOIR, pas à la TECHNIQUE.
-- **Contraintes d'achat futures : place limitée + veut une connexion PC.** → recommandé :
-  **88 touches lestées SLIM** (Casio Privia PX-S, prof. ~23 cm) ; critère PC = **USB-MIDI**.
-  Reproposer un guide chiffré quand il fixe un budget.
-- **Plan Web MIDI :** quand il a un clavier USB-MIDI, brancher les leçons dessus via la Web MIDI
-  API (les leçons réagissent au vrai piano). Nécessite de servir les leçons en `localhost`
-  (contexte sécurisé requis) — prévoir un petit serveur local à ce moment-là.
+- **✅ ACHAT ARBITRÉ (juillet 2026) : Nektar Impact GXP61** (206 €, B-stock 189 €)
+  **+ pédale Nektar NP-2** (17,90 €, non fournie !). Contraintes chiffrées enfin connues :
+  **largeur dispo ~1 m max** et **budget ~200 €** → les 88 touches lestés (Casio CDP-S110 299 €,
+  Roland FP-10 398 €, tous ~132 cm) sont écartés **par la place**, pas par le prix.
+  Choisi contre l'Arturia KeyLab Essential 61 mk3 : semi-lesté > synth-action, 2 entrées sustain
+  + 1 expression > 1 jack. Détails → `reference/premier-clavier-et-branchement.html`.
+- **⚠️ C'est un contrôleur MIDI : aucun son ni haut-parleur, pas de marteaux.**
+  - Son recommandé : **Splice INSTRUMENT (ex-Spitfire LABS), gratuit, mode AUTONOME sans DAW**,
+    preset *Soft Piano* (timbre feutré ≈ The Scientist). Cubase LE fourni mais plus lourd.
+  - Latence > 20 ms sous Windows → **ASIO4ALL**.
+  - **Cadrer l'attente :** toucher semi-lesté ≠ marteaux. Force de doigts et nuances ne se
+    travaillent que partiellement ; un vrai piano lui paraîtra lourd → le lui redire à ce
+    moment-là pour qu'il ne le lise pas comme une régression.
+  - **61 touches** : OK pour The Scientist / Happy Ending. Pour **Interstellar**, enseigner le
+    **bouton Octave** pour atteindre les graves.
+- **✅ WEB MIDI LIVRÉ (juillet 2026) — le clavier est reçu et branché.**
+  - **`./serve.sh`** = `python3 -m http.server 8000` (stdlib, rien à installer). **Obligatoire** :
+    le navigateur refuse le MIDI en `file://`. Tout se fait via **http://localhost:8000/**.
+  - **Le MIDI est dans `lib/piano.js`, pas dans les leçons.** Les messages entrants passent par
+    le MÊME `press()`/`release()` que la souris et le clavier PC → **les 9 leçons ont réagi au
+    vrai piano sans être modifiées**. Ne pas dupliquer de code MIDI dans une leçon.
+    Note ON/OFF (0x90/0x80, vélocité 0 = OFF) + **pédale = CC64** → `pedalMidi`, 3e source de
+    pédale à côté du bouton et de la barre Espace.
+  - **Témoin 🎹 ajouté à `mountControls`** : affiche le nom du clavier détecté, ou le message
+    d'aide qui va bien (hors plage / pas en localhost / son à débloquer).
+  - **Diagnostic : `lib/test-midi.html`** — journal des messages bruts + auto-test qui injecte
+    de faux messages via `api.midiMessage(bytes)`. À lui faire ouvrir si « ça ne marche pas ».
+  - **⚠️ Piège du son :** le navigateur ne démarre l'audio qu'après un **geste utilisateur** ;
+    un message MIDI n'en est pas un → il faut **cliquer une fois sur la page**. Géré par un
+    message dans le témoin, mais à redire de vive voix.
+  - **⚠️ Plage :** les leçons affichent Do3→Do6 (MIDI 48-84), le GXP61 va de Do2 à Do7.
+    Les notes hors plage sont ignorées (message dans le témoin) → **lui apprendre le bouton
+    Octave**, ce qui servira aussi pour les graves d'*Interstellar*.
+  - Le ghosting du clavier PC et l'astuce « deux surfaces » (bass-pad mobile) sont désormais
+    **inutiles** — les deux mains sur un seul vrai clavier, autant de notes qu'il veut.
+- **`lib/sheet.css`** = style commun des fiches `reference/*.html` (écran + impression).
+  Les schémas propres à une fiche restent en `<style>` local.
+- **1re session sur vrai clavier prévue : rejouer The Scientist en entier**, pour transférer
+  l'acquis du clavier PC vers un vrai toucher.
 
 ## Morceaux cibles (le « pourquoi »)
 1. The Scientist — Coldplay (accords Dm – Bb – F – C). Le plus accessible → bon 1er objectif.
@@ -33,13 +66,24 @@
 - Toujours rattacher au moins un morceau cible pour ancrer la théorie.
 
 ## Préférences techniques (HTML)
+- **⛔ LE CLAVIER D'ORDINATEUR EST SUPPRIMÉ (juillet 2026).** Jeffy a un vrai piano MIDI : plus de
+  mapping AZERTY, plus de badges de touches, plus de bouton « Touches PC », plus de contournement
+  du ghosting ni d'astuce « deux surfaces ». Retiré de `piano.js`/`piano.css` et de toutes les
+  leçons. **Ne pas le réintroduire.** (La barre Espace reste = pédale : ce n'est pas une note.)
+- **Boutons standard, identiques dans TOUTES les leçons** (injectés par `mountControls`) :
+  🔊 Son · 🎵 Noms des notes · 🎯 Guide · ✋ Doigtés · 🎶 Pédale · 🎹 témoin MIDI.
+  **🎯 Guide** = surlignage des prochaines touches ; **✋ Doigtés** = ronds numérotés dessus.
+  Les deux sont de simples classes CSS (`pk-noguide`, `pk-nofing`) → une leçon appelle
+  `guide()`/`target()` sans se soucier de l'état choisi par Jeffy.
+- **`piano.guide(notes[, doigts])`** = surligne + pose les ronds. **Doigté déduit si omis** :
+  triade serrée (≤ quinte) → 1-3-5, plus large (renversement) → 1-2-5. Passer `doigts`
+  explicitement pour tout autre cas (gammes, mélodies).
 - **Lib piano réutilisable : `lib/piano.css` + `lib/piano.js`** (demandée par Jeffy). À utiliser
   dans CHAQUE leçon plutôt que de redupliquer le code du clavier. Script classique (marche en
   `file://`), expose `window.PianoKeyboard.create({mount, onNote, octaves, labels, computerKeys…})`.
   API : `playNote/playChord`, `highlight(notes,'pk-target')`, `addClass/removeClass(midi,'pk-ok'/'pk-bad')`,
   `clearClass(...)`, `mountControls(el)` (boutons Son/Noms/Touches), `midiToEl`. Classes CSS préfixées `.pk-`.
   Inclure via `<link href="../lib/piano.css">` et `<script src="../lib/piano.js">`.
-  ⚠️ Plage clavier AZERTY = MIDI 60–75 → choisir les voicings d'accords dans cette plage.
   **Les 5 leçons utilisent la lib.** `playChord` joue toutes les notes au MÊME instant via
   l'horloge audio (plus de `setTimeout` → plus d'arpège parasite).
 - **Sustain (notes tenues) :** la lib expose `noteOn(midi)` / `noteOff(midi)`. Les appuis
@@ -62,44 +106,75 @@
   externe). Chaque touche stocke un n° MIDI ; `freq = 440·2^((midi-69)/12)`. Do central = Do4
   (MIDI 60). Oscillateur triangle + légère harmonique sine, enveloppe attaque rapide/déclin.
   Prévoir un toggle 🔊 pour couper le son.
-- **Jouer à deux mains sans instrument = séparer les mains sur 2 surfaces.** Le téléphone et le
-  clavier PC sont trop petits pour 2 mains (chevauchement). Solution livrée : **`lessons/bass-pad.html`**
-  = pad de basse plein écran, tactile, grosses touches (1 octave Do3-Si3, lib `octaves:1 computerKeys:false`),
-  à ouvrir sur le **téléphone (paysage) = main gauche**, pendant que la **main droite** joue les accords
-  sur l'ordi. Pas de connexion : chaque appareil sonne, on entend les deux dans la pièce. (Routage
-  audio/USB = pas utile, ne transmet pas les notes ; le vrai « lien » serait le MIDI plus tard.)
-  Lien depuis la Leçon 05. Mobile : touches élargies via `@media (pointer:coarse)` dans piano.css.
-  NB : pour ouvrir une page sur le téléphone, il faut servir le dossier sur le réseau local (Jeffy a
-  déjà une méthode pour voir les leçons sur mobile ; sinon proposer un petit serveur local).
-- **Limite clavier PC = ghosting** (max ~3-4 touches simultanées). Pour les leçons « mains ensemble »,
-  toujours proposer un **mode accompagnement** : l'appli joue une main (auto, sur le temps 1) pendant
-  que Jeffy joue l'autre → ≤3 touches à la fois. Pattern implémenté en Leçon 0005 (bouton « Tu joues » :
-  mains ensemble / main droite+basse auto / main gauche+accords auto). Mentionner aussi tablette
-  (multi-touch) et MIDI comme alternatives.
-- **Clavier 2 octaves chromatiques partout** : `create({ keyboard:'2oct', octaves:3, startOctave:3 })`.
-  **Les 5 leçons l'utilisent** (rendu identique Do3→Do6, mêmes raccourcis → mémoire musculaire
-  transférable). Layout façon DAW : main gauche grave = rangée du bas (blanches) + rangée du milieu
-  (noires : S D G H J, **Si♭=J**) ; main droite médium = A Z E R T Y U (blanches) + chiffres (noires).
-  Built-in dans la lib (`KEYMAP2`/`AZLBL2`) ; option `keymap`/`keylabels` reste dispo pour un mapping
-  custom. Badges des blanches affichés EN BAS de la touche, noires en haut (cohérence avec les rangées PC).
-- **Jouable au clavier d'ordinateur (AZERTY).** Mapper par **position physique** (`event.code`,
-  pas `event.key`) → robuste quelle que soit la disposition. Convention :
-  rangée du milieu = blanches (`Q S D F G H J K L` = Do4→Ré5),
-  rangée du dessus = noires (`Z E · T Y U · O P`, trous entre Mi-Fa et Si-Do).
-  Codes : blanches A S D F G H J K L (60,62,64,65,67,69,71,72,74) ;
-  noires W E T Y U O P (61,63,66,68,70,73,75). Afficher un badge de la touche PC sur chaque
-  touche (toggle ⌨). Réutiliser ce mapping dans les futures leçons.
 
-## Progression prévue (esquisse)
-1. ✅ Géographie du clavier + noms des notes (Do Ré Mi) — Leçon 0001.
-2. ✅ Triade majeure (Do/Fa/Sol majeur, forme « saute une touche », doigté 1-3-5) — Leçon 0002.
-3. ✅ Accord mineur (baisser la tierce d'1/2 ton) + demi-tons/touches noires + Si♭ majeur
-   → 4 accords de The Scientist (Ré m – Si♭ – Fa – Do) avec exercice d'enchaînement — Leçon 0003.
-4. ✅ Rythme : pulsation, mesure 4/4, tempo, métronome + play-along — Leçon 0004.
-5. ✅ Main gauche (basse = fondamentale) + coordination mains ensemble — Leçon 0005.
-6. ✅ Balancier main droite (croches / subdivision) — Leçon 0006.
-7. ✅ Assemblage The Scientist mains ensemble + pédale — Leçon 0007. 🎯 1er morceau assemblé !
-   (+ Bonus ★ Canon de Pachelbel.)
-8. Au choix : fignoler The Scientist (accord cassé + mélodie) OU démarrer **Interstellar**
-   (arpèges en La mineur → introduit les arpèges + la lecture). Demander à Jeffy.
-9. Lecture de la portée (clé de Sol), trouver Do central.
+## Progression & architecture du cours (juillet 2026 — grande harmonisation)
+
+### ⚠️ L'ORDRE VIT DANS UN SEUL ENDROIT : le tableau `LESSONS` de `lib/nav.js`
+- **Les fichiers n'ont plus de numéro** (`passage-du-pouce.html`, pas `0003-…`).
+  **Réordonner = déplacer une ligne du tableau.** Rien d'autre à toucher.
+- Les numéros sont **calculés** depuis la position ; le champ `n` n'est jamais écrit à la main.
+- Chaque leçon expose des ancrages que `nav.js` remplit :
+  `<p class="kicker" data-lnum>`, `<span data-lnum="n">` (forme courte), `<nav data-lprevnext>`,
+  et `document.title`. **Aucun numéro n'est écrit en dur dans une page** — vérifié par grep.
+- **Règle absolue :** dans le texte d'une leçon, citer une autre leçon **par son nom**, jamais par
+  son numéro (« la leçon sur l'accord mineur »), sinon le réordonnancement casse la prose.
+
+### Composant d'exercice : `lib/exercise.js` (+ styles `.ex-*` dans `lesson.css`)
+Toujours le même écran, dans le même ordre :
+**consigne → contrôles → panneau → indice → clavier (touches à jouer surlignées) → verdict → score.**
+API : `prompt / button / target / hit / miss / verdict / measure / streak / panel / showPanel / reset`.
+`ex.pianoMount` = où monter le clavier ; `ex.attach(kb)` monte les boutons de la lib.
+- **Migrées vers le composant :** cinq-doigts-et-premier-accord, passage-du-pouce,
+  accord-dun-seul-bloc, renversements.
+- **Pas migrées** (logique bespoke : métronome, frise, play-along) : géographie, accord-mineur,
+  rythme, main-gauche, balancier, the-scientist-assemblage, bonus. Elles gardent leur JS mais
+  leurs règles CSS de consigne/retour/score ont été **supprimées** → les alias hérités de
+  `lesson.css` (`.tprompt`, `.tfeedback`, `.exfeedback`, `.score`…) leur donnent le même rendu.
+  Les migrer pour de bon = travail restant, non bloquant.
+- **Toute nouvelle leçon utilise `Exercise`.** Inclure : `lesson.css`, `piano.css`,
+  `piano.js`, `exercise.js`, `nav.js`.
+
+### Ordre actuel
+1. Géographie du clavier
+2. **Cinq doigts & ton premier accord** ← fusion demandée par Jeffy (position de 5 doigts +
+   triade majeure). Pont pédagogique : **l'accord = la position, doigts 1-3-5 ensemble**.
+   Un seul clavier, 3 modes (jeu des numéros / mélodie / accords).
+3. Le passage du pouce
+4. Accord mineur & The Scientist
+5. Un accord d'un seul bloc
+6. Les renversements
+7. Le rythme
+8. La main gauche : la basse
+9. Le balancier (croches)
+10. The Scientist : assemblage
+★ Bonus Canon de Pachelbel
+
+### ⚠️ AVANT DE DIRE QUE C'EST FINI : `node lib/selftest.js`
+Vérifier la **syntaxe** (`new Function`) NE SUFFIT PAS. Une variable supprimée par erreur ne casse
+qu'à l'exécution — et comme `mountControls()` est appelé au début de chaque leçon, **une seule
+erreur y tue tout le script de la page** : le clavier s'affiche, les exercices disparaissent.
+C'est exactement le bug de juillet 2026 (la suppression du clavier d'ordinateur a emporté le bloc
+Web MIDI). `lib/selftest.js` exécute les libs sur un faux DOM et l'attrape en 200 ms.
+
+### Vérifications à relancer après tout renommage/réordonnancement
+- Le vérificateur de liens (script node jetable, cf. learning-record 0015) — **95 liens** au dernier passage.
+- `lib/test-midi.html` : auto-tests MIDI **+ auto-tests du composant et de l'ordre**.
+
+### Fichiers MIDI pour Synthesia — `python3 tools/make-midi.py` → `midi/`
+Générateur **sans dépendance** (format MIDI écrit à la main, ~60 lignes) qui **se relit lui-même**
+après écriture (`verify()`) : un fichier binaire non revérifié est un fichier que Synthesia refuse.
+Sortie : SMF **format 1, deux pistes nommées « Main droite » / « Main gauche »** (canaux 0 et 1) —
+c'est ainsi que Synthesia sépare les mains.
+⚠️ **Les notes sont dupliquées depuis les leçons.** Si un voicing change dans une leçon, le corriger
+aussi dans `tools/make-midi.py` puis relancer. (Source unique impossible sans build : les leçons
+sont du JS dans du HTML.)
+
+### Suite
+- **Rejouer The Scientist en entier au vrai clavier, avec le doigté** (test de transfert).
+- Au choix : fignoler The Scientist (accord cassé + mélodie) OU démarrer **Interstellar**
+  (arpèges en La mineur — le passage du pouce est le prérequis, désormais couvert). Demander à Jeffy.
+- Lecture de la portée (clé de Sol), trouver Do central.
+- **Décision en attente :** harmoniser les voicings d'accords entre la leçon « un accord d'un seul
+  bloc »/« assemblage » (Si♭ [65,70,74], Fa [65,69,72]) et la leçon « renversements »
+  (Si♭ [62,65,70], Fa [60,65,69]). Question posée à Jeffy, pas de réponse → on ne touche à rien.
+- **Travail restant (non bloquant) :** migrer vers `Exercise` les 7 leçons encore bespoke.

@@ -21,7 +21,26 @@
 - [Pianist.me — piano virtuel](https://pianist.me/)
   Use for: alternative au-dessus, sons de bonne qualité, affichage des noms de notes.
 
-### Achat d'un premier clavier (contraintes : place limitée + connexion PC)
+### ✅ Clavier retenu (juillet 2026) — Nektar Impact GXP61
+Contraintes réelles : **~1 m de largeur max** + **budget ~200 €** → 88 touches lestés impossibles (132 cm).
+- [Thomann — Nektar Impact GXP61](https://www.thomann.fr/nektar_impact_gxp61.htm) — 206 € (B-stock 189 €).
+  61 touches **semi-lestées** + aftertouch, 2 entrées sustain + 1 expression, USB bus-powered,
+  96,5 × 23 cm, 5 kg. Boîte = clavier + câble USB + Cubase LE + Retrologue. **Pas de son interne.**
+- [Thomann — Nektar NP-2](https://www.thomann.fr/nektar_np_2.htm) — 17,90 €. Pédale de sustain
+  **à acheter séparément**, polarité commutable. Use for: la pédale des Leçons 05/07.
+- [Thomann — Arturia KeyLab Essential 61 mk3](https://www.thomann.fr/arturia_keylab_essential_61_mk3_white.htm)
+  — 215 €, écarté : synth-action (non lesté), 1 seul jack pédale, faders/pads inutiles pour apprendre.
+- [Splice INSTRUMENT (ex-Spitfire LABS)](https://splice.com/instrument) — **gratuit**, tourne en
+  **autonome sans DAW**, preset *Soft Piano*. Use for: donner un vrai son de piano au GXP61.
+- Fiche interne : `reference/premier-clavier-et-branchement.html` (comparatif + checklist de déballage).
+
+### Upgrade futur (le jour où la place suit)
+- [Thomann — Casio CDP-S110](https://www.thomann.fr/casio_cdp_s110_bk.htm) — 299 €, 88 touches à
+  marteaux, HP 2×8 W, 132 × 23,2 cm, pédale + pupitre + alim inclus. La cible naturelle.
+- [Thomann — Roland FP-10](https://www.thomann.fr/roland_fp_10.htm) — 398 €, mécanique PHA-4
+  (meilleure), 128 × 25,8 cm, 12,3 kg, Bluetooth MIDI.
+
+### Achat d'un premier clavier — analyse initiale (juin 2026, contraintes alors imprécises)
 - Critère « PC » = **port USB-MIDI** (presque tous l'ont) → permet la Web MIDI API dans le navigateur.
 - **88 touches lestées slim recommandé** malgré la place : les Casio Privia PX-S sont les plus fins
   du marché (profondeur ~23 cm, < qu'un 61). Touches lestées = la seule chose que le clavier PC ne

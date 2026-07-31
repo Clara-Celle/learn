@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cinq doigts &amp; ton premier accord</title>
+<link rel="stylesheet" href="../lib/lesson.css">
+<link rel="stylesheet" href="../lib/piano.css">
+<style>
+  /* propre à cette leçon : la main posée, la mélodie, les cartes d'accords */
+  .pos{display:flex;gap:6px;justify-content:center;margin:18px 0 8px;flex-wrap:wrap}
+  .pos .k{background:#15110f;border:1px solid var(--line);border-radius:10px;padding:12px 0 10px;width:92px;text-align:center}
+  .pos .k .d{font-family:var(--serif);font-size:28px;color:var(--accent);display:block;line-height:1}
+  .pos .k .n{font-size:15px;color:var(--ink);display:block;margin-top:4px;font-weight:600}
+  .pos .k .f{font-size:11.5px;color:var(--muted);display:block;margin-top:3px}
+  .pos.left .k .d{color:var(--violet)}
+  .pos .k.chord{border-color:var(--accent);background:#2a211a}
+  .pos .k.dim{opacity:.32}
+
+  .mel{display:flex;gap:5px;justify-content:center;flex-wrap:wrap;max-width:640px;margin:0 auto}
+  .mel .s{background:#15110f;border:1px solid var(--line);border-radius:9px;padding:8px 0 6px;width:52px;text-align:center}
+  .mel .s .d{font-family:var(--serif);font-size:19px;color:var(--accent2);display:block;line-height:1.1}
+  .mel .s .n{font-size:11.5px;color:var(--muted);display:block}
+  .mel .s.now{border-color:var(--accent);background:#2a211a;transform:translateY(-3px)}
+  .mel .s.now .d{color:var(--accent)}
+  .mel .s.done{opacity:.4} .mel .s.done .d{color:var(--good)}
+
+  .prog{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+  .prog .c{background:#15110f;border:1px solid var(--line);border-radius:10px;padding:8px 16px;font-family:var(--serif);font-size:17px;color:var(--muted)}
+  .prog .c.now{border-color:var(--accent);color:var(--accent);background:#2a211a}
+  .prog .c.done{opacity:.4;color:var(--good)}
+
+  .big-num{font-family:var(--serif);font-size:92px;line-height:1;color:var(--accent);display:block}
+  .big-num.lh{color:var(--violet)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <p class="kicker" data-lnum></p>
+    <h1 data-ltitle></h1>
+    <p class="mission">Deux choses qui n'en font qu'une. D'abord <b>un doigt par touche</b> — la main
+    immobile, la base de tout. Puis la découverte qui change tout : <b>ton premier accord n'est rien
+    d'autre que cette position, en appuyant sur trois doigts à la fois</b>.</p>
+  </header>
+
+  <p class="lead">Tu ne vas pas apprendre deux techniques. Tu vas apprendre <b>une</b> position de
+  main, et t'en servir de deux façons.</p>
+
+  <h2>1. Les doigts ont des numéros</h2>
+  <p>Tous les pianistes du monde utilisent la même numérotation. Le <b>pouce est le 1</b>,
+  <b>aux deux mains</b> — les numéros partent du centre du clavier et s'écartent vers l'extérieur.
+  C'est la convention que tu retrouveras sur toutes les partitions : un « 3 » écrit au-dessus d'une
+  note veut dire « joue-la avec le majeur ».</p>
+
+  <h2>2. La position de cinq doigts : le camp de base</h2>
+  <p>Pose ta main droite sur cinq touches blanches voisines à partir du <b>Do central</b>, un doigt
+  sur chacune. Ne bouge plus.</p>
+  <p>Son intérêt n'est pas musical, il est <b>mécanique</b> : tant que ta main ne se déplace pas, tu
+  n'as plus besoin de vérifier où elle est. Tes yeux sont libres — exactement ce qu'il faudra pour
+  lire une partition.</p>
+
+  <h3>Main droite — position de Do</h3>
+  <div class="pos">
+    <div class="k"><span class="d">1</span><span class="n">Do</span><span class="f">pouce</span></div>
+    <div class="k"><span class="d">2</span><span class="n">Ré</span><span class="f">index</span></div>
+    <div class="k"><span class="d">3</span><span class="n">Mi</span><span class="f">majeur</span></div>
+    <div class="k"><span class="d">4</span><span class="n">Fa</span><span class="f">annulaire</span></div>
+    <div class="k"><span class="d">5</span><span class="n">Sol</span><span class="f">auriculaire</span></div>
+  </div>
+
+  <h3>Main gauche — le miroir</h3>
+  <p>Les deux mains sont construites en miroir. Le pouce reste le <b>1</b> — mais comme il est du
+  côté droit de ta main gauche, c'est le <b>5</b> qui se retrouve sur le Do grave.</p>
+  <div class="pos left">
+    <div class="k"><span class="d">5</span><span class="n">Do</span><span class="f">auriculaire</span></div>
+    <div class="k"><span class="d">4</span><span class="n">Ré</span><span class="f">annulaire</span></div>
+    <div class="k"><span class="d">3</span><span class="n">Mi</span><span class="f">majeur</span></div>
+    <div class="k"><span class="d">2</span><span class="n">Fa</span><span class="f">index</span></div>
+    <div class="k"><span class="d">1</span><span class="n">Sol</span><span class="f">pouce</span></div>
+  </div>
+
+  <h3>La forme de la main</h3>
+  <p>Pose ta main sur ta cuisse, sans rien faire. Les doigts sont naturellement <b>courbés</b> :
+  c'est exactement la forme à garder, comme si tu tenais une petite balle dans la paume.</p>
+  <div class="card">
+    <ul style="margin:0">
+      <li><b>Doigts courbés</b>, tu joues sur la <b>pulpe</b>, pas à plat.</li>
+      <li><b>Poignet à niveau</b> avec l'avant-bras — ni cassé, ni relevé.</li>
+      <li><b>Épaules relâchées</b>, coudes légèrement écartés du corps.</li>
+      <li>Siège à la bonne hauteur : <b>avant-bras à l'horizontale</b>.</li>
+      <li>Un doigt appuie, <b>les autres restent posés</b> — ils ne s'envolent pas.</li>
+    </ul>
+  </div>
+  <div class="tip"><b>Le piège de cette position :</b> comme les doigts ne se déplacent plus, ils ont
+  tendance à s'aplatir. Doigts à plat = dernière phalange molle, contrôle de la force perdu.</div>
+
+  <details class="aside">
+    <summary>Réglage : le bouton Octave de ton Nektar</summary>
+    <p>Le piano à l'écran affiche <b>Do3 → Do6</b>, mais ton clavier va de Do2 à Do7 : les notes des
+    extrémités ne déclencheront rien, et le témoin 🎹 affichera « hors de la plage ». Les boutons
+    <b>Octave −/+</b> décalent tout le clavier d'un cran. Pour cette leçon, reste au centre.</p>
+  </details>
+
+  <h2>3. Le pont : un accord, c'est la même position</h2>
+  <p>Voici l'idée qui relie les deux moitiés de cette leçon. Ta main est posée sur Do-Ré-Mi-Fa-Sol.
+  Maintenant, au lieu d'appuyer sur un doigt à la fois, <b>appuie sur les doigts 1, 3 et 5 en même
+  temps</b>. Laisse le 2 et le 4 posés sans appuyer.</p>
+  <div class="pos">
+    <div class="k chord"><span class="d">1</span><span class="n">Do</span><span class="f">j'appuie</span></div>
+    <div class="k dim"><span class="d">2</span><span class="n">Ré</span><span class="f">posé</span></div>
+    <div class="k chord"><span class="d">3</span><span class="n">Mi</span><span class="f">j'appuie</span></div>
+    <div class="k dim"><span class="d">4</span><span class="n">Fa</span><span class="f">posé</span></div>
+    <div class="k chord"><span class="d">5</span><span class="n">Sol</span><span class="f">j'appuie</span></div>
+  </div>
+  <div class="card" style="text-align:center;font-size:19px">
+    <b>Do · Mi · Sol</b> = l'accord de <span class="chordname">Do majeur</span>. 🎉
+    <p style="font-size:15px;color:var(--muted);margin:10px 0 0">Ton premier accord, sans bouger la main
+    d'un millimètre. Le doigté <b>1–3–5</b>, c'est juste « un doigt sur deux ».</p>
+  </div>
+
+  <h2>4. La règle générale : « saute une touche »</h2>
+  <p>Ce que tu viens de faire a un nom et une recette. Un <b>accord</b>, c'est au moins 3 notes jouées
+  ensemble ; celui à 3 notes s'appelle une <b>triade</b>. Pour en construire une sur les blanches :</p>
+  <div class="card" style="text-align:center;font-size:20px">
+    <b>Départ → saute 1 blanche → joue → saute 1 blanche → joue.</b>
+  </div>
+  <p>Appliquée à trois points de départ, la même forme donne trois accords tout en touches blanches —
+  et ta main garde exactement la même forme, tu la déplaces, c'est tout :</p>
+  <div class="card">
+    <ul style="margin:0;list-style:none;padding:0;font-size:18px">
+      <li>🎵 <span class="chordname">Do majeur</span> = Do · Mi · Sol</li>
+      <li>🎵 <span class="chordname">Fa majeur</span> = Fa · La · Do
+        <span style="color:var(--muted);font-size:14px">← dans <i>The Scientist</i></span></li>
+      <li>🎵 <span class="chordname">Sol majeur</span> = Sol · Si · Ré</li>
+    </ul>
+  </div>
+
+  <h2>5. À toi de jouer</h2>
+  <p>Un seul clavier, trois entraînements. Choisis avec les boutons — les touches à jouer sont
+  <b>toujours surlignées</b>, et le verdict s'affiche juste en dessous.</p>
+
+  <div id="ex"></div>
+
+  <div class="win hidden" id="win">
+    <p style="margin:0"><b>Objectif atteint. 🎯</b> Tu tiens la position <i>et</i> le premier accord.
+    <b>Fa majeur</b> et <b>Do majeur</b> sont déjà 2 des 4 accords de <i>The Scientist</i>.</p>
+  </div>
+
+  <h2>6. Le lien avec <i>The Scientist</i></h2>
+  <p>Il te manque l'accord <b>mineur</b> et un accord avec une touche noire — c'est la leçon suivante,
+  et la chanson sera à portée de doigts.</p>
+
+  <details class="aside">
+    <summary>Pourquoi « majeur » ?</summary>
+    <p>« Majeur » décrit la couleur de l'accord : lumineux. Le « mineur » est plus sombre — il suffit
+    de baisser la note du milieu d'un demi-ton. Pour l'instant, retiens la forme « saute une touche »
+    et le son du majeur.</p>
+  </details>
+
+  <details class="aside">
+    <summary>Pourquoi <i>Au clair de la lune</i> s'arrête-t-elle ?</summary>
+    <p>La suite (« Ma chandelle est morte… ») descend sous le Do : ça sort de la position de cinq
+    doigts. Pour la jouer il faudrait déplacer la main en faisant passer le pouce dessous — c'est le
+    sujet de la <a href="passage-du-pouce.html">leçon suivante</a>.</p>
+  </details>
+
+  <div class="ask">
+    <p style="margin:0 0 8px"><b>Source à consulter :</b>
+    <a href="https://app.hoffmanacademy.com/lessons/piano/finger-numbers/video/">Hoffman Academy — Finger Numbers</a>
+    (5 min, très visuel) et la
+    <a href="https://www.hoffmanacademy.com/store/learning-and-teaching-resources/pentascale-guide">fiche PDF des pentascales</a>.</p>
+    <p style="margin:0"><b>Une question ?</b> Demande-moi. Si un doigt refuse d'obéir — le 4 est le
+    pire, il partage un tendon avec le 3 — dis-le-moi plutôt que de forcer.</p>
+  </div>
+
+  <footer>
+    <nav data-lprevnext></nav>
+    <p>Fiches : <a href="../reference/position-des-doigts.html">position des doigts</a> ·
+    <a href="../reference/keyboard-map.html">carte du clavier</a></p>
+    <p class="src">Numérotation, position de cinq doigts et doigté 1-3-5 d'après
+    <a href="https://app.hoffmanacademy.com/lessons/piano/finger-numbers/video/">Hoffman Academy</a>.</p>
+  </footer>
+</div>
+
+<script src="../lib/piano.js"></script>
+<script src="../lib/exercise.js"></script>
+<script src="../lib/nav.js"></script>
+<script>
+var RH={notes:[60,62,64,65,67], doigts:[1,2,3,4,5], nom:'Main droite', cls:''};
+var LH={notes:[48,50,52,53,55], doigts:[5,4,3,2,1], nom:'Main gauche', cls:'lh'};
+var NOMS=['Do','Ré','Mi','Fa','Sol'];
+
+var MEL=[0,0,0,1,2,1,0,2,1,1,0];                      // Au clair de la lune, dans la position de Do
+var SYL=['Au','clair','de','la','lu','ne','mon','a','mi','Pier','rot'];
+
+var CHORDS={
+  Do: {name:'Do majeur',  notes:[60,64,67], sol:'Do · Mi · Sol'},
+  Fa: {name:'Fa majeur',  notes:[65,69,72], sol:'Fa · La · Do'},
+  Sol:{name:'Sol majeur', notes:[67,71,74], sol:'Sol · Si · Ré'}
+};
+var PROG=['Do','Fa','Sol','Do'];
+
+var ex=Exercise.create({mount:'#ex'});
+var kb=PianoKeyboard.create({mount:ex.pianoMount, octaves:3, startOctave:3, onNote:onNote});
+ex.attach(kb);
+
+var winBox=document.getElementById('win');
+var mode='doigts', side=RH, running=false, streak=0;
+var target=null;                                       // jeu des numéros
+var melPos=0;                                          // mélodie
+var progStep=0, got={};                                // accords
+
+/* ---- boutons : mode, puis actions du mode ---- */
+var bDoigts=ex.button('① Le jeu des numéros', function(){ setMode('doigts'); });
+var bMel   =ex.button('② La mélodie',         function(){ setMode('melodie'); });
+var bAcc   =ex.button('③ Les accords',        function(){ setMode('accords'); });
+var bGo    =ex.button('▶ Commencer', toggleRun, {primary:true});
+var bHand  =ex.button('✋ Main droite', function(b){
+  side=(side===RH)?LH:RH; b.innerHTML=(side===RH)?'✋ Main droite':'🤚 Main gauche';
+  streak=0; target=null; if(running) nextCue(); else showPos();
+});
+var bHear  =ex.button('🔊 Écouter', listen);
+var bHide  =ex.button('🙈 Masquer le clavier', function(b){
+  var hidden=ex.pianoMount.classList.toggle('hidden');
+  b.classList.toggle('on',hidden);
+  b.innerHTML=hidden?'👁 Remontrer le clavier':'🙈 Masquer le clavier';
+});
+
+function setMode(m){
+  mode=m; running=false; streak=0; target=null; melPos=0; progStep=0; got={};
+  [bDoigts,bMel,bAcc].forEach(function(b,i){ b.classList.toggle('on', ['doigts','melodie','accords'][i]===m); });
+  bHand.style.display=(m==='doigts')?'':'none';
+  bHide.style.display=(m==='doigts')?'':'none';
+  bGo.innerHTML='▶ Commencer'; bGo.classList.add('primary');
+  ex.showPanel(m!=='doigts');
+  ex.reset(); winBox.classList.add('hidden');
+  drawPanel(); showPos();
+  ex.prompt('', {
+    doigts :'Mode ① — l\'appli annonce un doigt, tu joues la touche. Sans regarder tes mains.',
+    melodie:'Mode ② — <i>Au clair de la lune</i>, note à note, la main ne bouge pas.',
+    accords:'Mode ③ — construis chaque accord, puis enchaîne Do → Fa → Sol → Do.'
+  }[m]);
+  ex.hint(m==='doigts'
+    ? 'Quand ça devient facile, masque le clavier : tu perds le repère visuel et tu te fies à la sensation.'
+    : 'Main droite, à partir du <b>Do central</b>. Les touches à jouer sont surlignées.');
+  ex.streak(0, m==='doigts'?10:(m==='melodie'?MEL.length:PROG.length),
+            m==='melodie'?'Notes':(m==='accords'?'Accords':'Série'));
+}
+
+function showPos(){
+  // les ronds numérotés disent quel doigt va sur quelle touche
+  if(mode==='doigts') ex.target(side.notes, side.doigts);
+  else if(mode==='melodie') ex.target(RH.notes, RH.doigts);
+  else ex.target(CHORDS[PROG[progStep]].notes, [1,3,5]);
+}
+
+function drawPanel(){
+  if(mode==='melodie'){
+    ex.panel.innerHTML='<div class="mel">'+MEL.map(function(i,k){
+      return '<div class="s'+(k<melPos?' done':'')+(k===melPos&&running?' now':'')+'">'
+        +'<span class="d">'+RH.doigts[i]+'</span><span class="n">'+NOMS[i]+'</span></div>';
+    }).join('')+'</div>';
+  }else if(mode==='accords'){
+    ex.panel.innerHTML='<div class="prog">'+PROG.map(function(k,i){
+      return '<div class="c'+(i<progStep?' done':'')+(i===progStep&&running?' now':'')+'">'+CHORDS[k].name+'</div>';
+    }).join('')+'</div>';
+  }else ex.panel.innerHTML='';
+}
+
+function toggleRun(){
+  running=!running;
+  bGo.innerHTML=running?'■ Arrêter':'▶ Commencer';
+  bGo.classList.toggle('primary',!running);
+  streak=0; melPos=0; progStep=0; got={}; target=null;
+  ex.reset(); winBox.classList.add('hidden'); drawPanel(); showPos();
+  if(!running){ ex.prompt('','En pause.'); return; }
+  if(mode==='doigts') nextCue();
+  else if(mode==='melodie'){ ex.prompt('Au clair de la lune','Joue la note en surbrillance.'); ex.streak(0,MEL.length,'Notes'); }
+  else nextChord();
+}
+
+function listen(){
+  if(mode==='melodie'){ var t=kb.now(); MEL.forEach(function(i,k){ kb.playNote(RH.notes[i], t+k*0.42); }); }
+  else if(mode==='accords'){ var t2=kb.now(); PROG.forEach(function(k,i){ kb.playChord(CHORDS[k].notes, t2+i*0.9); }); }
+  else kb.playChord(side.notes.slice(0,1));
+}
+
+/* ---- mode ① : le jeu des numéros ---- */
+function nextCue(){
+  var i; do{ i=Math.floor(Math.random()*5); }while(target!==null && i===target);
+  target=i;
+  ex.prompt('<span class="big-num '+side.cls+'">'+side.doigts[i]+'</span>',
+            side.nom+' — joue le doigt '+side.doigts[i]+', sans regarder.');
+}
+
+/* ---- mode ③ : les accords ---- */
+function nextChord(){
+  got={};
+  var c=CHORDS[PROG[progStep]];
+  ex.prompt(c.name, c.sol+' — doigté 1 – 3 – 5, les trois doigts ensemble.');
+  ex.target(c.notes, [1,3,5]);
+  drawPanel();
+}
+
+/* ---- une seule entrée pour toutes les notes ---- */
+function onNote(midi){
+  if(!running) return;
+  if(mode==='doigts')  return checkCue(midi);
+  if(mode==='melodie') return checkMel(midi);
+  return checkChord(midi);
+}
+function samePc(a,b){ return ((a%12)+12)%12 === ((b%12)+12)%12; }
+
+function checkCue(midi){
+  var want=side.notes[target];
+  if(midi===want){
+    streak++; ex.hit(midi);
+    ex.verdict('ok','✓ '+NOMS[target],'Doigt '+side.doigts[target]+'.');
+    ex.streak(streak,10);
+    if(streak>=10){ winBox.classList.remove('hidden'); }
+    setTimeout(function(){ if(running){ showPos(); nextCue(); ex.verdict('','',''); } }, 550);
+  }else if(samePc(midi,want)){
+    streak=0; ex.streak(0,10); ex.miss(midi);
+    ex.verdict('no','Bonne note, mauvaise octave','C\'est le '+NOMS[target]+' de ta position — reviens au camp de base.');
+  }else{
+    streak=0; ex.streak(0,10); ex.miss(midi);
+    var idx=side.notes.indexOf(midi);
+    ex.verdict('no','Pas encore', idx>=0
+      ? 'Tu as joué '+NOMS[idx]+' = doigt '+side.doigts[idx]+'. On demandait le doigt '+side.doigts[target]+'.'
+      : 'Cette touche est hors de ta position de cinq doigts.');
+  }
+}
+
+function checkMel(midi){
+  var want=RH.notes[MEL[melPos]];
+  if(midi!==want && !samePc(midi,want)){
+    ex.miss(midi);
+    ex.verdict('no','Non','On attend <b>'+NOMS[MEL[melPos]]+'</b> (doigt '+RH.doigts[MEL[melPos]]+'), sur «&nbsp;'+SYL[melPos]+'&nbsp;».');
+    return;
+  }
+  melPos++; ex.streak(melPos,MEL.length,'Notes');
+  ex.verdict('ok','✓', SYL.slice(0,melPos).join(' '));
+  if(melPos>=MEL.length){
+    running=false; bGo.innerHTML='▶ Recommencer'; bGo.classList.add('primary');
+    ex.verdict('ok','🎵 Au clair de la lune, mon ami Pierrot','Ta main n\'a pas bougé d\'un millimètre.');
+    winBox.classList.remove('hidden'); ex.clearKeys();
+  }
+  drawPanel();
+}
+
+function checkChord(midi){
+  var c=CHORDS[PROG[progStep]];
+  if(c.notes.indexOf(midi)<0){ ex.miss(midi); return; }
+  if(got[midi]) return;
+  got[midi]=1; ex.hit(midi);
+  if(Object.keys(got).length<c.notes.length) return;
+
+  progStep++; ex.streak(progStep,PROG.length,'Accords');
+  if(progStep<PROG.length){
+    ex.verdict('ok','✓ '+c.name,'Enchaîne : '+CHORDS[PROG[progStep]].name+'.');
+    setTimeout(function(){ if(running) nextChord(); }, 650);
+  }else{
+    running=false; bGo.innerHTML='▶ Recommencer'; bGo.classList.add('primary');
+    ex.verdict('ok','✓ Do → Fa → Sol → Do','Tu viens de jouer une progression complète.');
+    winBox.classList.remove('hidden'); ex.clearKeys(); drawPanel();
+  }
+}
+
+setMode('doigts');
+</script>
+</body>
+</html>

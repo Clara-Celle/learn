@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Référence — Position des doigts</title>
+<link rel="stylesheet" href="../lib/sheet.css">
+<style>
+  .hands{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:16px 0}
+  .hand h3{margin-top:0;text-align:center}
+  .fingrid{display:flex;gap:5px;justify-content:center}
+  .fingrid .k{border:1px solid var(--line);border-radius:8px;padding:9px 0 7px;width:100%;text-align:center;background:#fff}
+  .fingrid .k .d{font-family:'Iowan Old Style',Georgia,serif;font-size:23px;color:var(--accent);display:block;line-height:1}
+  .fingrid .k .n{font-size:13px;font-weight:700;display:block;margin-top:3px}
+  .fingrid .k .f{font-size:10px;color:var(--muted);display:block}
+  .left .fingrid .k .d{color:var(--accent2)}
+  @media (max-width:640px){.hands{grid-template-columns:1fr}}
+
+  .chords{width:100%}
+  .chords td.dg{font-family:'Iowan Old Style',Georgia,serif;font-size:19px;color:var(--accent);font-weight:700}
+  .bad{color:#b03a14;font-weight:700}
+  .good{color:var(--accent2);font-weight:700}
+</style>
+</head>
+<body>
+<div class="sheet">
+  <h1>✋ Position des doigts</h1>
+  <p class="sub">Fiche de référence · Piano · à imprimer et poser sur le pupitre</p>
+
+  <h2>Les numéros</h2>
+  <div class="rule"><b>Le pouce est le 1, aux deux mains.</b> Les numéros partent donc du centre du
+  clavier et s'écartent vers l'extérieur. C'est la convention de toutes les partitions du monde :
+  un « 3 » écrit au-dessus d'une note veut dire « joue-la avec le majeur ».</div>
+
+  <table>
+    <tr><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr>
+    <tr><td>pouce</td><td>index</td><td>majeur</td><td>annulaire</td><td>auriculaire</td></tr>
+  </table>
+
+  <h2>La position de cinq doigts (« camp de base »)</h2>
+  <p>Un doigt par touche, sur cinq blanches voisines. Tant que la main ne se déplace pas, tu n'as
+  pas besoin de la regarder — c'est ce qui libère les yeux pour lire la partition.</p>
+
+  <div class="hands">
+    <div class="hand">
+      <h3>Main droite — position de Do</h3>
+      <div class="fingrid">
+        <div class="k"><span class="d">1</span><span class="n">Do</span><span class="f">pouce</span></div>
+        <div class="k"><span class="d">2</span><span class="n">Ré</span><span class="f">index</span></div>
+        <div class="k"><span class="d">3</span><span class="n">Mi</span><span class="f">majeur</span></div>
+        <div class="k"><span class="d">4</span><span class="n">Fa</span><span class="f">annul.</span></div>
+        <div class="k"><span class="d">5</span><span class="n">Sol</span><span class="f">auric.</span></div>
+      </div>
+    </div>
+    <div class="hand left">
+      <h3>Main gauche — le miroir</h3>
+      <div class="fingrid">
+        <div class="k"><span class="d">5</span><span class="n">Do</span><span class="f">auric.</span></div>
+        <div class="k"><span class="d">4</span><span class="n">Ré</span><span class="f">annul.</span></div>
+        <div class="k"><span class="d">3</span><span class="n">Mi</span><span class="f">majeur</span></div>
+        <div class="k"><span class="d">2</span><span class="n">Fa</span><span class="f">index</span></div>
+        <div class="k"><span class="d">1</span><span class="n">Sol</span><span class="f">pouce</span></div>
+      </div>
+    </div>
+  </div>
+
+  <h2>La forme de la main</h2>
+  <ul class="check">
+    <li><b>Doigts courbés</b> — comme si tu tenais une petite balle dans la paume. Tu joues sur la
+      <b>pulpe</b>, jamais à plat.</li>
+    <li><b>Poignet à niveau</b> avec l'avant-bras : ni cassé vers le bas, ni relevé.</li>
+    <li><b>Épaules relâchées</b>, coudes légèrement écartés du corps.</li>
+    <li><b>Siège à la bonne hauteur</b> : avant-bras à l'horizontale.</li>
+    <li>Un doigt appuie, <b>les autres restent posés</b> sur leurs touches — ils ne s'envolent pas.</li>
+  </ul>
+  <div class="rule warn"><b>Le défaut n°1 :</b> les doigts à plat. La dernière phalange se ramollit,
+  tu perds le contrôle de la force, et l'auriculaire n'arrive plus à s'enfoncer en même temps que
+  le pouce → les accords « bavent ». <b>Filme-toi 30 s de côté</b> : ça se voit tout de suite.</div>
+
+  <h2>Sortir de la position : le passage du pouce</h2>
+  <p>Cinq doigts, quatre-vingt-huit touches. Pour dépasser le camp de base sans trou dans le son,
+  le <b>pouce passe sous la paume</b> pendant que le doigt précédent tient encore sa note.</p>
+  <table>
+    <tr><th class="l">Gamme de Do, main droite</th><th>Do</th><th>Ré</th><th>Mi</th><th>Fa</th><th>Sol</th><th>La</th><th>Si</th><th>Do</th></tr>
+    <tr><td class="l">Montée <i>(pouce sous)</i></td><td>1</td><td>2</td><td>3</td><td class="dg">1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+    <tr><td class="l">Descente <i>(3 par-dessus)</i></td><td>1</td><td>2</td><td class="dg">3</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+  </table>
+  <div class="rule"><b>Le pivot est sur le Fa</b> (4<sup>e</sup> degré) à la montée. Le coude ne
+  bouge pas : le mouvement vient du pouce, pas du bras. Si la main <i>saute</i>, c'est le coude qui
+  compense. <b>Moins de 60 ms de silence</b> au passage = c'est lié.</div>
+
+  <h2>Doigté des accords de <i>The Scientist</i></h2>
+  <p>Main droite, dans les positions utilisées par les les leçons sur les accords (accords pris
+  isolément). Pour les <i>enchaîner</i> sans lever la main, voir le cycle lié plus bas.</p>
+  <table class="chords">
+    <tr><th class="l">Accord</th><th>Notes</th><th>Doigté</th><th class="l">Remarque</th></tr>
+    <tr><td class="l">Ré mineur</td><td>Ré · Fa · La</td><td class="dg">1 – 3 – 5</td><td class="l">position fondamentale</td></tr>
+    <tr><td class="l">Si♭ majeur</td><td>Fa · Si♭ · Ré</td><td class="dg">1 – 2 – 5</td><td class="l"><b>exception</b> : renversement, écart plus large</td></tr>
+    <tr><td class="l">Fa majeur</td><td>Fa · La · Do</td><td class="dg">1 – 3 – 5</td><td class="l">position fondamentale</td></tr>
+    <tr><td class="l">Do majeur</td><td>Do · Mi · Sol</td><td class="dg">1 – 3 – 5</td><td class="l">position fondamentale</td></tr>
+    <tr><td class="l">Basse (main gauche)</td><td>la fondamentale</td><td class="dg">5</td><td class="l">l'auriculaire, une note tenue</td></tr>
+  </table>
+  <div class="rule"><b>La règle générale :</b> une triade serrée en position fondamentale se joue
+  <b>1-3-5</b>. Dès que l'écart entre les notes s'élargit (un renversement), le doigté s'adapte —
+  le plus souvent en <b>1-2-5</b>.</div>
+
+  <h2>Enchaîner sans lever la main : le cycle lié</h2>
+  <p>Un accord est un <b>ensemble de notes</b>, pas une forme : on peut les empiler dans n'importe
+  quel ordre (c'est un <b>renversement</b>). En choisissant à chaque fois la version la plus proche,
+  la main ne se déplace presque plus.</p>
+  <table class="chords">
+    <tr><th class="l">Accord</th><th>Notes (version liée)</th><th>Position</th><th>Doigté</th><th>Déplacement</th></tr>
+    <tr><td class="l">Ré mineur</td><td>Ré · Fa · La</td><td>fondamentale</td><td class="dg">1 – 3 – 5</td><td>départ</td></tr>
+    <tr><td class="l">Si♭ majeur</td><td>Ré · Fa · Si♭</td><td>1<sup>er</sup> renv.</td><td class="dg">1 – 2 – 5</td><td class="good">+1</td></tr>
+    <tr><td class="l">Fa majeur</td><td>Do · Fa · La</td><td>2<sup>e</sup> renv.</td><td class="dg">1 – 2 – 5</td><td class="good">+3</td></tr>
+    <tr><td class="l">Do majeur</td><td>Do · Mi · Sol</td><td>fondamentale</td><td class="dg">1 – 3 – 5</td><td class="good">+3</td></tr>
+    <tr><td class="l">↩ retour au Ré m</td><td>Ré · Fa · La</td><td>fondamentale</td><td class="dg">1 – 3 – 5</td><td class="good">+5</td></tr>
+  </table>
+  <div class="rule ok"><b>Les notes communes restent sous leur doigt</b>, les autres se déplacent du
+  plus petit intervalle possible. Tour complet = <b>12 demi-tons</b> parcourus, contre
+  <span class="bad">52</span> si tout est joué en position fondamentale. C'est ça, « avoir l'air de
+  savoir jouer » : pas la vitesse, l'économie.
+  <br><b>La main gauche, elle, se déplace</b> — elle joue la fondamentale, qui change à chaque accord.</div>
+
+  <h2>Le test qui ne ment pas</h2>
+  <div class="rule ok">Joue un accord et écoute&nbsp;: les trois notes arrivent-elles
+  <b>ensemble</b> ? <span class="good">Moins de 40 ms = un accord.</span>
+  <span class="bad">Plus de 90 ms = tu arpèges</span>, et c'est presque toujours la forme de la main
+  qui est en cause, pas la vitesse. L'exercice de la
+  <a href="../lessons/accord-dun-seul-bloc.html">la leçon « un accord d’un seul bloc »</a> le mesure pour toi.</div>
+
+  <h2>Sources</h2>
+  <p style="font-size:14px">
+    <a href="https://app.hoffmanacademy.com/lessons/piano/finger-numbers/video/">Hoffman Academy — Finger Numbers (leçon 16)</a> ·
+    <a href="https://www.hoffmanacademy.com/store/learning-and-teaching-resources/finger-numbers">Fiche PDF « Finger Numbers »</a> ·
+    <a href="https://www.hoffmanacademy.com/store/learning-and-teaching-resources/pentascale-guide">Fiche PDF « Pentascale Guide »</a> ·
+    <a href="https://www.pianote.com/blog/theory/">Pianote — théorie</a>
+  </p>
+  <p class="noprint">Leçons liées :
+    <a href="../lessons/cinq-doigts-et-premier-accord.html">cinq doigts &amp; premier accord</a> ·
+    <a href="../lessons/passage-du-pouce.html">le passage du pouce</a> ·
+    <a href="../lessons/accord-dun-seul-bloc.html">un accord d’un seul bloc</a>.
+    Une question ? Demande à ton prof.</p>
+</div>
+</body>
+</html>

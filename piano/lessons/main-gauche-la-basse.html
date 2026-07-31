@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Leçon 05 — La main gauche : la basse</title>
+<title>La main gauche : la basse</title>
+<link rel="stylesheet" href="../lib/lesson.css">
 <link rel="stylesheet" href="../lib/piano.css">
 <style>
   :root{
@@ -92,7 +93,7 @@
 <div class="wrap">
 
   <header class="hero">
-    <p class="kicker">Leçon 05 · Les deux mains</p>
+    <p class="kicker" data-lnum></p>
     <h1>La main gauche : la basse</h1>
     <p class="mission">Jusqu'ici, tout se passe à la main droite. Maintenant on réveille la <b>main
     gauche</b> : elle pose la <b>basse</b>, la fondation grave sous tes accords. C'est ce qui donne à
@@ -147,7 +148,7 @@
   <p>Active le guidage : à chaque mesure, la/les note(s) à jouer s'allument et le métronome te cale.
   Le bouton <b>« Écouter »</b> te joue la chanson basse+accords pour entendre l'objectif.</p>
 
-  <div class="tip"><b>Difficile à deux mains sur ton clavier d'ordinateur ?</b> C'est normal : la plupart
+  <div class="tip"><b>Difficile à deux mains ?</b> C'est normal au début : la plupart
   des claviers PC ne gèrent pas 4 touches enfoncées en même temps. Le bouton <b>« Tu joues »</b> est ta
   solution — il fait jouer <b>une main par l'appli</b> pendant que tu joues l'autre :
   <ul style="margin:8px 0 0">
@@ -187,10 +188,7 @@
       </div>
     </div>
 
-    <p class="kbdhint">⌨ Clavier sur 2 octaves (le raccourci est écrit sur chaque touche).
-    <b>Main droite</b> (médium) : <b>A Z E R T Y U</b> = blanches, <b>chiffres</b> au-dessus = noires.
-    <b>Main gauche</b> (graves) : <b class="bk">rangée du bas</b> = blanches, <b class="bk">S D G H J</b> au-dessus = noires
-    (le <b>Si♭ de basse = J</b>).</p>
+    <p class="kbdhint">🎹 Joue sur ton clavier — ou clique les touches à l'écran. Les boutons <b>🎯 Guide</b> et <b>✋ Doigtés</b> affichent ou masquent les prochaines touches et le numéro du doigt.</p>
 
     <div class="controls" id="pk-controls"></div>
 
@@ -223,12 +221,13 @@
   </ul>
 
   <footer>
+    <nav data-lprevnext></nav>
     <p class="src"><b>Sources &amp; pour aller plus loin :</b></p>
     <ul class="src">
       <li><a href="https://www.hoffmanacademy.com/blog/music-theory-for-beginners" target="_blank">Hoffman Academy — Music Theory for Beginners</a> (basse, fondamentale, mains ensemble)</li>
       <li><a href="https://www.pianote.com/blog/coldplay-the-scientist/" target="_blank">Pianote — Coldplay « The Scientist »</a></li>
     </ul>
-    <p class="src" style="color:var(--muted)">Leçon 05 · Mission : jouer The Scientist, Happy Ending
+    <p class="src" style="color:var(--muted)"><span data-lnum="n"></span> · Mission : jouer The Scientist, Happy Ending
     &amp; Interstellar en comprenant ce qu'on joue.</p>
   </footer>
 </div>
@@ -247,7 +246,7 @@
   var PROG=['Rem','Sib','Fa','DoM'];
 
   // Piano 3 octaves (Do3..Do6) + clavier 2 octaves chromatiques (lib, identique partout).
-  var piano=PianoKeyboard.create({ mount:'#piano-mount', octaves:3, startOctave:3, keyboard:'2oct', onNote:onNote });
+  var piano=PianoKeyboard.create({ mount:'#piano-mount', octaves:3, startOctave:3, onNote:onNote });
   piano.mountControls('#pk-controls');
 
   /* ----- beat dots ----- */
@@ -306,7 +305,7 @@
   document.getElementById('tDown').onclick=function(){ tempo=Math.max(40,tempo-5); bpmEl.textContent=tempo; };
 
   /* ----- play-along : tu joues tout, OU l'appli t'accompagne d'une main -----
-     Résout la limite du clavier PC (ghosting) : tu ne gères qu'une main à la fois. */
+     Permet de ne gérer qu'une main à la fois pendant l'apprentissage. */
   var guide=false, play='both', current=null, barSet=new Set();
   var metroChord=document.getElementById('metroChord');
   var btnGuide=document.getElementById('btnGuide');
@@ -320,7 +319,7 @@
   function setBar(bar, doAuto){
     var c=current=CHORDS[PROG[bar % PROG.length]]; barSet=new Set();
     clearHighlights();
-    if(play!=='left')  piano.highlight(c.notes,'pk-target');   // accord (bleu) = à toi, sauf mode main gauche
+    if(play!=='left')  piano.guide(c.notes);   // accord (bleu) = à toi, sauf mode main gauche
     if(play!=='right') piano.addClass(c.bass,'basst');         // basse (violet) = à toi, sauf mode main droite
     var au=autoNotes(c);
     if(doAuto && au.length){                                   // l'appli joue l'autre main sur le temps 1

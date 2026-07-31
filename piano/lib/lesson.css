@@ -1,0 +1,113 @@
+/* ============================================================
+   lesson.css — coquille commune des leçons (lessons/*.html).
+   Extrait du style répété dans les leçons 01→07. Les nouvelles leçons
+   font <link rel="stylesheet" href="../lib/lesson.css"> et ne gardent
+   en <style> local QUE ce qui leur est propre (métronome, frise…).
+   Les leçons 01→07 gardent leur bloc inline : elles marchent, on n'y touche pas.
+   ============================================================ */
+:root{
+  --bg:#1a1614; --panel:#241f1c; --ink:#f4ece4; --muted:#b3a596;
+  --accent:#e8a04e; --accent2:#5fb0a8; --good:#5cba6b; --bad:#e0625a; --violet:#a98cd8;
+  --line:#3a322d; --serif:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;
+  --sans:'Avenir Next','Segoe UI',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  line-height:1.65;font-size:17px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.wrap{max-width:760px;margin:0 auto;padding:48px 24px 96px}
+
+header.hero{margin-bottom:40px;border-bottom:1px solid var(--line);padding-bottom:28px}
+.kicker{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 10px}
+h1{font-family:var(--serif);font-size:34px;line-height:1.14;margin:0 0 14px;font-weight:600}
+.mission{color:var(--muted);font-size:16px;margin:0}
+.mission b{color:var(--ink)}
+h2{font-family:var(--serif);font-size:26px;margin:48px 0 14px;font-weight:600}
+h3{font-family:var(--serif);font-size:19px;margin:26px 0 8px;font-weight:600}
+p{margin:0 0 16px}
+.lead{font-size:19px;color:var(--ink)}
+ul{padding-left:22px}li{margin:7px 0}
+a{color:var(--accent2);text-decoration:none;border-bottom:1px solid rgba(95,176,168,.4)}
+a:hover{border-bottom-color:var(--accent2)}
+
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:24px 0}
+.tip{border-left:3px solid var(--accent);padding:4px 0 4px 18px;margin:20px 0;color:var(--muted)}
+.tip b{color:var(--ink)}
+.note{font-family:var(--sans);background:#15110f;border:1px solid var(--line);border-radius:6px;
+  padding:2px 8px;font-weight:700;font-size:.92em;color:var(--accent)}
+.bass{color:var(--violet)}
+.chordname{font-family:var(--serif);color:var(--accent);font-weight:700}
+
+details.aside{margin:18px 0;border:1px solid var(--line);border-radius:10px;background:#1d1916;padding:0 18px}
+details.aside summary{cursor:pointer;color:var(--muted);font-weight:600;padding:14px 0;list-style:none}
+details.aside summary::-webkit-details-marker{display:none}
+details.aside summary::before{content:"▸ ";color:var(--accent)}
+details.aside[open] summary::before{content:"▾ "}
+details.aside p{font-size:15px;color:var(--muted)}
+
+/* scène pleine largeur : le piano ne doit PAS être limité à la colonne de texte */
+.stage{background:var(--panel);border:1px solid var(--line);border-left:none;border-right:none;
+  border-radius:0;padding:24px clamp(16px,4vw,56px);margin:28px 0;width:100vw;margin-left:calc(50% - 50vw)}
+.stage>*{max-width:820px;margin-left:auto;margin-right:auto}
+.controls{display:flex;flex-wrap:wrap;gap:10px;margin:14px auto;align-items:center}
+button{font-family:var(--sans);font-weight:600;font-size:14px;cursor:pointer;border:1px solid var(--line);
+  background:#15110f;color:var(--ink);padding:9px 16px;border-radius:9px;transition:.15s}
+button:hover{border-color:var(--accent);color:var(--accent)}
+button.on{background:var(--accent);color:#1a1614;border-color:var(--accent)}
+button.primary{background:var(--accent2);color:#10201e;border-color:var(--accent2)}
+button.primary:hover{filter:brightness(1.1);color:#10201e}
+.kbdhint{color:var(--muted);font-size:14px;text-align:center;margin:0 auto 14px}
+.kbdhint b{color:var(--ink)} .kbdhint .bk{color:var(--violet)}
+
+/* ===== coquille d'exercice (lib/exercise.js) — même ordre partout =====
+   consigne → contrôles → panneau → clavier → verdict → score */
+.ex>*{max-width:820px;margin-left:auto;margin-right:auto}
+.ex-prompt{text-align:center;margin-bottom:10px}
+.ex-title{display:block;font-family:var(--serif);font-size:30px;color:var(--accent);line-height:1.25}
+.ex-title:empty{display:none}
+.ex-sub{display:block;color:var(--muted);font-size:14.5px;margin-top:4px}
+.ex-controls{display:flex;flex-wrap:wrap;gap:10px;margin:14px auto;align-items:center;justify-content:center}
+.ex-panel{margin:12px auto}
+.ex-hint{color:var(--muted);font-size:14px;text-align:center;margin:0 auto 14px}
+.ex-hint b{color:var(--ink)}
+.ex-piano{margin:0 auto}
+
+.ex-verdict{min-height:74px;background:#1d1916;border:1px solid var(--line);border-radius:12px;
+  padding:14px 18px;margin:14px auto;text-align:center}
+.ex-verdict:empty{background:none;border-color:transparent}
+.ex-big{display:block;font-family:var(--serif);font-size:21px;margin-bottom:4px}
+.ex-num{display:block;font-family:var(--serif);font-size:34px;line-height:1.1}
+.ex-det{display:block;color:var(--muted);font-size:14.5px}
+.ex-verdict.ok{border-color:var(--good)}  .ex-verdict.ok .ex-big,.ex-verdict.ok .ex-num{color:var(--good)}
+.ex-verdict.meh{border-color:var(--accent)}.ex-verdict.meh .ex-big,.ex-verdict.meh .ex-num{color:var(--accent)}
+.ex-verdict.no{border-color:var(--bad)}   .ex-verdict.no .ex-big,.ex-verdict.no .ex-num{color:var(--bad)}
+
+.ex-score{font-family:var(--serif);font-size:17px;color:var(--muted);text-align:center;margin:8px 0 0}
+.ex-streak{letter-spacing:3px;font-size:18px}
+.ex-streak.full{color:var(--good)}
+
+/* Alias hérités : les leçons écrites avant le composant gardent leur logique JS
+   (mêmes id, mêmes noms de classe) mais adoptent ici le rendu de .ex-prompt /
+   .ex-verdict / .ex-score. Une leçon migrée vers exercise.js n'en a plus besoin. */
+.tprompt,.prompt{text-align:center;font-family:var(--serif);font-size:24px;color:var(--accent);margin:6px auto 10px}
+.tfeedback,.feedback,.exfeedback{min-height:52px;background:#1d1916;border:1px solid var(--line);
+  border-radius:12px;padding:14px 18px;margin:14px auto;text-align:center;max-width:820px;
+  font-family:var(--serif);font-size:19px;color:var(--muted)}
+.tfeedback:empty,.feedback:empty,.exfeedback:empty{background:none;border-color:transparent;min-height:0;padding:0;margin:0}
+.tfeedback.ok,.feedback.ok,.exfeedback.ok{border-color:var(--good);color:var(--good)}
+.tfeedback.bad,.feedback.bad,.exfeedback.bad,
+.tfeedback.no,.feedback.no,.exfeedback.no{border-color:var(--bad);color:var(--bad)}
+.score,.extimer,.exhistory{font-family:var(--serif);font-size:17px;color:var(--muted);text-align:center;margin:8px auto 0}
+.score b{color:var(--accent)}
+
+/* navigation précédent/suivant injectée par nav.js */
+.lnav-prevnext{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:10px}
+.lnav-prevnext a{font-size:15px}
+
+.ask{background:linear-gradient(135deg,#2a211a,#241f1c);border:1px solid var(--accent);border-radius:14px;padding:20px 24px;margin:32px 0}
+.ask b{color:var(--accent)}
+.win{background:linear-gradient(135deg,#23301f,#1d2a1b);border:1px solid var(--good);border-radius:14px;padding:20px 24px;margin:24px 0}
+.win b{color:var(--good)}
+
+footer{margin-top:56px;border-top:1px solid var(--line);padding-top:24px;color:var(--muted);font-size:15px}
+.src{font-size:14px}

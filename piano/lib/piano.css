@@ -28,14 +28,25 @@
 .pk-wkey.pk-bad{background:linear-gradient(#f6c7c3,#e89992)!important}
 .pk-bkey.pk-bad{background:linear-gradient(#e89992,#c75d55)!important}
 
-/* badges des touches d'ordinateur */
-/* badge blanche EN BAS (au-dessus du nom de note), badge noire plus haut → même ordre vertical
-   que sur le clavier d'ordinateur (lettres des noires au-dessus de celles des blanches). */
-.pk-kkey{position:absolute;left:50%;transform:translateX(-50%);top:auto;bottom:34px;font-size:11px;font-weight:800;
-  font-family:'Avenir Next','Segoe UI',system-ui,sans-serif;color:#7c6f5f;background:#fffaf0;
-  border:1px solid #d9ccb6;border-radius:4px;padding:1px 6px;pointer-events:none}
-.pk-bkey .pk-kkey{bottom:10px;font-size:10px;padding:1px 4px;color:#e9dcc7;background:#15110f;border-color:#3a322d}
-.pk-piano.pk-hidekeys .pk-kkey{display:none}
+/* pastille de doigté : quel doigt sur quelle touche (1 = pouce … 5 = auriculaire) */
+/* Placée au-dessus du nom de note (.pk-lbl, bottom:12px), dans la zone blanche
+   libre sous les touches noires. */
+.pk-fing{position:absolute;left:50%;transform:translateX(-50%);bottom:44px;
+  width:30px;height:30px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Iowan Old Style',Georgia,serif;font-size:17px;font-weight:700;line-height:1;
+  background:#b06a14;color:#fffdf8;border:2px solid #fffdf8;
+  box-shadow:0 2px 6px rgba(0,0,0,.4);pointer-events:none;z-index:4}
+.pk-bkey .pk-fing{bottom:22px;width:24px;height:24px;font-size:14px;
+  background:#e8a04e;color:#1a1614;border-color:#15110f}
+/* claviers courts (mobile) : on remonte tout pour éviter le chevauchement */
+@media (max-height:520px){ .pk-fing{bottom:36px;width:26px;height:26px;font-size:15px} }
+.pk-wkey.pk-ok .pk-fing,.pk-bkey.pk-ok .pk-fing{background:#2f7a3d}
+
+/* réglages d'affichage pilotés par les boutons (guide / doigtés) */
+.pk-piano.pk-noguide .pk-wkey.pk-target{box-shadow:none;background:linear-gradient(#fffdf8,#efe7da)}
+.pk-piano.pk-noguide .pk-bkey.pk-target{box-shadow:none;background:linear-gradient(#2a2421,#0d0b0a)}
+.pk-piano.pk-nofing .pk-fing{display:none}
 
 /* boutons standard injectés par mountControls() */
 .pk-btn{font-family:'Avenir Next','Segoe UI',system-ui,sans-serif;font-weight:600;font-size:14px;cursor:pointer;

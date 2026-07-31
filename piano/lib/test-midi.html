@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnostic MIDI — piano.js</title>
+<link rel="stylesheet" href="sheet.css">
+<link rel="stylesheet" href="piano.css">
+<style>
+  #log{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;background:#1c1a17;color:#e8e0d2;
+    padding:12px 14px;border-radius:6px;height:180px;overflow:auto;margin:12px 0}
+  #log b{color:#f0b45e}
+  .res{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:14px;margin:3px 0}
+  .pass{color:#1d6b63}.fail{color:#b03a14;font-weight:700}
+  #ctrl{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+</style>
+</head>
+<body>
+<div class="sheet">
+  <h1>🔌 Diagnostic MIDI</h1>
+  <p class="sub">Vérifie que le Nektar Impact GXP61 parle bien aux leçons · <b>doit être ouvert en http://localhost</b></p>
+
+  <div class="rule warn" id="ctx"></div>
+
+  <h2>1. Ton clavier est-il vu ?</h2>
+  <div id="ctrl"></div>
+  <div id="piano"></div>
+  <p>Joue quelques notes et appuie sur la pédale : les touches doivent s'allumer et sonner,
+     et chaque message doit apparaître ci-dessous.</p>
+  <div id="log"></div>
+
+  <h2>2. Auto-test de la lib (sans toucher au clavier)</h2>
+  <p>Ces contrôles injectent de faux messages MIDI pour vérifier que <code>piano.js</code> les
+     décode correctement. Ils doivent tous passer, clavier branché ou non.</p>
+  <div id="tests"></div>
+
+  <h2>3. Auto-test du composant d'exercice &amp; de l'ordre des leçons</h2>
+  <p>Vérifie que <code>exercise.js</code> monte toujours les mêmes zones dans le même ordre, et que
+     l'ordre défini dans <code>nav.js</code> est cohérent.</p>
+  <div id="tests2"></div>
+  <div id="ex-probe" style="display:none"></div>
+</div>
+
+<script src="piano.js"></script>
+<script src="exercise.js"></script>
+<script>window.LNAV_NOMOUNT=true;</script>
+<script src="nav.js"></script>
+<script>
+/* ---------- contexte sécurisé ? ---------- */
+var ctx=document.getElementById('ctx');
+if(window.isSecureContext && location.protocol!=='file:'){
+  ctx.className='rule ok';
+  ctx.innerHTML='✅ Page servie en <b>'+location.protocol+'//'+location.host+'</b> — le MIDI est autorisé ici.';
+}else{
+  ctx.innerHTML='⛔ Cette page est ouverte en <b>'+location.protocol+'</b>. Le MIDI ne marchera pas.<br>'+
+    'Lance <code>./serve.sh</code> puis ouvre <b>http://localhost:8000/lib/test-midi.html</b>.';
+}
+
+/* ---------- clavier + journal des messages ---------- */
+var lastNote=null;
+var kb=PianoKeyboard.create({mount:'#piano', keyboard:'2oct', octaves:3, startOctave:3,
+  onNote:function(m,el,info){ lastNote={midi:m, info:info}; }});
+kb.mountControls('#ctrl');
+
+var log=document.getElementById('log');
+function say(html){
+  var d=document.createElement('div'); d.innerHTML=html;
+  log.appendChild(d); log.scrollTop=log.scrollHeight;
+  while(log.children.length>200) log.removeChild(log.firstChild);
+}
+if(navigator.requestMIDIAccess){
+  navigator.requestMIDIAccess().then(function(a){
+    function watch(){
+      a.inputs.forEach(function(inp){
+        say('🔌 entrée détectée : <b>'+inp.name+'</b> ('+inp.manufacturer+')');
+        inp.onmidimessage=function(e){
+          var d=e.data, c=d[0]&0xf0;
+          var what = c===0x90&&d[2]>0 ? 'note ON  '
+                   : (c===0x80||c===0x90) ? 'note OFF '
+                   : c===0xb0&&d[1]===64 ? (d[2]>=64?'PÉDALE ↓':'PÉDALE ↑')
+                   : 'CC/autre';
+          say('<b>'+what+'</b> ['+[].join.call(d,' ')+']');
+        };
+      });
+      if(!a.inputs.size) say('⚠️ aucune entrée MIDI — clavier branché et allumé ?');
+    }
+    a.onstatechange=watch; watch();
+  }).catch(function(err){ say('⛔ accès MIDI refusé : '+err.message); });
+}else{
+  say('⛔ Web MIDI absent de ce navigateur — utilise Chrome ou Edge.');
+}
+
+/* ---------- auto-test : on injecte de faux messages ---------- */
+(function(){
+  var out=document.getElementById('tests'), fails=0;
+  function check(name, cond){
+    var d=document.createElement('div');
+    d.className='res '+(cond?'pass':'fail');
+    d.textContent=(cond?'✓ ':'✗ ')+name;
+    out.appendChild(d); if(!cond) fails++;
+  }
+  var el=kb.midiToEl(60);
+  kb.setSound(false);                                    // muet : on teste le décodage, pas l'audio
+
+  kb.midiMessage([0x90,60,100]);
+  check('note ON (0x90 vél.100) allume le Do central', el.classList.contains('pk-press'));
+
+  kb.midiMessage([0x80,60,0]);
+  check('note OFF (0x80) éteint le Do central', !el.classList.contains('pk-press'));
+
+  kb.midiMessage([0x90,60,0]);
+  check('note ON à vélocité 0 = note OFF (convention MIDI)', !el.classList.contains('pk-press'));
+
+  kb.midiMessage([0x90,127,100]);
+  check('note hors plage → message d\'aide, pas de plantage',
+        kb.midiState().text.indexOf('hors de la plage')>=0);
+  kb.midiMessage([0x80,127,0]);
+
+  kb.midiMessage([0xb0,64,127]);
+  kb.midiMessage([0x90,64,100]); kb.midiMessage([0x80,64,0]);
+  check('pédale CC64 baissée : la touche relâchée ne reste pas allumée',
+        !kb.midiToEl(64).classList.contains('pk-press'));
+  kb.midiMessage([0xb0,64,0]);
+
+  kb.midiMessage([0xb0,1,64]);
+  check('molette de modulation (CC1) ignorée sans effet', !el.classList.contains('pk-press'));
+
+  // la vélocité doit remonter jusqu'aux leçons : c'est ce qui mesure la force des doigts (Leçon 08)
+  lastNote=null; kb.midiMessage([0x90,67,42]); kb.midiMessage([0x80,67,0]);
+  check('la force de frappe (vélocité) remonte à onNote',
+        !!lastNote && lastNote.midi===67 && lastNote.info.velocity===42 && lastNote.info.source==='midi');
+
+  kb.setSound(true);
+  var h=document.createElement('div');
+  h.className='rule '+(fails?'warn':'ok');
+  h.innerHTML=fails?('<b>'+fails+' test(s) en échec</b> — préviens ton prof.')
+                   :'<b>Tous les tests passent.</b> Le décodage MIDI de la lib est bon.';
+  out.appendChild(h);
+})();
+</script>
+
+<script>
+/* ---------- auto-test : composant d'exercice + ordre des leçons ---------- */
+(function(){
+  var out=document.getElementById('tests2'), fails=0;
+  function check(name, cond){
+    var d=document.createElement('div');
+    d.className='res '+(cond?'pass':'fail');
+    d.textContent=(cond?'✓ ':'✗ ')+name;
+    out.appendChild(d); if(!cond) fails++;
+  }
+
+  // --- exercise.js : les zones, toujours dans le même ordre ---
+  var ex=Exercise.create({mount:'#ex-probe', hint:'test'});
+  var order=[].map.call(document.querySelector('#ex-probe').children, function(e){ return e.className.split(' ')[0]; });
+  check('les zones sont montées dans l\'ordre consigne→contrôles→panneau→indice→clavier→verdict→score',
+        order.join(',')==='ex-prompt,ex-controls,ex-panel,ex-hint,ex-piano,ex-verdict,ex-score');
+
+  var kbp=PianoKeyboard.create({mount:ex.pianoMount, keyboard:'2oct', octaves:3, startOctave:3, midi:false, sound:false});
+  ex.attach(kbp);
+
+  ex.target([60,64,67]);
+  check('target() surligne les touches à jouer (règle : toujours visibles)',
+        kbp.midiToEl(60).classList.contains('pk-target') && kbp.midiToEl(64).classList.contains('pk-target'));
+
+  ex.hit(60);
+  check('hit() passe la touche de « à jouer » à « trouvée »',
+        !kbp.midiToEl(60).classList.contains('pk-target') && kbp.midiToEl(60).classList.contains('pk-ok'));
+
+  ex.miss(61);
+  check('miss() marque la touche fausse', kbp.midiToEl(61).classList.contains('pk-bad'));
+
+  ex.target([60,64,67],[1,3,5]);
+  var f=kbp.midiToEl(64).querySelector('.pk-fing');
+  check('target(notes, doigts) pose un rond numéroté sur chaque touche',
+        !!f && f.textContent==='3' && kbp.midiToEl(60).querySelector('.pk-fing').textContent==='1');
+
+  ex.target([60,64,67]);        // doigté omis → déduit
+  check('doigté déduit : triade serrée (≤ quinte) → 1-3-5',
+        kbp.midiToEl(60).querySelector('.pk-fing').textContent==='1'
+     && kbp.midiToEl(64).querySelector('.pk-fing').textContent==='3'
+     && kbp.midiToEl(67).querySelector('.pk-fing').textContent==='5');
+
+  ex.target([60,65,69]);        // Do-Fa-La = sixte → renversement
+  check('doigté déduit : accord large (renversement) → 1-2-5',
+        kbp.midiToEl(65).querySelector('.pk-fing').textContent==='2');
+
+  kbp.setGuide(false);
+  check('le bouton Guide masque le surlignage', kbp.el.classList.contains('pk-noguide'));
+  kbp.setGuide(true);
+  kbp.setFingersVisible(false);
+  check('le bouton Doigtés masque les ronds', kbp.el.classList.contains('pk-nofing'));
+  kbp.setFingersVisible(true);
+
+  check('plus aucune trace de clavier d\'ordinateur dans le rendu',
+        !document.querySelector('.pk-kkey') && typeof kbp.toggleKeys==='undefined');
+
+  ex.clearKeys();
+  check('clearKeys() retire aussi les ronds de doigté',
+        !kbp.midiToEl(64).querySelector('.pk-fing'));
+
+  ex.target([60,64,67],[1,3,5]);
+
+  ex.verdict('ok','Bravo','détail');
+  var v=document.querySelector('#ex-probe .ex-verdict');
+  check('verdict() écrit le résultat sous le clavier',
+        v.classList.contains('ok') && v.textContent.indexOf('Bravo')>=0);
+
+  ex.streak(3,5);
+  check('streak() affiche la progression', document.querySelector('#ex-probe .ex-score').textContent.indexOf('●●●··')>=0);
+
+  ex.reset();
+  check('reset() vide le verdict et le clavier',
+        !document.querySelector('#ex-probe .ex-verdict').textContent
+        && !kbp.midiToEl(60).classList.contains('pk-ok'));
+
+  // --- nav.js : l'ordre est la source unique ---
+  var L=window.LessonNav.lessons;
+  var nums=L.filter(function(x){return !x.bonus;}).map(function(x){return x.n;});
+  var expected=nums.map(function(_,i){ return ('0'+(i+1)).slice(-2); });
+  check('les numéros sont calculés depuis l\'ordre (aucun écrit à la main)', nums.join()===expected.join());
+
+  var files={}, dup=false;
+  L.forEach(function(x){ if(files[x.f]) dup=true; files[x.f]=1; });
+  check('aucune leçon en double dans la liste', !dup);
+
+  check('le bonus est hors numérotation et en dernier',
+        L[L.length-1].bonus===true && L[L.length-1].n==='★');
+
+  check('chaque leçon a un fichier, un titre et une rubrique',
+        L.every(function(x){ return x.f && x.t && x.k; }));
+
+  var h=document.createElement('div');
+  h.className='rule '+(fails?'warn':'ok');
+  h.innerHTML=fails?('<b>'+fails+' test(s) en échec</b> — préviens ton prof.')
+                   :'<b>Tous les tests passent.</b> Composant d\'exercice et ordre des leçons cohérents.';
+  out.appendChild(h);
+})();
+</script>
+</body>
+</html>

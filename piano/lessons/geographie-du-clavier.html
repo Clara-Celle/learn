@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Leçon 01 — La géographie du clavier</title>
+<title>La géographie du clavier</title>
+<link rel="stylesheet" href="../lib/lesson.css">
 <link rel="stylesheet" href="../lib/piano.css">
 <style>
   :root{
@@ -57,11 +58,6 @@
   .legend span{display:inline-flex;align-items:center;gap:7px}
   .dot{width:14px;height:14px;border-radius:4px;display:inline-block}
   .quizbar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:16px;min-height:54px}
-  .prompt{font-family:var(--serif);font-size:22px}
-  .prompt b{color:var(--accent);font-size:30px}
-  .score{margin-left:auto;color:var(--muted);font-weight:600}
-  .feedback{font-weight:700;min-height:24px}
-  .feedback.ok{color:var(--good)}.feedback.no{color:var(--bad)}
 
   footer{margin-top:56px;border-top:1px solid var(--line);padding-top:24px;color:var(--muted);font-size:15px}
   .src{font-size:14px}
@@ -74,7 +70,7 @@
 <div class="wrap">
 
   <header class="hero">
-    <p class="kicker">Leçon 01 · Les fondations</p>
+    <p class="kicker" data-lnum></p>
     <h1>La géographie du clavier</h1>
     <p class="mission">Objectif de cette leçon : qu'on te dise <b>n'importe quelle note</b> et
     que tu la trouves instantanément sur le clavier — partout. C'est la première brique pour jouer
@@ -133,8 +129,7 @@
       <button id="btnQuiz" class="primary">▶ Lancer le Quiz</button>
     </div>
 
-    <p class="kbdhint">⌨ Le raccourci clavier est écrit sur chaque touche. Blanches : <b>A Z E R T Y U</b>
-    (médium) ou la rangée du bas (graves) · noires : les <b>chiffres</b> (médium) ou <b>S D G H J</b> (graves).</p>
+    <p class="kbdhint">🎹 Joue sur ton clavier — ou clique les touches à l'écran. Les boutons <b>🎯 Guide</b> et <b>✋ Doigtés</b> affichent ou masquent les prochaines touches et le numéro du doigt.</p>
 
     <div id="piano-mount"></div>
 
@@ -165,7 +160,7 @@
   <ul>
     <li>Ouvre <a href="https://virtualpiano.net/" target="_blank">virtualpiano.net</a> ou
     <a href="https://pianist.me/" target="_blank">pianist.me</a> : des pianos virtuels gratuits,
-    jouables à la souris ou au clavier d'ordinateur.</li>
+    jouables au clavier MIDI ou à la souris.</li>
     <li>Jeu express (30 s, plusieurs fois par jour) : pointe un Do, puis nomme à voix haute en
     montant — <i>Do, Ré, Mi…</i></li>
     <li>Plus tard : on parlera d'un vrai <b>piano numérique 88 touches lestées</b> dès que tu veux
@@ -173,13 +168,14 @@
   </ul>
 
   <footer>
+    <nav data-lprevnext></nav>
     <p class="src"><b>Sources &amp; pour aller plus loin :</b></p>
     <ul class="src">
       <li><a href="https://www.hoffmanacademy.com/blog/music-theory-for-beginners" target="_blank">Hoffman Academy — Music Theory for Beginners</a> (notes &amp; clavier)</li>
       <li><a href="https://www.flowkey.com/en/piano-guide/read-sheet-music" target="_blank">flowkey — How to Read Sheet Music</a></li>
       <li><a href="https://www.pianote.com/blog/coldplay-the-scientist/" target="_blank">Pianote — Coldplay « The Scientist » (notre 1er morceau cible)</a></li>
     </ul>
-    <p class="src" style="color:var(--muted)">Leçon 01 · Mission : jouer The Scientist, Happy Ending
+    <p class="src" style="color:var(--muted)"><span data-lnum="n"></span> · Mission : jouer The Scientist, Happy Ending
     &amp; Interstellar en comprenant ce qu'on joue.</p>
   </footer>
 </div>
@@ -188,8 +184,8 @@
 <script src="../lib/nav.js"></script>
 <script>
 (function(){
-  var piano=PianoKeyboard.create({ mount:'#piano-mount', octaves:3, startOctave:3, keyboard:'2oct', onNote:onNote });
-  piano.mountControls('#pk-controls');   // 🔊 Son · Afficher les noms · ⌨ Touches PC
+  var piano=PianoKeyboard.create({ mount:'#piano-mount', octaves:3, startOctave:3, onNote:onNote });
+  piano.mountControls('#pk-controls');   // 🔊 Son · 🎵 Noms · 🎯 Guide · ✋ Doigtés · 🎶 Pédale · 🎹 MIDI
 
   /* ----- « Montre les Do » : surligne brièvement tous les Do ----- */
   document.getElementById('btnDo').onclick=function(){

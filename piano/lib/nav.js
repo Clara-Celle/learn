@@ -5,29 +5,45 @@
    Pour ajouter une leçon : compléter le tableau LESSONS ci-dessous.
    ============================================================ */
 (function(){
-  // Source unique des leçons du cours : la page d'accueil (../index.html) lit ce tableau
-  // via window.LessonNav.lessons. Ajouter une leçon = compléter UNIQUEMENT ce tableau.
+  /* ============================================================
+     L'ORDRE DU COURS VIT ICI, ET NULLE PART AILLEURS.
+     Réordonner une leçon = déplacer sa ligne. Les numéros sont CALCULÉS
+     depuis la position (champ `n` ajouté plus bas) : aucun numéro n'est
+     écrit en dur, ni dans les fichiers, ni dans leur nom.
+     Chaque leçon appelle LessonNav.applyToLesson() (via nav.js) qui remplit
+     son titre, son numéro et ses liens précédent/suivant.
+     ============================================================ */
   var LESSONS=[
-    {n:'01', t:'Géographie du clavier',          f:'0001-la-geographie-du-clavier.html',
+    {t:'Géographie du clavier',              f:'geographie-du-clavier.html', k:'Repères',
      d:"Trouver n'importe quelle note instantanément sur le clavier."},
-    {n:'02', t:'Premier accord (majeur)',         f:'0002-ton-premier-accord-la-triade-majeure.html',
-     d:"Construire la triade majeure — ton tout premier accord."},
-    {n:'03', t:'Accord mineur & The Scientist',   f:'0003-laccord-mineur-et-the-scientist.html',
+    {t:'Cinq doigts & ton premier accord',   f:'cinq-doigts-et-premier-accord.html', k:'Fondamentaux',
+     d:"Un doigt par touche, une mélodie — puis 1-3-5 ensemble : ton premier accord."},
+    {t:'Le passage du pouce',                f:'passage-du-pouce.html', k:'Technique',
+     d:"Sortir du camp de base sans trou dans le son — la porte des gammes."},
+    {t:'Accord mineur & The Scientist',      f:'accord-mineur-et-the-scientist.html', k:'Harmonie',
      d:"L'accord mineur, puis les 4 accords de The Scientist."},
-    {n:'04', t:'Le rythme : jouer en mesure',      f:'0004-le-rythme-jouer-en-mesure.html',
+    {t:'Un accord d\'un seul bloc',           f:'accord-dun-seul-bloc.html', k:'Technique',
+     d:"Le doigté 1-3-5, mesuré par ton vrai clavier : les 3 notes tombent-elles ensemble ?"},
+    {t:'Les renversements',                  f:'renversements.html', k:'Harmonie',
+     d:"Changer d'accord sans lever la main : les notes communes ne bougent pas."},
+    {t:'Le rythme : jouer en mesure',         f:'rythme-jouer-en-mesure.html', k:'Rythme',
      d:"Tenir le tempo et jouer en place avec le métronome."},
-    {n:'05', t:'La main gauche : la basse',         f:'0005-la-main-gauche-la-basse.html',
+    {t:'La main gauche : la basse',           f:'main-gauche-la-basse.html', k:'Mains ensemble',
      d:"Ajouter la basse à la main gauche sous tes accords."},
-    {n:'06', t:'Le balancier : main droite en croches', f:'0006-le-balancier-main-droite-croches.html',
+    {t:'Le balancier : main droite en croches', f:'balancier-croches.html', k:'Rythme',
      d:"Faire « respirer » l'accord en croches — le vrai mouvement de la chanson."},
-    {n:'07', t:'The Scientist : tout assembler',    f:'0007-the-scientist-assemblage-mains-ensemble.html',
+    {t:'The Scientist : tout assembler',      f:'the-scientist-assemblage.html', k:'Assemblage',
      d:"Mains ensemble + pédale : jouer The Scientist en entier."},
-    {n:'★', t:'Bonus : Canon de Pachelbel',        f:'bonus-canon-pachelbel.html',
+    {t:'Bonus : Canon de Pachelbel',          f:'bonus-canon-pachelbel.html', k:'Bonus', bonus:true,
      d:"Jouer la célèbre progression du Canon en Ré — révision en tonalité de Ré."}
   ];
+  // numérotation dérivée de l'ordre ci-dessus — jamais écrite à la main
+  (function(){ var i=0; LESSONS.forEach(function(L){ L.n = L.bonus ? '★' : ('0'+(++i)).slice(-2); }); })();
   var REF={t:'Fiche : carte du clavier', f:'../reference/keyboard-map.html'};
-  var HUB={t:'Tous les cours', f:'../index.html'};       // retour au hub
-  var HOME={t:'Accueil du cours', f:'index.html'};        // page d'accueil piano
+  var REF2={t:'Fiche : position des doigts', f:'../reference/position-des-doigts.html'};
+  // chemins relatifs à lessons/ (c'est de là que nav.js est chargé)
+  var HUB={t:'Tous les cours', f:'../../index.html'};     // hub de tous les cours
+  var HOME={t:'Accueil du cours', f:'../index.html'};     // page d'accueil piano
 
   var CSS=''
    +'.lnav{position:fixed;top:16px;left:16px;z-index:1000;width:236px;background:#241f1c;'
@@ -46,6 +62,7 @@
    +'.lnav-list a.current b{color:#1a1614}'
    +'.lnav-home{color:#e8a04e!important;font-weight:700}'
    +'.lnav-ref{margin-top:6px;border-top:1px solid #3a322d;padding-top:10px!important;color:#5fb0a8!important}'
+   +'.lnav-ref2{margin-top:0;border-top:none;padding-top:2px!important}'
    +'.lnav-hub{margin-top:2px;color:#7c6f5f!important;font-size:12px!important}'
    +'.lnav.collapsed{width:auto}'
    +'.lnav.collapsed .lnav-title,.lnav.collapsed .lnav-list{display:none}'
@@ -81,8 +98,11 @@
       var a=document.createElement('a'); a.href=L.f; if(L.f===cur) a.className='current';
       a.innerHTML='<b>'+L.n+'</b> · '+L.t; list.appendChild(a);
     });
-    var ref=document.createElement('a'); ref.href=REF.f; ref.className='lnav-ref'; ref.textContent='📄 '+REF.t;
-    list.appendChild(ref);
+    [REF,REF2].forEach(function(R,i){
+      var ref=document.createElement('a'); ref.href=R.f;
+      ref.className='lnav-ref'+(i?' lnav-ref2':''); ref.textContent='📄 '+R.t;
+      list.appendChild(ref);
+    });
     var hub=document.createElement('a'); hub.href=HUB.f; hub.className='lnav-hub'; hub.textContent='← '+HUB.t;
     list.appendChild(hub);
     nav.appendChild(list);
@@ -99,7 +119,42 @@
     toggle.onclick=function(){ setCollapsed(!nav.classList.contains('collapsed')); };
   }
 
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',mount); else mount();
+  /* ----- en-tête & pied de page dérivés de l'ordre -----
+     Une leçon ne connaît plus son propre numéro. Elle expose des points d'ancrage :
+       <p class="kicker" data-lnum></p>        → « Leçon 04 · Harmonie »
+       <h1 data-ltitle>…</h1>                  → titre depuis LESSONS (si l'élément est vide)
+       <nav data-lprevnext></nav>              → liens ← précédente / suivante →
+     Réordonner LESSONS suffit : tout suit. */
+  function applyToLesson(){
+    var cur=currentFile(), i=-1;
+    LESSONS.forEach(function(L,k){ if(L.f===cur) i=k; });
+    if(i<0) return;
+    var L=LESSONS[i];
+
+    document.title='Leçon '+L.n+' — '+L.t;
+
+    // data-lnum      → « Leçon 04 · Harmonie »
+    // data-lnum="n"  → « Leçon 04 » (pour les pieds de page)
+    var label=(L.bonus?'Bonus':'Leçon '+L.n);
+    [].forEach.call(document.querySelectorAll('[data-lnum]'), function(e){
+      e.textContent = (e.getAttribute('data-lnum')==='n') ? label : label+(L.k?' · '+L.k:'');
+    });
+
+    var ttl=document.querySelector('[data-ltitle]');
+    if(ttl && !ttl.textContent.trim()) ttl.textContent=L.t;
+
+    var pn=document.querySelector('[data-lprevnext]');
+    if(pn){
+      pn.className='lnav-prevnext';
+      var out=[];
+      if(i>0) out.push('<a href="'+LESSONS[i-1].f+'">← Leçon '+LESSONS[i-1].n+' · '+LESSONS[i-1].t+'</a>');
+      if(i<LESSONS.length-1) out.push('<a href="'+LESSONS[i+1].f+'">Leçon '+LESSONS[i+1].n+' · '+LESSONS[i+1].t+' →</a>');
+      pn.innerHTML=out.join('');
+    }
+  }
+
+  function boot(){ mount(); if(!window.LNAV_NOMOUNT) applyToLesson(); }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot); else boot();
   // Exposé pour la page d'accueil du cours (source unique de la liste des leçons).
-  window.LessonNav={mount:mount, lessons:LESSONS, ref:REF, hub:HUB, home:HOME};
+  window.LessonNav={mount:mount, applyToLesson:applyToLesson, lessons:LESSONS, ref:REF, ref2:REF2, hub:HUB, home:HOME};
 })();

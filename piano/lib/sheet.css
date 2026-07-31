@@ -1,0 +1,49 @@
+/* sheet.css — style commun des fiches de référence (reference/*.html).
+   Conçu pour l'écran ET pour l'impression. Les schémas spécifiques à une fiche
+   (mini-piano, portée…) restent en <style> local dans la fiche concernée. */
+
+:root{--ink:#1c1a17;--accent:#b06a14;--accent2:#1d6b63;--line:#d8cfc0;--muted:#6b6258}
+*{box-sizing:border-box}
+body{margin:0;background:#f4efe6;color:var(--ink);
+  font-family:'Avenir Next','Segoe UI',system-ui,sans-serif;line-height:1.55}
+.sheet{max-width:880px;margin:24px auto;background:#fffdf8;padding:40px 48px;
+  box-shadow:0 6px 30px rgba(0,0,0,.08)}
+h1{font-family:'Iowan Old Style',Georgia,serif;font-size:30px;margin:0 0 4px}
+.sub{color:var(--muted);margin:0 0 26px;font-size:15px}
+h2{font-family:'Iowan Old Style',Georgia,serif;font-size:20px;margin:30px 0 10px;
+  border-bottom:2px solid var(--line);padding-bottom:6px}
+h3{font-family:'Iowan Old Style',Georgia,serif;font-size:16px;margin:20px 0 6px}
+p{margin:0 0 12px}
+
+/* encadrés */
+.rule{background:#fbf4e6;border-left:4px solid var(--accent);padding:12px 16px;border-radius:6px;margin:14px 0}
+.rule.warn{background:#fdf0ec;border-left-color:#b03a14}
+.rule.ok{background:#eef6f4;border-left-color:var(--accent2)}
+
+table{border-collapse:collapse;width:100%;margin:10px 0;font-size:16px}
+th,td{border:1px solid var(--line);padding:9px 12px;text-align:center}
+th{background:#f0e8da;font-family:'Iowan Old Style',Georgia,serif}
+td.l,th.l{text-align:left}
+
+.do{color:var(--accent);font-weight:700}
+.cde{color:var(--accent2);font-weight:700}
+.price{font-family:'Iowan Old Style',Georgia,serif;font-weight:700;white-space:nowrap}
+
+/* checklist imprimable : la case se coche au stylo */
+ul.check{list-style:none;padding-left:0;margin:12px 0}
+ul.check li{position:relative;padding-left:30px;margin-bottom:9px}
+ul.check li::before{content:"";position:absolute;left:0;top:3px;width:15px;height:15px;
+  border:2px solid var(--accent);border-radius:3px}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:640px){.two{grid-template-columns:1fr}
+  .sheet{padding:24px 20px;margin:0}}
+
+.noprint{text-align:center;color:var(--muted);font-size:13px;margin-top:10px}
+@media print{
+  body{background:#fff}
+  .sheet{box-shadow:none;margin:0;max-width:100%;padding:0}
+  .noprint{display:none}
+  h2{break-after:avoid}
+  ul.check li,tr{break-inside:avoid}
+}

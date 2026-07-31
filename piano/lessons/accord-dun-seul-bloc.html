@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Les doigts : un accord d'un seul bloc</title>
+<link rel="stylesheet" href="../lib/lesson.css">
+<link rel="stylesheet" href="../lib/piano.css">
+<style>
+  /* propre à cette leçon : la main, le verdict, le nuancier de vélocité */
+  .hand{display:flex;gap:10px;justify-content:center;margin:18px 0 6px;flex-wrap:wrap}
+  .finger{background:#15110f;border:1px solid var(--line);border-radius:12px;padding:12px 0 10px;
+    width:88px;text-align:center}
+  .finger .num{font-family:var(--serif);font-size:30px;color:var(--accent);line-height:1;display:block}
+  .finger .nm{font-size:12.5px;color:var(--muted);display:block;margin-top:6px}
+
+  .fingering{display:flex;gap:8px;justify-content:center;margin:12px 0;flex-wrap:wrap;min-height:62px}
+  .fingering .fg{background:#15110f;border:1px solid var(--line);border-radius:10px;padding:7px 14px;text-align:center}
+  .fingering .fg .n{display:block;font-weight:700;font-size:15px}
+  .fingering .fg .d{display:block;font-family:var(--serif);font-size:20px;color:var(--accent2);line-height:1.2}
+  .fingering.hidden{visibility:hidden}
+
+  .verdict{min-height:96px;background:#1d1916;border:1px solid var(--line);border-radius:12px;
+    padding:16px 18px;margin:14px auto;text-align:center}
+  .verdict .big{font-family:var(--serif);font-size:22px;display:block;margin-bottom:6px}
+  .verdict.good{border-color:var(--good)} .verdict.good .big{color:var(--good)}
+  .verdict.meh{border-color:var(--accent)} .verdict.meh .big{color:var(--accent)}
+  .verdict.bad{border-color:var(--bad)}   .verdict.bad .big{color:var(--bad)}
+  .verdict .det{color:var(--muted);font-size:14.5px}
+
+  .gauge{height:12px;background:#15110f;border:1px solid var(--line);border-radius:7px;
+    margin:12px auto 4px;max-width:420px;position:relative;overflow:hidden}
+  .gauge i{position:absolute;left:0;top:0;bottom:0;background:var(--good);transition:width .25s, background .25s}
+  .gaugelab{display:flex;justify-content:space-between;max-width:420px;margin:0 auto;
+    font-size:11.5px;color:var(--muted)}
+
+  .vel{display:flex;gap:10px;justify-content:center;align-items:flex-end;margin:14px 0 2px;min-height:76px}
+  .vel .bar{width:52px;text-align:center}
+  .vel .bar .b{background:var(--accent2);border-radius:5px 5px 0 0;margin:0 auto;width:26px;transition:height .25s}
+  .vel .bar .l{font-size:12px;color:var(--muted);margin-top:5px}
+  .vel .bar.weak .b{background:var(--bad)}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <p class="kicker" data-lnum></p>
+    <h1>Les doigts : un accord d'un seul bloc</h1>
+    <p class="mission">Tu sais construire les quatre accords. Tu sais numéroter tes doigts et tenir
+    la forme de main. Il reste une chose : <b>les faire tomber ensemble</b>. C'est ce qui sépare un
+    accord d'un « bruit de trois notes » — et ton clavier peut le mesurer.</p>
+  </header>
+
+  <p class="lead">Un accord, ce n'est pas trois notes jouées vite. C'est trois notes jouées
+  <b>au même instant</b>, avec <b>la même force</b>. Ton clavier peut mesurer les deux — c'est ta
+  nouvelle boucle de feedback.</p>
+
+  <h2>1. Rappel : les doigts et la forme</h2>
+  <p>Tu as vu tout ça en <a href="cinq-doigts-et-premier-accord.html">la leçon « Cinq doigts &amp; ton premier accord »</a> — pouce = 1 aux
+  deux mains, doigts courbés, poignet à niveau. Un coup d'œil rapide avant d'attaquer :</p>
+
+  <div class="hand">
+    <div class="finger"><span class="num">1</span><span class="nm">pouce</span></div>
+    <div class="finger"><span class="num">2</span><span class="nm">index</span></div>
+    <div class="finger"><span class="num">3</span><span class="nm">majeur</span></div>
+    <div class="finger"><span class="num">4</span><span class="nm">annulaire</span></div>
+    <div class="finger"><span class="num">5</span><span class="nm">auriculaire</span></div>
+  </div>
+
+  <h2>2. Le nouveau : le doigté d'un accord</h2>
+  <div class="tip"><b>La règle de la triade.</b> Pour un accord en position fondamentale
+  (les trois notes serrées, comme tu les as apprises en <a href="cinq-doigts-et-premier-accord.html">la leçon sur la triade majeure</a>) :
+  main droite <b>1 – 3 – 5</b>. Le pouce en bas, l'auriculaire en haut, le majeur au milieu.
+  Main gauche sur la basse : <b>5</b> (l'auriculaire).</div>
+  <p>Trois doigts qui appuient en même temps, ce n'est pas la même chose que trois doigts qui
+  appuient l'un après l'autre très vite. Et c'est là que <b>la forme de la main</b> se venge :
+  doigts à plat, la dernière phalange se ramollit, et l'auriculaire n'arrive plus à s'enfoncer
+  en même temps que le pouce. C'est la cause n°1 des accords qui « bavent ».</p>
+
+  <h2>3. L'exercice : d'un seul bloc</h2>
+  <p>L'appli te <b>nomme</b> un accord — à toi de le construire <b>de mémoire</b> sur ton vrai
+  clavier, avec le bon doigté. Elle mesure ensuite deux choses que ton oreille de débutant ne
+  sait pas encore juger&nbsp;:</p>
+  <ul>
+    <li><b>L'écart</b> entre ta première et ta dernière note. Objectif : <b>moins de 40 ms</b>.</li>
+    <li><b>L'équilibre</b> de force entre tes trois doigts. Le 5 est presque toujours le plus faible —
+    c'est normal, et ça se voit sur le graphique.</li>
+  </ul>
+
+  <div id="ex"></div>
+
+  <div class="win" id="win" style="display:none">
+    <p style="margin:0"><b>5 accords d'affilée, d'un seul bloc. 🎯</b> Ta main a pris la forme.
+    C'est le moment de retourner à la
+    <a href="the-scientist-assemblage.html">la leçon d’assemblage</a> et de rejouer
+    <i>The Scientist</i> en entier — cette fois avec les bons doigts, sur un vrai instrument.</p>
+  </div>
+
+  <h2>4. Ce que la machine ne voit pas</h2>
+  <p>Elle mesure <b>quand</b> et <b>avec quelle force</b> tes notes arrivent. Elle ne voit pas
+  <b>quels doigts</b> tu as utilisés, ni si ton poignet est cassé. Pour ça, deux astuces de
+  pianiste&nbsp;:</p>
+  <ul>
+    <li><b>Filme tes mains</b> 30 secondes avec ton téléphone posé de côté. Tu verras immédiatement
+    si tes doigts sont à plat.</li>
+    <li><b>Poste la vidéo</b> sur <a href="https://www.reddit.com/r/pianolearning/">r/pianolearning</a> —
+    les retours sur la position de main y sont fréquents et bienveillants. C'est le genre de correction
+    qu'aucune appli ne remplace.</li>
+  </ul>
+
+  <div class="ask">
+    <p style="margin:0 0 8px"><b>Source à consulter :</b>
+    <a href="https://app.hoffmanacademy.com/lessons/piano/finger-numbers/video/">Hoffman Academy — Finger Numbers (leçon 16, vidéo gratuite)</a>.
+    Cinq minutes, en anglais mais très visuel. Il y a aussi une
+    <a href="https://www.hoffmanacademy.com/store/learning-and-teaching-resources/finger-numbers">fiche d'exercice PDF gratuite</a>
+    à imprimer.</p>
+    <p style="margin:0"><b>Une question ?</b> Demande-moi. Je suis ton prof : si le verdict te
+    semble injuste, si ta main te fait mal, ou si tu ne sais pas quel doigt mettre sur un accord
+    qu'on n'a pas vu — dis-le-moi.</p>
+  </div>
+
+  <footer>
+    <nav data-lprevnext></nav>
+    <p>Fiches : <a href="../reference/position-des-doigts.html">position des doigts</a> ·
+    <a href="../reference/keyboard-map.html">carte du clavier</a> ·
+    <a href="../reference/premier-clavier-et-branchement.html">clavier &amp; branchement</a></p>
+    <p class="src">Doigté 1-3-5 et numérotation des doigts d'après
+    <a href="https://app.hoffmanacademy.com/lessons/piano/finger-numbers/video/">Hoffman Academy</a> ·
+    position de la main d'après <a href="https://www.pianote.com/blog/theory/">Pianote</a>.</p>
+  </footer>
+</div>
+
+<script src="../lib/piano.js"></script>
+<script src="../lib/exercise.js"></script>
+<script src="../lib/nav.js"></script>
+<script>
+var CHORDS=[
+  {id:'Rem', name:'Ré mineur',  notes:[62,65,69], noms:['Ré','Fa','La'],   doigts:[1,3,5]},
+  {id:'Sib', name:'Si♭ majeur', notes:[65,70,74], noms:['Fa','Si♭','Ré'],  doigts:[1,2,5]},
+  {id:'Fa',  name:'Fa majeur',  notes:[65,69,72], noms:['Fa','La','Do'],   doigts:[1,3,5]},
+  {id:'DoM', name:'Do majeur',  notes:[60,64,67], noms:['Do','Mi','Sol'],  doigts:[1,3,5]}
+];
+
+var ex=Exercise.create({mount:'#ex',
+  hint:'Joue sur ton <b>vrai clavier</b> — la mesure de force a besoin du MIDI. '
+      +'(À la souris, seul l\'écart de temps est mesuré.)'});
+var kb=PianoKeyboard.create({mount:ex.pianoMount, octaves:3, startOctave:3, onNote:onNote});
+ex.attach(kb);
+
+var winBox=document.getElementById('win');
+var running=false, current=null, buf=[], timer=null, streak=0;
+
+function pcs(l){ return l.map(function(m){ return ((m%12)+12)%12; }).sort(function(a,b){return a-b;}).join(','); }
+
+function pick(){
+  var c; do{ c=CHORDS[Math.floor(Math.random()*CHORDS.length)]; }while(current && c.id===current.id);
+  current=c; buf=[];
+  ex.clearKeys(); ex.showPanel(false); ex.panel.innerHTML='';
+  ex.prompt(c.name,'Construis-le de mémoire, puis joue les 3 notes ensemble.');
+}
+
+function showFingering(c){
+  ex.showPanel(true);
+  ex.panel.innerHTML='<div class="fingering">'+c.noms.map(function(n,i){
+    return '<div class="fg"><span class="d">'+c.doigts[i]+'</span><span class="n">'+n+'</span></div>';
+  }).join('')+'</div>';
+}
+function showVel(items){
+  if(!items.length || items[0].vel==null) return;
+  var min=Math.min.apply(null,items.map(function(x){return x.vel;}));
+  ex.showPanel(true);
+  ex.panel.innerHTML='<div class="vel">'+items.map(function(x){
+    return '<div class="bar'+(x.vel===min&&items.length>1?' weak':'')+'">'
+      +'<div class="b" style="height:'+Math.max(6,Math.round(x.vel/127*64))+'px"></div>'
+      +'<div class="l">doigt '+x.doigt+'<br>'+x.vel+'</div></div>';
+  }).join('')+'</div>';
+}
+
+var bGo=ex.button('▶ Commencer', function(b){
+  running=!running;
+  b.innerHTML=running?'■ Arrêter':'▶ Commencer'; b.classList.toggle('primary',!running);
+  streak=0; ex.streak(0,5); winBox.classList.add('hidden'); ex.reset();
+  if(running) pick();
+  else { current=null; ex.prompt('','En pause.'); ex.showPanel(false); }
+}, {primary:true});
+
+ex.button('👁 Montre-moi', function(){
+  if(!current) return;
+  showFingering(current);
+  ex.target(current.notes, current.doigts);
+  streak=0; ex.streak(0,5);          // regarder a un coût : la série repart de zéro
+});
+ex.button('🔊 Écouter l\'accord', function(){ if(current) kb.playChord(current.notes); });
+
+function onNote(midi, el, info){
+  if(!running) return;
+  buf.push({midi:midi, t:performance.now(), vel:(info&&info.velocity)||null});
+  clearTimeout(timer);
+  timer=setTimeout(evaluate, 400);   // 400 ms sans nouvelle note = l'accord est « posé »
+}
+
+function evaluate(){
+  if(!running || !current) return;
+  var seen={}, uniq=[];
+  buf.forEach(function(e){ if(!seen[e.midi]){ seen[e.midi]=1; uniq.push(e); } });
+  if(uniq.length<2){ buf=[]; return; }
+
+  if(pcs(uniq.map(function(e){return e.midi;}))!==pcs(current.notes)){
+    uniq.forEach(function(e){ if(current.notes.indexOf(e.midi)<0) ex.miss(e.midi); });
+    ex.verdict('no','Ce n\'est pas encore '+current.name,
+      'Tu as joué '+uniq.length+' note(s). <b>👁 Montre-moi</b> si tu bloques — mais cherche d\'abord seul, c\'est comme ça que ça rentre.');
+    buf=[]; streak=0; ex.streak(0,5);
+    return;
+  }
+  uniq.forEach(function(e){ ex.hit(e.midi); });
+
+  var ts=uniq.map(function(e){return e.t;});
+  var spread=Math.round(Math.max.apply(null,ts)-Math.min.apply(null,ts));
+  var byPitch=uniq.slice().sort(function(a,b){return a.midi-b.midi;});
+  var items=byPitch.map(function(e,i){ return {vel:e.vel, doigt:current.doigts[i]||'?'}; });
+  showVel(items);
+
+  var vels=items.map(function(x){return x.vel;}).filter(function(v){return v!=null;});
+  var vtxt='';
+  if(vels.length===3){
+    var vspread=Math.max.apply(null,vels)-Math.min.apply(null,vels);
+    var weakest=items[vels.indexOf(Math.min.apply(null,vels))].doigt;
+    vtxt = vspread<25 ? ' Tes trois doigts frappent avec la même force — c\'est rare, bravo.'
+                      : ' Ton <b>doigt '+weakest+'</b> est plus faible ('+vspread+' d\'écart). Normal, il se muscle.';
+  }
+
+  if(spread<40){ streak++; ex.measure('ok', spread+' ms', 'd\'un seul bloc — tes 3 notes sont tombées ensemble.'+vtxt); }
+  else if(spread<90){ streak=0; ex.measure('meh', spread+' ms', 'ça s\'entend encore un peu — prépare la <b>forme</b> de la main au-dessus des touches, puis laisse tomber le poids d\'un coup.'+vtxt); }
+  else { streak=0; ex.measure('no', spread+' ms', 'tu arpèges — pose les 3 doigts <b>sur</b> les touches sans appuyer, puis enfonce-les d\'un seul mouvement du poignet.'+vtxt); }
+
+  ex.streak(streak,5);
+  if(streak>=5) winBox.classList.remove('hidden');
+  buf=[];
+  setTimeout(function(){ if(running) pick(); }, 1400);
+}
+
+ex.streak(0,5);
+ex.prompt('','Clique sur « Commencer », puis joue l\'accord sur ton clavier.');
+</script>
+</body>
+</html>

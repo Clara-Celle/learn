@@ -150,6 +150,22 @@
   <p>Démarre le métronome, sens le temps 1 (le clic plus aigu). Puis active <b>« Guide les accords »</b> :
   l'accord à jouer change tout seul à chaque mesure et s'allume sur le piano. Joue-le sur le temps 1 et
   laisse-le sonner. Compte à voix haute : <b>1-2-3-4</b>.</p>
+  <div class="tip"><b>⚠️ Ne fais pas tout en même temps — c'est le piège de cette leçon.</b>
+  Tenir le tempo, trouver les notes du bon accord, et changer d'accord chaque mesure, ça fait
+  <b>trois choses</b> dont aucune n'est encore automatique chez toi. Ta tête sature, et ce n'est pas
+  un manque de concentration : c'est mécanique, tout le monde y passe. Le bouton
+  <b>🎹 Accords</b> a donc <b>trois paliers</b> — appuie dessus pour tourner :
+  <ol style="margin:8px 0 0">
+    <li><b>OFF — rythme seul.</b> Tape n'importe quelle touche sur le temps 1. Une seule chose à
+      faire : tomber juste. Regarde la frise, rien d'autre.</li>
+    <li><b>1 seul accord (Ré m).</b> Le même accord toute la durée, il ne change jamais. Tu ajoutes
+      les notes, mais tu n'as rien à anticiper.</li>
+    <li><b>La progression.</b> Les quatre accords s'enchaînent. Seulement quand les deux premiers
+      paliers sont confortables.</li>
+  </ol>
+  <p style="margin:8px 0 0">Reste à un palier tant qu'il n'est pas <b>ennuyeux</b>. L'ennui est le
+  signal que c'est devenu automatique — et c'est seulement là que tu as de la place pour la suite.</p></div>
+
   <p>Sous l'accord, deux colonnes te suivent en direct : <b>« À jouer »</b> (les trois notes attendues,
   qui passent au vert dès que tu les trouves) et <b>« Tu as joué »</b> (tes appuis dans l'ordre,
   ✓ vert ou ✗ rouge). Les fausses notes laissent enfin une trace : au tempo, tu n'as pas le temps de
@@ -164,7 +180,7 @@
           <span id="bpm">60</span><span class="bpmlab">BPM</span>
           <button id="tUp" aria-label="plus vite">+</button>
         </div>
-        <button id="btnGuide">🎹 Guide les accords : OFF</button>
+        <button id="btnGuide">🎹 Accords : OFF — rythme seul</button>
       </div>
       <div class="beatdots" id="beatdots"></div>
       <div class="metro-chord" id="metroChord"><small>Active « Guide les accords » pour jouer la progression.</small></div>
@@ -299,7 +315,11 @@
   document.getElementById('tDown').onclick=function(){ tempo=Math.max(40,tempo-5); bpmEl.textContent=tempo; };
 
   /* ----- play-along : l'accord change à chaque mesure ----- */
-  var guide=false, current=null, barSet=new Set();
+  /* Trois paliers au lieu d'un interrupteur. Tenir le tempo, trouver l'accord et en changer
+     chaque mesure = trois tâches non automatiques d'un coup : la mémoire de travail sature.
+     Le palier « 1 seul » enlève la seule variable dont on n'a pas besoin pour travailler le rythme. */
+  var GLAB=['OFF — rythme seul', '1 seul accord (Ré m)', 'la progression'];
+  var gi=0, guide=false, unSeul=false, current=null, barSet=new Set();
   var metroChord=document.getElementById('metroChord');
   var btnGuide=document.getElementById('btnGuide');
   /* ----- tableau de bord de la mesure : ce qu'il faut jouer / ce que tu as joué -----
@@ -324,10 +344,11 @@
   }
 
   function setBarChord(bar){
-    var key=PROG[bar % PROG.length];
+    var key=PROG[unSeul ? 0 : (bar % PROG.length)];
     current=CHORDS[key]; barSet=new Set(); barPlayed=[];
     piano.clearClass('pk-target','pk-ok','pk-bad'); piano.guide(current.notes);
-    metroChord.innerHTML='Joue : <span class="chordname">'+current.name+'</span>';
+    metroChord.innerHTML='Joue : <span class="chordname">'+current.name+'</span>'
+      +(unSeul?' <small>— le même toute la durée. Occupe-toi seulement du tempo.</small>':'');
     // doigts déjà posés : une touche tenue ne renverra pas de nouveau onNote
     piano.held().forEach(function(m){
       if(current.notes.indexOf(m)!==-1){ barSet.add(m); piano.removeClass(m,'pk-target'); piano.addClass(m,'pk-ok'); }
@@ -351,14 +372,16 @@
     drawPlayed();
   }
   btnGuide.onclick=function(){
-    guide=!guide;
+    gi=(gi+1)%3;
+    guide=(gi>0); unSeul=(gi===1);
     btnGuide.classList.toggle('on',guide);
-    btnGuide.textContent='🎹 Guide les accords : '+(guide?'ON':'OFF');
+    btnGuide.textContent='🎹 Accords : '+GLAB[gi];
     if(guide){
       if(!running) startMetro(); else setBarChord(schedBar);
     } else {
       current=null; piano.clearClass('pk-target','pk-ok','pk-bad');
-      metroChord.innerHTML='<small>Active « Guide les accords » pour jouer la progression.</small>';
+      metroChord.innerHTML='<small>Aucun accord imposé : tape n\'importe quelle touche sur le temps 1 '
+        +'et regarde la frise. Rappuie sur le bouton pour ajouter un accord.</small>';
       drawPlayed();
     }
   };

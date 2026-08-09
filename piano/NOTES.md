@@ -78,6 +78,12 @@
 
 ## Pédagogie
 - Une leçon = UNE chose, gain rapide et tangible, boucle de feedback serrée.
+- **⚠️ Compter les tâches simultanées, pas seulement les notions.** Une leçon peut n'enseigner
+  qu'une notion et rester injouable si l'exercice exige 3 gestes non automatiques en même temps
+  (rythme + notes + anticipation = la leçon 8). Quand Clara dit « je n'arrive pas à me concentrer »,
+  **compter d'abord ce que l'exercice lui demande de tenir à la fois** : c'est presque toujours de la
+  surcharge, jamais de l'attention. Le remède est un **palier qui retire une variable**, pas un
+  encouragement. Voir aussi le bouton « Tu joues » de la leçon main gauche, même principe.
 - Privilégier les leçons HTML interactives (clavier cliquable) puisqu'il n'y a pas d'instru.
 - Toujours rattacher au moins un morceau cible pour ancrer la théorie.
 
@@ -186,7 +192,13 @@ API : `prompt / button / target / hit / miss / verdict / measure / streak / pane
    comparaison à l'oreille) · ③ Le cycle (mesure les demi-tons parcourus).
 6. Accord mineur & The Scientist — **voicings liés** (Si♭ = Ré·Fa·Si♭, Fa = Do·Fa·La)
 7. Un accord d'un seul bloc — **voicings liés**
-8. Le rythme — tableau de bord « À jouer / Tu as joué » (chips ✓ vert, ✗ rouge)
+8. Le rythme — tableau de bord « À jouer / Tu as joué » (chips ✓ vert, ✗ rouge).
+   ⚠️ **Bouton 🎹 Accords à TROIS paliers** (OFF → 1 seul accord → progression), pas un
+   interrupteur. Clara : « j'ai du mal à me concentrer sur le rythme et les accords en même
+   temps » — c'était une **surcharge de mémoire de travail**, pas un défaut d'attention.
+   Trois tâches non automatiques d'un coup. Le palier « 1 seul » retire la variable inutile
+   au travail du rythme. Consigne écrite dans la leçon : **rester à un palier jusqu'à ce qu'il
+   soit ennuyeux** — l'ennui signale l'automatisation.
 9. La main gauche : la basse
 10. Le balancier (croches)
 11. The Scientist : assemblage

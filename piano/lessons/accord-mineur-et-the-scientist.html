@@ -191,10 +191,16 @@
     <span class="chordname maj">Fa majeur</span> &nbsp;→&nbsp;
     <span class="chordname maj">Do majeur</span>
     <p style="font-size:15px;color:var(--muted);margin:12px 0 0">
-    <b><span class="black">Si♭ majeur</span></b> = Si♭ · Ré · Fa. Le <span class="note black">Si♭</span>
-    est la touche <b>noire entre La et Si</b> — ton autre nouvelle touche noire. C'est le seul accord
-    de la chanson qui en contient une.</p>
+    <b><span class="black">Si♭ majeur</span></b> = Si♭ · Ré · Fa, rencontré à
+    <a href="renversements.html">la leçon sur les renversements</a>. Le
+    <span class="note black">Si♭</span> est la touche <b>noire entre La et Si</b> : c'est le seul
+    accord de la chanson qui en contient une.</p>
   </div>
+  <div class="tip"><b>Les positions sont celles du cycle lié</b>, pas la position fondamentale — tu
+  les as travaillées à <a href="renversements.html">la leçon précédente</a>. Sur le clavier tu joues
+  donc <b>Ré · Fa · Si♭</b> et <b>Do · Fa · La</b> : mêmes accords, mêmes noms, empilés pour que ta
+  main ne saute pas. Tu apprends tout de suite la version que tu garderas jusqu'à la chanson
+  complète — il n'y aura rien à réapprendre.</div>
   <p>Lance l'<b>exercice d'enchaînement</b> dans l'atelier ci-dessus : il te guide accord par accord
   dans l'ordre de <i>The Scientist</i>. Quand tu boucles les 4 → tu joues le squelette de la chanson. 🎉</p>
 
@@ -243,8 +249,8 @@
     ReM:{name:'Ré majeur', notes:[62,66,69], sol:['Ré','Fa♯','La']},
     Rem:{name:'Ré mineur', notes:[62,65,69], sol:['Ré','Fa','La']},
     Mim:{name:'Mi mineur', notes:[64,67,71], sol:['Mi','Sol','Si']},
-    Fa: {name:'Fa majeur', notes:[65,69,72], sol:['Fa','La','Do']},
-    Sib:{name:'Si♭ majeur',notes:[65,70,74], sol:['Si♭','Ré','Fa']}
+    Fa: {name:'Fa majeur', notes:[60,65,69], sol:['Do','Fa','La']},
+    Sib:{name:'Si♭ majeur',notes:[62,65,70], sol:['Ré','Fa','Si♭']}
   };
 
   var piano=PianoKeyboard.create({ mount:'#piano-mount', octaves:3, startOctave:3, onNote:notePlayed });
@@ -261,6 +267,13 @@
     tfeedback.textContent=''; tfeedback.className='tfeedback';
     var c=CHORDS[key];
     piano.guide(c.notes);
+    // Les doigts déjà posés sur les bonnes touches comptent tout de suite : une touche tenue ne
+    // renvoie pas de nouveau onNote, sinon il faudrait la relâcher et la retaper pour rien.
+    piano.held().forEach(function(m){
+      if(c.notes.indexOf(m)!==-1 && !achieved.has(m)){
+        achieved.add(m); piano.removeClass(m,'pk-target'); piano.addClass(m,'pk-ok');
+      }
+    });
     tprompt.innerHTML='Joue <b>'+c.name+'</b> : '+c.sol.join(' · ');
     document.querySelectorAll('.chordbtn').forEach(function(b){ b.classList.toggle('on',b.dataset.ch===key); });
   }
@@ -269,8 +282,12 @@
     if(exerciseOn && !timerStarted) startClock();   // chrono lancé à la 1re note de l'enchaînement
     var c=CHORDS[currentChord];
     if(c.notes.indexOf(midi)!==-1){
-      if(!achieved.has(midi)){ achieved.add(midi); piano.removeClass(midi,'pk-target'); piano.addClass(midi,'pk-ok'); }
-      if(achieved.size===c.notes.length) chordCompleted(c);
+      // la validation ne part que sur une note NOUVELLE : sinon retaper une touche déjà trouvée
+      // re-déclenchait « Bravo » toute seule
+      if(!achieved.has(midi)){
+        achieved.add(midi); piano.removeClass(midi,'pk-target'); piano.addClass(midi,'pk-ok');
+        if(achieved.size===c.notes.length) chordCompleted(c);
+      }
     } else {
       piano.addClass(midi,'pk-bad'); setTimeout(function(){ piano.removeClass(midi,'pk-bad'); },320);
     }
@@ -283,10 +300,11 @@
       else {
         exfeedback.textContent='✓ '+c.name+'  →  joue maintenant : '+CHORDS[PROG[step]].name;
         exfeedback.className='exfeedback ok';
-        setTimeout(function(){ selectChord(PROG[step]); }, 650);
+        selectChord(PROG[step]);    // tout de suite : un délai ici avalerait les notes jouées pendant
       }
     } else {
-      setTimeout(function(){ piano.playChord(c.notes); },120);
+      // pas de re-lecture ici : tes touches sont enfoncées, l'accord sonne déjà.
+      // Le rejouer par-dessus s'entendait comme un écho parasite. Le bouton 🔊 Écouter reste là.
       tfeedback.textContent='✓ Bravo ! Voilà '+c.name+'. Écoute sa couleur.';
       tfeedback.className='tfeedback ok';
     }

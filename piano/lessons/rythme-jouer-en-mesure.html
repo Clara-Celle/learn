@@ -70,6 +70,19 @@
   .beatdot.on.accent{background:var(--accent);border-color:var(--accent);color:#1a1614}
   .metro-chord{font-family:var(--serif);font-size:22px;color:var(--accent);margin-top:16px;min-height:30px}
   .metro-chord small{color:var(--muted);font-family:var(--sans);font-size:14px}
+
+  /* tableau de bord de la mesure : à jouer / joué */
+  .played{display:flex;gap:22px;flex-wrap:wrap;align-items:flex-start;margin-top:12px;min-height:52px}
+  .played .col{display:flex;flex-direction:column;gap:5px}
+  .played .lab{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:700}
+  .played .row{display:flex;gap:6px;flex-wrap:wrap;min-height:28px;align-items:center}
+  .nchip{font-family:var(--sans);font-size:14px;font-weight:700;padding:4px 11px;border-radius:999px;
+    border:1px solid var(--line);background:#15110f;color:var(--muted);white-space:nowrap}
+  .nchip.wait{border-style:dashed}
+  .nchip.ok{border-color:var(--good);color:var(--good);background:rgba(92,186,107,.12)}
+  .nchip.bad{border-color:var(--bad);color:var(--bad);background:rgba(224,98,90,.12)}
+  .nchip.ok::before{content:"✓ "} .nchip.bad::before{content:"✗ "}
+  .played .empty{color:var(--muted);font-size:13.5px;font-style:italic}
   .frise{margin-top:16px;width:100%;height:96px;display:block;background:#15110f;border:1px solid var(--line);border-radius:10px}
   .friselegend{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin-top:8px;align-items:center}
   .friselegend b{color:var(--ink)}
@@ -137,6 +150,10 @@
   <p>Démarre le métronome, sens le temps 1 (le clic plus aigu). Puis active <b>« Guide les accords »</b> :
   l'accord à jouer change tout seul à chaque mesure et s'allume sur le piano. Joue-le sur le temps 1 et
   laisse-le sonner. Compte à voix haute : <b>1-2-3-4</b>.</p>
+  <p>Sous l'accord, deux colonnes te suivent en direct : <b>« À jouer »</b> (les trois notes attendues,
+  qui passent au vert dès que tu les trouves) et <b>« Tu as joué »</b> (tes appuis dans l'ordre,
+  ✓ vert ou ✗ rouge). Les fausses notes laissent enfin une trace : au tempo, tu n'as pas le temps de
+  regarder tes doigts — tu regardes ça après coup.</p>
 
   <div class="stage">
     <div class="metro">
@@ -151,6 +168,7 @@
       </div>
       <div class="beatdots" id="beatdots"></div>
       <div class="metro-chord" id="metroChord"><small>Active « Guide les accords » pour jouer la progression.</small></div>
+      <div class="played" id="played"></div>
       <canvas class="frise" id="frise"></canvas>
       <div class="friselegend">
         <span><span class="swatch" style="background:#5cba6b"></span>pile</span>
@@ -208,8 +226,8 @@
 (function(){
   var CHORDS={
     Rem:{name:'Ré mineur', notes:[62,65,69]},
-    Sib:{name:'Si♭ majeur',notes:[65,70,74]},
-    Fa: {name:'Fa majeur', notes:[65,69,72]},
+    Sib:{name:'Si♭ majeur',notes:[62,65,70]},
+    Fa: {name:'Fa majeur', notes:[60,65,69]},
     DoM:{name:'Do majeur', notes:[60,64,67]}
   };
   var PROG=['Rem','Sib','Fa','DoM'];
@@ -284,18 +302,53 @@
   var guide=false, current=null, barSet=new Set();
   var metroChord=document.getElementById('metroChord');
   var btnGuide=document.getElementById('btnGuide');
+  /* ----- tableau de bord de la mesure : ce qu'il faut jouer / ce que tu as joué -----
+     Les deux côte à côte : sans le « joué », une fausse note ne laissait aucune trace et
+     on ne savait pas ce qu'on avait tapé. */
+  var playedEl=document.getElementById('played');
+  var SOLF=['Do','Do♯','Ré','Mi♭','Mi','Fa','Fa♯','Sol','La♭','La','Si♭','Si'];
+  function nomNote(m){ return SOLF[((m%12)+12)%12]; }
+  var barPlayed=[];                        // [{midi, ok}] dans l'ordre de frappe, pour la mesure en cours
+
+  function drawPlayed(){
+    if(!guide||!current){ playedEl.innerHTML=''; return; }
+    var attendu=current.notes.map(function(m){
+      return '<span class="nchip'+(barSet.has(m)?' ok':' wait')+'">'+nomNote(m)+'</span>';
+    }).join('');
+    var joue=barPlayed.length
+      ? barPlayed.map(function(h){ return '<span class="nchip'+(h.ok?' ok':' bad')+'">'+nomNote(h.midi)+'</span>'; }).join('')
+      : '<span class="empty">rien encore</span>';
+    playedEl.innerHTML=
+      '<div class="col"><span class="lab">À jouer</span><span class="row">'+attendu+'</span></div>'+
+      '<div class="col"><span class="lab">Tu as joué</span><span class="row">'+joue+'</span></div>';
+  }
+
   function setBarChord(bar){
     var key=PROG[bar % PROG.length];
-    current=CHORDS[key]; barSet=new Set();
-    piano.clearClass('pk-target','pk-ok'); piano.guide(current.notes);
+    current=CHORDS[key]; barSet=new Set(); barPlayed=[];
+    piano.clearClass('pk-target','pk-ok','pk-bad'); piano.guide(current.notes);
     metroChord.innerHTML='Joue : <span class="chordname">'+current.name+'</span>';
+    // doigts déjà posés : une touche tenue ne renverra pas de nouveau onNote
+    piano.held().forEach(function(m){
+      if(current.notes.indexOf(m)!==-1){ barSet.add(m); piano.removeClass(m,'pk-target'); piano.addClass(m,'pk-ok'); }
+    });
+    drawPlayed();
   }
   function onNote(midi,el){
     if(running) recordHit();   // chaque appui est placé sur la frise rythmique
     if(!guide||!current) return;
-    if(current.notes.indexOf(midi)!==-1 && !barSet.has(midi)){
-      barSet.add(midi); piano.removeClass(midi,'pk-target'); piano.addClass(midi,'pk-ok');
+    var bon=current.notes.indexOf(midi)!==-1;
+    if(bon){
+      if(!barSet.has(midi)){
+        barSet.add(midi); piano.removeClass(midi,'pk-target'); piano.addClass(midi,'pk-ok');
+      }
+    } else {
+      piano.addClass(midi,'pk-bad');
+      setTimeout(function(){ piano.removeClass(midi,'pk-bad'); },400);
     }
+    barPlayed.push({midi:midi, ok:bon});
+    if(barPlayed.length>8) barPlayed.shift();       // une mesure = 4 temps, 8 chips suffisent
+    drawPlayed();
   }
   btnGuide.onclick=function(){
     guide=!guide;
@@ -304,8 +357,9 @@
     if(guide){
       if(!running) startMetro(); else setBarChord(schedBar);
     } else {
-      current=null; piano.clearClass('pk-target','pk-ok');
+      current=null; piano.clearClass('pk-target','pk-ok','pk-bad');
       metroChord.innerHTML='<small>Active « Guide les accords » pour jouer la progression.</small>';
+      drawPlayed();
     }
   };
 

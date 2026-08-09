@@ -27,14 +27,17 @@ def vlq(n):
     return bytes(out)
 
 
-def track(events, name, tempo_bpm=None, first=False):
-    """events = [(tick, status, data1, data2)] ; renvoie un chunk MTrk."""
+def track(events, name, tempo_bpm=None, first=False, sig=(4, 4)):
+    """events = [(tick, status, data1, data2)] ; renvoie un chunk MTrk.
+    sig = (numérateur, dénominateur) — 4/4 par défaut, 2/4 pour Katyusha."""
     meta = bytearray()
     meta += b'\x00\xff\x03' + vlq(len(name.encode())) + name.encode()
     if first:
         us = int(60_000_000 / tempo_bpm)
         meta += b'\x00\xff\x51\x03' + struct.pack('>I', us)[1:]
-        meta += b'\x00\xff\x58\x04\x04\x02\x18\x08'      # 4/4
+        num, den = sig
+        assert den in (2, 4, 8), f'dénominateur non géré : {den}'
+        meta += b'\x00\xff\x58\x04' + bytes([num, {2: 1, 4: 2, 8: 3}[den], 0x18, 0x08])
 
     body = bytearray(meta)
     prev = 0
@@ -46,7 +49,7 @@ def track(events, name, tempo_bpm=None, first=False):
     return b'MTrk' + struct.pack('>I', len(body)) + bytes(body)
 
 
-def write(path, right, left, bpm, title):
+def write(path, right, left, bpm, title, sig=(4, 4)):
     """right/left = [(beat_start, beat_len, [notes], velocity)]"""
     def to_events(notes_spec, chan):
         ev = []
@@ -58,12 +61,12 @@ def write(path, right, left, bpm, title):
                 ev.append((max(t1, t0 + 1), 0x80 | chan, n, 0))
         return ev
 
-    chunks = [track(to_events(right, 0), 'Main droite', bpm, first=True)]
+    chunks = [track(to_events(right, 0), 'Main droite', bpm, first=True, sig=sig)]
     if left:
         chunks.append(track(to_events(left, 1), 'Main gauche'))
     header = b'MThd' + struct.pack('>IHHH', 6, 1, len(chunks), TPQ)
     path.write_bytes(header + b''.join(chunks))
-    bars = max([s + l for s, l, _, _ in right + left] or [0]) / 4
+    bars = max([s + l for s, l, _, _ in right + left] or [0]) / sig[0]
     n = verify(path)                      # relecture immédiate : pas de fichier douteux livré
     print(f'  {path.name:44s} {bpm:3d} BPM  {bars:.0f} mesures  {n:3d} notes  — {title}')
 
@@ -120,8 +123,8 @@ def verify(path):
 # The Scientist : voicings des leçons « rythme », « main gauche », « assemblage »
 SCI = [                                   # (accord main droite, basse main gauche)
     ([62, 65, 69], 50),                   # Ré mineur
-    ([65, 70, 74], 58),                   # Si♭ majeur
-    ([65, 69, 72], 53),                   # Fa majeur
+    ([62, 65, 70], 58),                   # Si♭ majeur
+    ([60, 65, 69], 53),                   # Fa majeur
     ([60, 64, 67], 48),                   # Do majeur
 ]
 # Renversements : le cycle « lié » (12 demi-tons sur un tour)
@@ -134,6 +137,24 @@ GAMME = [60, 62, 64, 65, 67, 69, 71, 72]
 POS = [60, 62, 64, 65, 67]
 MEL = [0, 0, 0, 1, 2, 1, 0, 2, 1, 1, 0]
 MEL_DUR = [1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 4]
+
+# ---------- Katyusha (Matveï Blanter, 1938) ----------
+# ⚠️ ACCOMPAGNEMENT SEUL. La mélodie n'est pas reproduite ici : l'œuvre n'est pas dans le
+# domaine public (Blanter mort en 1990). Ce qui suit est la GRILLE D'ACCORDS relevée sur
+# Chordify — une suite d'accords, pas le thème. Clara joue la mélodie d'après sa partition.
+# Tonalité : Ré mineur. Mesure : 2/4 (lue sur la partition — 2 temps, pas 4).
+# La barre oblique d'un nom d'accord ne change QUE la basse : « Solm/Ré » = Sol mineur, Ré en bas.
+KAT = {                                    # nom : (accord main droite, basse main gauche)
+    'Rem':     ([62, 65, 69], 50),         # Ré · Fa · La
+    'Rem/La':  ([62, 65, 69], 45),         #   même accord, La à la basse
+    'Solm':    ([62, 67, 70], 43),         # Ré · Sol · Si♭ — 2e renv., la main ne bouge que de 3 demi-tons
+    'Solm/Re': ([62, 67, 70], 50),         #   même accord, Ré à la basse
+    'La7':     ([61, 67, 69], 45),         # Do♯ · Sol · La — la quinte (Mi) est omise, doigté tenable
+    'La7/Do#': ([61, 67, 69], 49),         #   même accord, Do♯ à la basse
+}
+# Lecture de la grille Chordify. À corriger si Clara relève autre chose en jouant.
+KAT_SEQ = ['Rem', 'Solm', 'Rem', 'La7', 'Rem', 'Rem/La', 'La7', 'Rem',
+           'Solm', 'Rem/La', 'Solm/Re', 'Rem/La', 'La7', 'Rem', 'La7', 'Rem']
 
 
 def main():
@@ -194,6 +215,16 @@ def main():
         l = [(bar * 4, 4, [SCI[bar % 4][1]], 88) for bar in range(8)]
         write(out / f'the-scientist-mains-ensemble-{bpm}bpm.mid', r, l, bpm,
               'balancier en croches + basse — la chanson complète')
+
+    # — Katyusha : accompagnement seul (basse + accords), en 2/4
+    for bpm in (60, 84):
+        r, l = [], []
+        for bar, nom in enumerate(KAT_SEQ):
+            notes, basse = KAT[nom]
+            r.append((bar * 2, 2, notes, 80))          # accord tenu la mesure entière
+            l.append((bar * 2, 2, [basse], 88))        # basse sur le temps 1
+        write(out / f'katyusha-accompagnement-{bpm}bpm.mid', r, l, bpm,
+              'Katyusha — accords + basse seuls (pas la mélodie), 2/4', sig=(2, 4))
 
     print('\nDans Synthesia : « Play a Song » → « Import Songs » → choisis le dossier midi/.\n')
 

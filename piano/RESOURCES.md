@@ -14,6 +14,22 @@
 - [G Major Music Theory — partitions & worksheets gratuits par niveau](https://www.gmajormusictheory.org/)
   Use for: exercices imprimables de lecture de notes pour grands débutants.
 
+### 🇫🇷 Ressources francophones (août 2026 — comble le manque signalé plus bas)
+Trouvées par recherche, **pas encore validées en profondeur** : à faire lire à Clara une à la fois et
+à noter ici ce qui tient. Critère de tri retenu : **en français, en Do Ré Mi, et qui enseigne le
+solfège** — les méthodes « sans solfège » sont écartées, elles vont contre la mission (comprendre ce
+qu'elle joue, lire une partition).
+- [apprendrelesolfege.com — cours & jeux de lecture de notes](https://www.apprendrelesolfege.com/cours-lecons-solfege)
+  Gratuit, en français, **jeux de lecture de notes**. Use for: la partie « lire la portée » de la
+  mission, la seule encore non couverte par le cours. **Le plus prometteur des cinq.**
+- [AccordsPiano.fr — théorie (intervalles, gammes, tonalités, cycle des quintes)](https://www.accordspiano.fr/theorie/)
+  Use for: prolonger la leçon majeur/mineur vers les gammes et les tonalités, en français.
+- [iMusic-School — dictionnaire d'accords piano](https://www.imusic-school.com/fr/outils/accords-piano/)
+  Use for: vérifier un accord croisé dans une grille. ⚠️ Affiche les lettres — c'est le prof qui traduit.
+- [AuPiano — cours gratuits & 500 accords visualisés](https://aupiano.fr/cours-gratuits/)
+  Use for: le dictionnaire d'accords visuel. ⚠️ Méthode « sans solfège » : prendre la référence, pas la pédagogie.
+- [MyPianoPop — guides PDF gratuits](https://www.mypianopop.com/guides-piano/) — Use for: PDF de théorie à imprimer. À évaluer.
+
 ### Outils de pratique (pas d'instrument requis)
 - [Virtual Piano (virtualpiano.net)](https://virtualpiano.net/)
   Clavier jouable au clavier d'ordinateur, sans inscription. Use for: pratiquer la géographie
@@ -71,7 +87,16 @@ Contraintes réelles : **~1 m de largeur max** + **budget ~200 €** → 88 touc
   de piano numérique, questions techniques détaillées.
 
 ## Gaps
-- Pas encore de ressource francophone validée (Do Ré Mi) — à chercher si Clara préfère du
-  contenu en français. Piste à explorer : chaînes YouTube FR de piano débutant.
-- Budget d'achat encore indéfini (Clara n'a pas voulu fixer de fourchette). Reste : place
-  limitée + connexion PC souhaitée. Reproposer le guide d'achat chiffré quand il aura un budget.
+- ~~Pas de ressource francophone~~ → **cinq candidates listées ci-dessus (août 2026)**, aucune encore
+  validée en usage. Reste à faire : en faire tester une par Clara et garder celle qui tient.
+- ~~Budget d'achat indéfini~~ → **clos** : GXP61 acheté et branché (juillet 2026).
+- **🔴 PRIORITÉ 1 — Lecture de la portée : aucune leçon, aucune ressource validée.** C'était le
+  dernier point de `MISSION.md` sans rien en face ; depuis Katyusha (août 2026) **c'est ce qui bloque
+  Clara sur un morceau qu'elle veut jouer maintenant** : elle a la partition, elle ne peut pas la
+  lire (cf. learning-record 0020). Construire la leçon **sur sa partition de Katyusha**, pas sur un
+  exercice abstrait. `apprendrelesolfege.com` (jeux de lecture de notes, gratuit, en français) est la
+  piste à instruire d'abord.
+- **MuseScore** — à évaluer comme outil de saisie : Clara entre la mélodie depuis sa partition, écoute,
+  exporte en MIDI. Le détour est utile *parce qu'il passe par la lecture* au lieu de l'éviter.
+- Pas de source consultée sur la **pédagogie du transfert clavier virtuel → vrai clavier**, alors que
+  c'est exactement la situation de Clara depuis juillet. Chercher si le sujet se pose à nouveau.

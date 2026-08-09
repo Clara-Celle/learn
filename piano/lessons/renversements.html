@@ -78,16 +78,31 @@
   les trois, l'un après l'autre, avec <b>un rond numéroté sur chaque touche</b> pour te dire quel
   doigt va où. Écoute-les : ils sonnent pareil, plus ou moins graves.</div>
 
+  <div class="tip"><b>Puis entends la différence pour de vrai.</b> Le mode <b>« ② Écoute le Si♭ »</b>
+  te fait jouer les <b>trois hauteurs du même Si♭ majeur</b>, l'une après l'autre, et te dit à chaque
+  fois ce que tu viens d'entendre. <b>Fa · Si♭ · Ré</b> sonne haut et brillant mais oblige la main à
+  sauter ; <b>Ré · Fa · Si♭</b> est discret et immobile — c'est celui qu'on gardera pour la chanson.
+  Le bouton <b>🔊 Écouter</b> les rejoue les trois à la suite : c'est la comparaison qui fait
+  entendre, pas l'accord isolé.</div>
+
   <div class="tip"><b>Pourquoi c'est utile ?</b> Parce que ça te donne <b>trois endroits</b> où
   jouer le même accord. Quand tu enchaînes, tu prends celui qui est <b>le plus près de ta main</b>.
   C'est tout. C'est pour ça qu'on n'a plus besoin de sauter.</div>
 
-  <div class="tip"><b>Tu en fais déjà un sans le savoir.</b> Le Si♭ que tu joues depuis
-  <a href="accord-mineur-et-the-scientist.html">la leçon sur l'accord mineur</a> (Fa · Si♭ · Ré)
-  n'est pas en position fondamentale — c'est un renversement. C'est pour ça que son doigté est
-  <b>1-2-5</b> et pas 1-3-5 : l'écart entre les doigts est plus large.</div>
+  <h2>2. Un accord neuf pour l'occasion : Si♭ majeur</h2>
+  <p>Jusqu'ici tous tes accords partaient d'une touche <b>blanche</b>. Celui-ci part d'une
+  <b>noire</b> — et c'est justement sur lui que les renversements s'entendent le mieux.</p>
+  <div class="card">
+    <p style="margin:0 0 8px"><b><span class="note black">Si♭</span></b> = la touche noire
+    <b>juste à gauche du Si</b>. « Bémol » veut dire <i>un demi-ton plus bas</i>.</p>
+    <p style="margin:0">Applique la règle que tu connais — <b>majeur = 4 puis 3 demi-tons</b> :
+    depuis Si♭, +4 donne <b>Ré</b>, puis +3 donne <b>Fa</b>.
+    <b>Si♭ majeur = Si♭ · Ré · Fa.</b> Rien de neuf, juste un départ sur une noire.</p>
+  </div>
+  <div class="tip">Tu le retrouveras dans <i>The Scientist</i> à la leçon suivante. Ici, il sert de
+  cobaye : le mode <b>② Écoute le Si♭</b> te fait entendre ses trois hauteurs.</div>
 
-  <h2>2. La règle : ce qui est commun ne bouge pas</h2>
+  <h2>3. La règle : ce qui est commun ne bouge pas</h2>
   <p>Deux accords voisins partagent presque toujours des notes. <span class="chordname">Ré mineur</span>
   (Ré-Fa-La) et <span class="chordname">Si♭ majeur</span> (Si♭-Ré-Fa) ont <b>Ré et Fa</b> en commun.</p>
   <div class="card">
@@ -101,7 +116,7 @@
   Pas la vitesse : <b>l'économie</b>. Le pianiste qui semble ne rien faire est celui qui a trouvé
   les bons renversements.</div>
 
-  <h2>3. Le cycle de <i>The Scientist</i>, version économique</h2>
+  <h2>4. Le cycle de <i>The Scientist</i>, version économique</h2>
   <p>Voici les quatre accords enchaînés avec un déplacement minimal. La main tient dans une seule
   position, du Do central au Si♭ au-dessus.</p>
   <div class="cyc" id="ref"></div>
@@ -110,7 +125,7 @@
     <span class="l">demi-tons parcourus sur un tour complet — contre <b>52</b> en position fondamentale partout</span>
   </div>
 
-  <h2>4. L'exercice : parcours le moins de chemin</h2>
+  <h2>5. L'exercice : parcours le moins de chemin</h2>
   <p>L'appli te nomme les accords dans l'ordre. Tu les joues — <b>n'importe quel renversement est
   accepté</b>, c'est le même accord. Elle mesure la seule chose qui compte ici : <b>combien de
   demi-tons tes doigts ont parcourus</b> depuis l'accord précédent.</p>
@@ -123,7 +138,7 @@
     tu vas entendre les accords se <b>lier</b> au lieu de se succéder.</p>
   </div>
 
-  <h2>5. Et la main gauche ?</h2>
+  <h2>6. Et la main gauche ?</h2>
   <p>Elle, elle bouge — et c'est normal. La basse joue la <b>fondamentale</b> de chaque accord
   (Ré, Si♭, Fa, Do), donc elle se déplace forcément. C'est même la division du travail habituelle :
   <b>la main gauche annonce l'accord</b> en se déplaçant, <b>la main droite reste sur place</b> et
@@ -171,7 +186,7 @@ var DISCOVER=[
    det:'On recommence : le <b>Mi</b> d\'en bas passe en haut. Toujours le même accord.'}
 ];
 
-/* Voicings liés : chaque accord choisi pour être le plus proche du précédent (mode ②).
+/* Voicings liés : chaque accord choisi pour être le plus proche du précédent (mode ③).
    Cycle complet = 12 demi-tons, contre 52 si tout est joué en position fondamentale. */
 var CYCLE=[
   {name:'Ré mineur',  notes:[62,65,69], dg:[1,3,5], noms:'Ré · Fa · La',  pos:'fondamentale'},
@@ -194,6 +209,21 @@ document.getElementById('ref').innerHTML=CYCLE.map(function(c,i){
     +' · '+c.dg.join('-')+'</span><span class="mv">'+(i===0?'départ':'+'+m+' demi-ton'+(m>1?'s':''))+'</span></div>';
 }).join('');
 
+/* Les 3 renversements de Si♭ majeur — pour ENTENDRE la différence (mode ③).
+   Ce sont exactement les deux voicings que Clara a croisés dans le cours : le 1er renversement
+   est celui du cycle, le 2e est celui des premières leçons. */
+var SIB=[
+  {name:'Si♭ majeur — position fondamentale', notes:[58,62,65], dg:[1,3,5], noms:'Si♭ · Ré · Fa',
+   det:'Le <b>Si♭</b> est en bas, sous les deux autres. C\'est la version « posée » : '
+      +'l\'accord repose sur la note qui lui donne son nom, et ça s\'entend — c\'est le plus stable des trois.'},
+  {name:'Si♭ majeur — 1<sup>er</sup> renversement', notes:[62,65,70], dg:[1,2,5], noms:'Ré · Fa · Si♭',
+   det:'Le Si♭ est passé <b>tout en haut</b>. C\'est <b>celui du cycle</b> : plus resserré, plus discret. '
+      +'Il ne s\'annonce pas, il se fond dans l\'enchaînement — exactement ce qu\'on veut au milieu d\'une chanson.'},
+  {name:'Si♭ majeur — 2<sup>e</sup> renversement', notes:[65,70,74], dg:[1,2,5], noms:'Fa · Si♭ · Ré',
+   det:'Le plus <b>haut</b> et le plus brillant des trois. C\'est celui des premières leçons — '
+      +'il sonne bien seul, mais il oblige ta main à sauter pour l\'atteindre depuis Ré mineur.'}
+];
+
 var ex=Exercise.create({mount:'#ex',
   hint:'Main droite seule. Les <b>ronds numérotés</b> sur les touches disent quel doigt va où '
       +'(1 = pouce … 5 = auriculaire).'});
@@ -201,23 +231,41 @@ var kb=PianoKeyboard.create({mount:ex.pianoMount, octaves:3, startOctave:3, onNo
 ex.attach(kb); ex.showPanel(true);
 
 var winBox=document.getElementById('win');
-var mode='decouvrir', dPos=0;
+var mode='decouvrir', dPos=0, sPos=0;
 var running=false, pos=0, total=0, prev=null, buf=[], timer=null;
 
 var bDec=ex.button('① Découvrir', function(){ setMode('decouvrir'); });
-var bCyc=ex.button('② Le cycle',  function(){ setMode('cycle'); });
+var bSib=ex.button('② Écoute le Si♭', function(){ setMode('sib'); });
+var bCyc=ex.button('③ Le cycle',  function(){ setMode('cycle'); });
 var bGo =ex.button('▶ Commencer', onGo, {primary:true});
 var bHear=ex.button('🔊 Écouter', onHear);
 
 function setMode(m){
-  mode=m; running=false; pos=0; total=0; prev=null; buf=[]; dPos=0;
+  mode=m; running=(m==='sib'); pos=0; total=0; prev=null; buf=[]; dPos=0; sPos=0;
   bDec.classList.toggle('on', m==='decouvrir');
+  bSib.classList.toggle('on', m==='sib');
   bCyc.classList.toggle('on', m==='cycle');
-  bGo.innerHTML=(m==='decouvrir')?'→ Renversement suivant':'▶ Commencer le cycle';
+  bGo.innerHTML=(m==='decouvrir')?'→ Renversement suivant'
+              :(m==='sib')?'↻ Reprendre au premier':'▶ Commencer le cycle';
   bGo.classList.add('primary');
   ex.reset(); winBox.classList.add('hidden');
   if(m==='decouvrir') showDiscover();
+  else if(m==='sib') showSib();
   else { drawCycle(); ex.prompt('','Clique sur « Commencer le cycle ».'); ex.score(''); }
+}
+
+/* ---------- mode ② : écouter les 3 renversements de Si♭ ---------- */
+function showSib(){
+  var s=SIB[sPos];
+  ex.showPanel(true);
+  ex.panel.innerHTML='<div class="cyc">'+SIB.map(function(x,k){
+    return '<div class="c'+(k<sPos?' done':'')+(k===sPos?' now':'')+'">'
+      +'<span class="n">'+['fondamentale','1<sup>er</sup> renv.','2<sup>e</sup> renv.'][k]+'</span>'
+      +'<span class="d">'+x.noms+'</span></div>';
+  }).join('')+'</div>';
+  ex.prompt(s.name, s.noms+' — doigté '+s.dg.join(' – ')+'. Joue-le, puis écoute.');
+  ex.target(s.notes, s.dg);
+  ex.score('Renversement '+(sPos+1)+' / 3');
 }
 
 /* ---------- mode ① : découvrir ---------- */
@@ -233,7 +281,7 @@ function showDiscover(){
   ex.score('Renversement '+(dPos+1)+' / 3');
 }
 
-/* ---------- mode ② : le cycle ---------- */
+/* ---------- mode ③ : le cycle ---------- */
 function drawCycle(){
   ex.showPanel(true);
   ex.panel.innerHTML='<div class="cyc">'+CYCLE.map(function(c,k){
@@ -256,6 +304,7 @@ function onGo(b){
     dPos=(dPos+1)%DISCOVER.length; showDiscover();
     return;
   }
+  if(mode==='sib'){ sPos=0; running=true; buf=[]; ex.reset(); showSib(); return; }
   running=!running;
   b.innerHTML=running?'■ Arrêter':'▶ Commencer le cycle'; b.classList.toggle('primary',!running);
   pos=0; total=0; prev=null; buf=[]; winBox.classList.add('hidden');
@@ -265,19 +314,57 @@ function onGo(b){
 function onHear(){
   if(mode==='decouvrir'){ kb.playChord(DISCOVER[dPos].notes); return; }
   var t=kb.now();
-  CYCLE.forEach(function(c,k){ kb.playChord(c.notes, t+k*0.9); });
+  // en mode Si♭ : les 3 hauteurs à la suite, c'est la comparaison qui fait entendre la différence
+  var suite=(mode==='sib')?SIB:CYCLE;
+  suite.forEach(function(c,k){ kb.playChord(c.notes, t+k*1.1); });
 }
 
 function onNote(midi){
-  if(mode!=='cycle' || !running) return;
+  if((mode!=='cycle' && mode!=='sib') || !running) return;
   buf.push(midi); clearTimeout(timer); timer=setTimeout(evaluate, 400);
+}
+
+function memesNotes(a,b){                       // ici l'octave COMPTE : c'est tout le sujet
+  var x=a.slice().sort(function(p,q){return p-q;}), y=b.slice().sort(function(p,q){return p-q;});
+  return x.length===y.length && x.every(function(m,i){ return m===y[i]; });
+}
+
+function evalSib(uniq){
+  var s=SIB[sPos];
+  if(!memesNotes(uniq,s.notes)){
+    uniq.forEach(function(m){ if(s.notes.indexOf(m)<0) ex.miss(m); });
+    ex.verdict('no','Pas encore ce renversement-là',
+      'Il te faut <b>'+s.noms+'</b> — les touches surlignées. Les mêmes notes ailleurs sonnent le même '
+      +'accord, mais ici on compare justement les hauteurs.');
+    return;
+  }
+  uniq.forEach(function(m){ ex.hit(m); });
+  kb.playChord(s.notes, kb.now()+0.35);          // décalé : tu entends ta version, puis la même en écho net
+  ex.verdict('ok','✓ '+s.name, s.det);
+  sPos++;
+  if(sPos>=SIB.length){
+    sPos=0; running=false;
+    ex.score('3 / 3');
+    ex.verdict('ok','Trois hauteurs, un seul accord',
+      'Tu viens d\'entendre la même harmonie à trois étages. Aucun n\'est « le bon » : on choisit '
+      +'celui qui tombe sous la main. Appuie sur <b>🔊 Écouter</b> pour les réentendre à la suite, '
+      +'puis passe au <b>③ Le cycle</b>.');
+    return;
+  }
+  setTimeout(function(){ if(mode==='sib'){ running=true; showSib(); } }, 1600);
+  running=false;                                 // petite pause : on laisse le son finir
 }
 
 function evaluate(){
   if(!running) return;
-  var uniq=buf.filter(function(m,i){ return buf.indexOf(m)===i; });
+  // Cette leçon apprend justement à GARDER les notes communes sous le doigt — or une touche tenue
+  // ne renvoie pas de nouveau onNote. Sans les touches encore enfoncées, l'accord reste incomplet
+  // et l'exercice ne répondait rien du tout.
+  var all=kb.held().concat(buf);
+  var uniq=all.filter(function(m,i){ return all.indexOf(m)===i; });
   buf=[];
   if(uniq.length<3) return;
+  if(mode==='sib') return evalSib(uniq);
 
   var want=CYCLE[pos];
   if(pcs(uniq)!==pcs(want.notes)){

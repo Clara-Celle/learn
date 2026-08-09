@@ -124,13 +124,11 @@
 
   // Fiches de référence (chemins relatifs depuis lessons/ → ramenés à la racine du cours)
   var rcBox=document.getElementById('refcards');
-  [window.LessonNav && window.LessonNav.ref, window.LessonNav && window.LessonNav.ref2]
-    .forEach(function(R){
-      if(!R) return;
-      var a=document.createElement('a'); a.className='refcard';
-      a.href=R.f.replace('../',''); a.innerHTML='📄 <span>'+R.t+'</span>';
-      rcBox.appendChild(a);
-    });
+  ((window.LessonNav && window.LessonNav.refs) || []).forEach(function(R){
+    var a=document.createElement('a'); a.className='refcard';
+    a.href=R.f.replace('../',''); a.innerHTML='📄 <span>'+R.t+'</span>';
+    rcBox.appendChild(a);
+  });
 
   // Progression : on lit la dernière leçon ouverte (mémorisée par le clavier au fil des sessions),
   // sinon on affiche simplement le total de leçons disponibles.

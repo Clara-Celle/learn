@@ -188,7 +188,8 @@ function tirer(){
   ex.reset();
   ex.target([c.r],[1]);                       // la note de DÉPART, pas la réponse
   ex.prompt(c.nom, 'Depuis <b>'+c.noms[0]+'</b> : monte de <b>'+(c.maj?4:3)+'</b> demi-tons, puis de <b>'
-    +(c.maj?3:4)+'</b>. Joue les trois notes de bas en haut.');
+    +(c.maj?3:4)+'</b>. De bas en haut pour être guidée à chaque étape — ou <b>les trois d\'un bloc</b> '
+    +'si tu les as déjà en tête.');
 }
 
 function reveler(){
@@ -200,6 +201,17 @@ function reveler(){
 ex.button('🔀 Nouvel accord', function(){ streak=0; ex.streak(0,5,'Construits d\'affilée'); tirer(); }, {primary:true});
 ex.button('👀 Montrer', reveler);
 ex.button('🔊 Écouter', function(){ if(cur) kb.playChord(cur.notes); });
+
+function reussi(){
+  cur.notes.forEach(function(m){ ex.hit(m); });
+  ex.verdict('ok','✓ '+cur.nom, cur.noms.join(' · ')+' — '+(cur.maj?'4 puis 3':'3 puis 4')+'.');
+  // pas de kb.playChord ici : les touches sont sous tes doigts, l'accord sonne déjà.
+  // Le rejouer par-dessus faisait un doublon qui s'entendait comme un bug.
+  if(!revele){ streak++; ex.streak(streak,5,'Construits d\'affilée'); if(streak>=5) winBox.classList.remove('hidden'); }
+  var fini=cur; cur=null;                        // fige la cible pendant la pause
+  setTimeout(function(){ if(!cur) tirer(); }, 1400);
+  return fini;
+}
 
 function onNote(midi){
   if(!cur) return;
@@ -213,12 +225,15 @@ function onNote(midi){
         'Maintenant <b>+'+reste+'</b> demi-ton'+(reste>1?'s':'')+' depuis là.');
       return;
     }
-    ex.verdict('ok','✓ '+cur.nom, cur.noms.join(' · ')+' — '+(cur.maj?'4 puis 3':'3 puis 4')+'.');
-    setTimeout(function(){ kb.playChord(cur.notes); },120);
-    if(!revele){ streak++; ex.streak(streak,5,'Construits d\'affilée'); if(streak>=5) winBox.classList.remove('hidden'); }
-    setTimeout(tirer, 1400);
+    reussi();
     return;
   }
+
+  // Accord joué d'un seul bloc : les 3 notes arrivent en quelques millisecondes et l'ordre des
+  // messages dépend de quel doigt touche en premier — donc imprévisible. Si les touches tenues
+  // forment l'accord, c'est juste. Monter de bas en haut est une béquille de comptage, pas la règle.
+  var tenues=kb.held();
+  if(cur.notes.every(function(m){ return tenues.indexOf(m)>=0; })){ reussi(); return; }
 
   // faux : on chiffre l'erreur au lieu de dire « non »
   ex.miss(midi);

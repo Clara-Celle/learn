@@ -33,7 +33,11 @@ El.prototype.querySelector=function(sel){
   const cls=String(sel).replace(/^\./,'');
   return this.children.find(c=>c._cls.has(cls))||null;
 };
-El.prototype.querySelectorAll=function(){ return []; };
+El.prototype.querySelectorAll=function(sel){   // récursif : held() cherche .pk-press dans tout le clavier
+  const cls=String(sel||'').replace(/^\./,''), out=[];
+  (function walk(n){ n.children.forEach(c=>{ if(c._cls.has(cls)) out.push(c); walk(c); }); })(this);
+  return out;
+};
 El.prototype.getBoundingClientRect=function(){ return {left:0,right:40,width:40,top:0,bottom:240,height:240}; };
 Object.defineProperty(El.prototype,'className',{ get(){return [...this._cls].join(' ');},
   set(v){ this._cls=new Set(String(v).split(/\s+/).filter(Boolean)); } });
@@ -107,6 +111,16 @@ check('note hors plage → message d\'aide, pas de plantage',
 check('plus aucune API de clavier d\'ordinateur',
   kb2.toggleKeys===undefined && kb2.setKeysVisible===undefined);
 
+// held() : une touche tenue ne renvoie plus jamais de onNote. Les leçons d'accords doivent pouvoir
+// demander « quelles touches sont enfoncées MAINTENANT », sinon un accord commencé avant que la
+// cible change ne peut plus jamais se compléter (bug leçons accord-mineur + renversements).
+kb2.midiMessage([0x90,62,90]); kb2.midiMessage([0x90,65,90]);
+check('held() liste les touches tenues, pas les note-on passés',
+  kb2.held().sort((a,b)=>a-b).join()==='62,65');
+kb2.midiMessage([0x80,62,0]);
+check('held() oublie la touche relâchée', kb2.held().join()==='65');
+kb2.midiMessage([0x80,65,0]);
+
 console.log('\nexercise.js');
 const mount=new El('div');
 const ex=window.Exercise.create({mount, hint:'test'});
@@ -132,6 +146,13 @@ check('le bonus est en dernier et hors numérotation', L[L.length-1].bonus===tru
 check('chaque leçon a fichier + titre + rubrique', L.every(x=>x.f&&x.t&&x.k));
 check('chaque fichier de leçon existe sur le disque',
   L.every(x=>fs.existsSync(path.join(LIB,'..','lessons',x.f))));
+
+// Les fiches sont listées une seule fois (nav.js) et affichées à deux endroits :
+// le sommaire des leçons et la page d'accueil. Une fiche listée mais absente = lien mort partout.
+const R=window.LessonNav.refs;
+check('les fiches de référence sont listées', Array.isArray(R) && R.length>0 && R.every(x=>x.f&&x.t));
+check('chaque fiche de référence existe sur le disque',
+  R.every(x=>fs.existsSync(path.join(LIB,'..','lessons',x.f))));
 
 console.log(fails ? `\n⛔ ${fails} test(s) en échec\n` : '\n✅ tout passe\n');
 process.exit(fails?1:0);

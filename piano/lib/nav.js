@@ -22,12 +22,12 @@
      d:"Sortir du camp de base sans trou dans le son — la porte des gammes."},
     {t:'Majeur ou mineur : compte les demi-tons', f:'majeur-ou-mineur-compter-les-demi-tons.html', k:'Harmonie',
      d:"Pourquoi Ré·Fa·La n'est pas le majeur de Ré : 4+3 contre 3+4."},
+    {t:'Les renversements',                  f:'renversements.html', k:'Harmonie',
+     d:"Changer d'accord sans lever la main : les notes communes ne bougent pas."},
     {t:'Accord mineur & The Scientist',      f:'accord-mineur-et-the-scientist.html', k:'Harmonie',
      d:"L'accord mineur, puis les 4 accords de The Scientist."},
     {t:'Un accord d\'un seul bloc',           f:'accord-dun-seul-bloc.html', k:'Technique',
      d:"Le doigté 1-3-5, mesuré par ton vrai clavier : les 3 notes tombent-elles ensemble ?"},
-    {t:'Les renversements',                  f:'renversements.html', k:'Harmonie',
-     d:"Changer d'accord sans lever la main : les notes communes ne bougent pas."},
     {t:'Le rythme : jouer en mesure',         f:'rythme-jouer-en-mesure.html', k:'Rythme',
      d:"Tenir le tempo et jouer en place avec le métronome."},
     {t:'La main gauche : la basse',           f:'main-gauche-la-basse.html', k:'Mains ensemble',
@@ -41,8 +41,15 @@
   ];
   // numérotation dérivée de l'ordre ci-dessus — jamais écrite à la main
   (function(){ var i=0; LESSONS.forEach(function(L){ L.n = L.bonus ? '★' : ('0'+(++i)).slice(-2); }); })();
-  var REF={t:'Fiche : carte du clavier', f:'../reference/keyboard-map.html'};
-  var REF2={t:'Fiche : position des doigts', f:'../reference/position-des-doigts.html'};
+  // Fiches de référence — une seule liste, consommée par le sommaire ET par la page d'accueil.
+  // Ajouter une fiche = ajouter une ligne ici, rien d'autre.
+  var REFS=[
+    {t:'Fiche : carte du clavier',     f:'../reference/keyboard-map.html'},
+    {t:'Fiche : position des doigts',  f:'../reference/position-des-doigts.html'},
+    {t:'Fiche : majeur / mineur',      f:'../reference/accords-majeur-mineur.html'},
+    {t:'Fiche : glossaire du cours',   f:'../reference/glossaire.html'},
+    {t:'Fiche : clavier & branchement',f:'../reference/premier-clavier-et-branchement.html'}
+  ];
   // chemins relatifs à lessons/ (c'est de là que nav.js est chargé)
   var HUB={t:'Tous les cours', f:'../../index.html'};     // hub de tous les cours
   var HOME={t:'Accueil du cours', f:'../index.html'};     // page d'accueil piano
@@ -100,7 +107,7 @@
       var a=document.createElement('a'); a.href=L.f; if(L.f===cur) a.className='current';
       a.innerHTML='<b>'+L.n+'</b> · '+L.t; list.appendChild(a);
     });
-    [REF,REF2].forEach(function(R,i){
+    REFS.forEach(function(R,i){
       var ref=document.createElement('a'); ref.href=R.f;
       ref.className='lnav-ref'+(i?' lnav-ref2':''); ref.textContent='📄 '+R.t;
       list.appendChild(ref);
@@ -158,5 +165,5 @@
   function boot(){ mount(); if(!window.LNAV_NOMOUNT) applyToLesson(); }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot); else boot();
   // Exposé pour la page d'accueil du cours (source unique de la liste des leçons).
-  window.LessonNav={mount:mount, applyToLesson:applyToLesson, lessons:LESSONS, ref:REF, ref2:REF2, hub:HUB, home:HOME};
+  window.LessonNav={mount:mount, applyToLesson:applyToLesson, lessons:LESSONS, refs:REFS, hub:HUB, home:HOME};
 })();

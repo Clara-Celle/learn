@@ -148,21 +148,15 @@
   <p>Active le guidage : à chaque mesure, la/les note(s) à jouer s'allument et le métronome te cale.
   Le bouton <b>« Écouter »</b> te joue la chanson basse+accords pour entendre l'objectif.</p>
 
-  <div class="tip"><b>Difficile à deux mains ?</b> C'est normal au début : la plupart
-  des claviers PC ne gèrent pas 4 touches enfoncées en même temps. Le bouton <b>« Tu joues »</b> est ta
-  solution — il fait jouer <b>une main par l'appli</b> pendant que tu joues l'autre :
+  <div class="tip"><b>Difficile à deux mains ?</b> C'est normal au début : les deux mains
+  n'ont pas encore leur autonomie. Le bouton <b>« Tu joues »</b> est ta solution — il fait jouer
+  <b>une main par l'appli</b> pendant que tu joues l'autre :
   <ul style="margin:8px 0 0">
     <li><b>Main droite (basse auto)</b> : tu joues juste l'accord, l'appli pose la basse.</li>
     <li><b>Main gauche (accords auto)</b> : tu joues juste la basse (1 touche !), l'appli pose l'accord.</li>
   </ul>
-  Tu entends quand même les deux mains ensemble, en rythme. (Sur une <b>tablette/écran tactile</b>, tu
-  peux carrément jouer les deux mains avec les doigts grâce au multi-touch.)</div>
-
-  <div class="tip"><b>📱 Astuce « deux surfaces » (très efficace) :</b> ouvre le
-  <a href="bass-pad.html" target="_blank"><b>Pad de basse</b></a> sur ton <b>téléphone</b> (en paysage,
-  grosses touches) → c'est ta <b>main gauche</b>. Joue les <b>accords</b> sur l'ordinateur → ta
-  <b>main droite</b>. Chaque appareil sonne de son côté et tu les entends ensemble dans la pièce — les
-  deux mains ne se chevauchent plus du tout. Aucune connexion nécessaire.</div>
+  Tu entends quand même les deux mains ensemble, en rythme. Quand une main tourne toute seule sans
+  que tu y penses, enlève la roulette et remets les deux.</div>
 
   <div class="stage">
     <div class="metro">
@@ -214,10 +208,8 @@
     <li><b>Étape 1</b> : « Main gauche seule » au métronome — les 4 basses, une par mesure.</li>
     <li><b>Étape 2</b> : « Mains ensemble » à <b>tempo très lent</b> (45–55 BPM). Vise des pastilles vertes sur la frise.</li>
     <li>Écoute souvent le bouton <b>« Écouter »</b> pour mémoriser le son cible.</li>
-    <li>Sans instrument ? Tout est jouable au clavier (raccourcis écrits sur les touches) :
-    <b class="bass">main gauche en bas</b> (blanches + noires S D G H J, dont le Si♭ = J),
-    <b>main droite sur A Z E R T Y U</b> + chiffres pour les noires.
-    <small>(Certains claviers PC bloquent au-delà de quelques touches simultanées — normal ; sinon utilise un mode « accompagnement » ci-dessus.)</small></li>
+    <li>Loin de ton clavier ? Les touches à l'écran se cliquent — tu peux réviser l'ordre des
+    basses et les accords sans jouer, seul le geste ne se travaille pas comme ça.</li>
   </ul>
 
   <footer>
@@ -239,8 +231,8 @@
   // RH = accord (notes), bass = fondamentale grave (≈ une octave plus bas), root = nom
   var CHORDS={
     Rem:{name:'Ré mineur', notes:[62,65,69], bass:50, root:'Ré'},
-    Sib:{name:'Si♭ majeur',notes:[65,70,74], bass:58, root:'Si♭'},
-    Fa: {name:'Fa majeur', notes:[65,69,72], bass:53, root:'Fa'},
+    Sib:{name:'Si♭ majeur',notes:[62,65,70], bass:58, root:'Si♭'},
+    Fa: {name:'Fa majeur', notes:[60,65,69], bass:53, root:'Fa'},
     DoM:{name:'Do majeur', notes:[60,64,67], bass:48, root:'Do'}
   };
   var PROG=['Rem','Sib','Fa','DoM'];

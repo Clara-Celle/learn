@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Référence — Glossaire du cours</title>
+<link rel="stylesheet" href="../lib/sheet.css">
+<style>
+  dl{margin:0}
+  dt{font-family:'Iowan Old Style',Georgia,serif;font-size:17px;font-weight:700;color:var(--accent);
+     margin:16px 0 3px;break-after:avoid}
+  dt .en{font-family:'Avenir Next','Segoe UI',system-ui,sans-serif;font-size:12.5px;font-weight:400;
+     color:var(--muted);margin-left:8px;letter-spacing:.02em}
+  dd{margin:0 0 4px;padding-left:0}
+  dd .ex{color:var(--muted);font-size:14.5px;display:block;margin-top:3px}
+  dd .ex b{color:var(--ink)}
+  a{color:var(--accent2)}
+  .idx{columns:3;column-gap:22px;font-size:14.5px;margin:6px 0 4px;-webkit-column-break-inside:avoid}
+  .idx a{display:block;border-bottom:1px dotted var(--line);padding:2px 0;text-decoration:none}
+  @media (max-width:640px){.idx{columns:2}}
+  .lex{font-size:15px}
+  .lex td.l{font-weight:700;color:var(--accent)}
+  section{break-inside:auto}
+</style>
+</head>
+<body>
+<div class="sheet">
+  <h1>📖 Glossaire du cours</h1>
+  <p class="sub">Fiche de référence · Piano · tout le vocabulaire employé dans les leçons, en solfège</p>
+
+  <div class="rule"><b>À quoi ça sert.</b> Chaque mot ci-dessous a un sens <i>précis</i> et toujours le
+  même dans tout le cours. Quand une leçon dit « la fondamentale », elle veut dire exactement ce qui
+  est écrit ici — pas autre chose. Si un mot d'une leçon ne figure pas dans cette fiche, c'est un oubli
+  de ma part : <b>dis-le-moi et je l'ajoute.</b></div>
+
+  <h2>Trouver un mot</h2>
+  <div class="idx">
+    <a href="#accord">Accord</a>
+    <a href="#arpege">Arpège</a>
+    <a href="#basse">Basse</a>
+    <a href="#bemol">Bémol ♭</a>
+    <a href="#bpm">BPM</a>
+    <a href="#croche">Croche</a>
+    <a href="#demiton">Demi-ton</a>
+    <a href="#diese">Dièse ♯</a>
+    <a href="#diminue">Diminué</a>
+    <a href="#docentral">Do central</a>
+    <a href="#doigte">Doigté</a>
+    <a href="#fondamentale">Fondamentale</a>
+    <a href="#gamme">Gamme</a>
+    <a href="#legato">Legato</a>
+    <a href="#majeur">Majeur</a>
+    <a href="#mesure">Mesure</a>
+    <a href="#mineur">Mineur</a>
+    <a href="#noire">Noire</a>
+    <a href="#octave">Octave</a>
+    <a href="#passagedupouce">Passage du pouce</a>
+    <a href="#pedale">Pédale</a>
+    <a href="#position5">Position de 5 doigts</a>
+    <a href="#renversement">Renversement</a>
+    <a href="#tempo">Tempo</a>
+    <a href="#temps">Temps</a>
+    <a href="#ton">Ton</a>
+    <a href="#touchenoire">Touche noire</a>
+    <a href="#triade">Triade</a>
+    <a href="#voicing">Voicing</a>
+  </div>
+
+  <h2>Les distances</h2>
+  <dl>
+    <dt id="demiton">Demi-ton <span class="en">la plus petite distance</span></dt>
+    <dd>La touche <b>juste à côté</b>, sans rien entre les deux — noire ou blanche, peu importe.
+      C'est l'unité de mesure de tout le cours.
+      <span class="ex">Do → Do♯ = 1 demi-ton. Mi → Fa = 1 demi-ton aussi (il n'y a pas de noire entre
+      les deux). <b>C'est là que se cache le piège des touches blanches.</b></span></dd>
+
+    <dt id="ton">Ton <span class="en">= 2 demi-tons</span></dt>
+    <dd>Deux demi-tons. On saute une touche.
+      <span class="ex">Do → Ré = 1 ton (on saute Do♯).</span></dd>
+
+    <dt id="octave">Octave</dt>
+    <dd>La distance d'un Do au Do suivant : <b>12 demi-tons</b>, le motif complet des touches qui se
+      répète. Deux notes à l'octave portent le même nom et sonnent « pareil, plus haut ».
+      <span class="ex">Sur ton clavier, le bouton <b>Octave</b> décale toutes les touches d'un cran —
+      c'est comme ça qu'on atteint les graves avec seulement 61 touches.</span></dd>
+  </dl>
+
+  <h2>Les touches et les notes</h2>
+  <dl>
+    <dt id="touchenoire">Touche noire</dt>
+    <dd>Les touches surélevées, groupées par 2 et par 3. Elles n'ont pas de nom à elles : chacune se
+      nomme par rapport à sa voisine blanche, avec un dièse ou un bémol.
+      <span class="ex"><b>Tu en joues déjà</b> : le Si♭ de <i>The Scientist</i> en est une.</span></dd>
+
+    <dt id="diese">Dièse ♯</dt>
+    <dd><b>Un demi-ton plus haut</b> (vers la droite).
+      <span class="ex">Do♯ = la noire juste à droite du Do.</span></dd>
+
+    <dt id="bemol">Bémol ♭</dt>
+    <dd><b>Un demi-ton plus bas</b> (vers la gauche).
+      <span class="ex">Si♭ = la noire juste à gauche du Si. <b>Même touche que le La♯</b> — deux noms
+      pour une seule touche, on choisit celui qui rend la lecture plus simple.</span></dd>
+
+    <dt id="docentral">Do central</dt>
+    <dd>Le Do le plus proche du milieu du piano, le point de repère de tout le cours. On le repère à
+      l'œil : c'est la blanche <b>juste à gauche d'un groupe de 2 noires</b>.
+      <span class="ex">Voir la <a href="keyboard-map.html">carte du clavier</a>.</span></dd>
+  </dl>
+
+  <h2>Les accords</h2>
+  <dl>
+    <dt id="accord">Accord</dt>
+    <dd>Plusieurs notes jouées <b>en même temps</b>. Un accord est un <i>ensemble de notes</i>, pas une
+      forme de main : les mêmes notes empilées autrement restent le même accord.</dd>
+
+    <dt id="triade">Triade</dt>
+    <dd>Un accord de <b>trois notes</b>. Tous les accords de tes trois morceaux sont des triades.</dd>
+
+    <dt id="fondamentale">Fondamentale</dt>
+    <dd>La note qui <b>donne son nom</b> à l'accord.
+      <span class="ex">L'accord de Ré mineur a Ré pour fondamentale. C'est aussi la note que joue la
+      <a href="#basse">main gauche</a>.</span></dd>
+
+    <dt id="majeur">Majeur</dt>
+    <dd>Triade dont les écarts sont <b>4 puis 3</b> demi-tons en partant du bas. Sonorité lumineuse.
+      <span class="ex">Fa majeur = Fa · La · Do. Détail :
+      <a href="accords-majeur-mineur.html">fiche majeur / mineur</a>.</span></dd>
+
+    <dt id="mineur">Mineur</dt>
+    <dd>Triade dont les écarts sont <b>3 puis 4</b> demi-tons. Sonorité sombre. Le total fait 7 dans
+      les deux cas : <b>une seule note</b>, celle du milieu, sépare majeur de mineur.</dd>
+
+    <dt id="diminue">Diminué</dt>
+    <dd>Triade en <b>3 puis 3</b> (total 6). Sonne instable. <b>Hors programme</b> — aucun de tes trois
+      morceaux n'en contient ; il est là seulement pour que tu saches pourquoi le septième accord des
+      touches blanches détonne.</dd>
+
+    <dt id="renversement">Renversement</dt>
+    <dd>Le même accord avec ses notes empilées dans un autre ordre : on prend la note du bas et on la
+      remet en haut. Sert à <b>ne pas déplacer la main</b> entre deux accords.
+      <span class="ex">Do majeur : Do·Mi·Sol (fondamentale) → Mi·Sol·Do (1<sup>er</sup>) →
+      Sol·Do·Mi (2<sup>e</sup>).</span></dd>
+
+    <dt id="voicing">Voicing <span class="en">mot anglais, faute de mieux</span></dt>
+    <dd>Le choix précis de <b>quel renversement</b> et à quelle hauteur on joue un accord. Deux voicings
+      du même accord portent le même nom mais ne se jouent pas au même endroit.
+      <span class="ex">Dans <i>The Scientist</i>, on joue Si♭ en <b>Ré·Fa·Si♭</b> plutôt que Fa·Si♭·Ré :
+      même accord, trois fois moins de déplacement.</span></dd>
+  </dl>
+
+  <h2>Le rythme</h2>
+  <dl>
+    <dt id="temps">Temps</dt>
+    <dd>La pulsation régulière, celle que tu taperais du pied. <i>The Scientist</i> a
+      <b>4 temps par mesure</b>.</dd>
+
+    <dt id="mesure">Mesure</dt>
+    <dd>Un paquet de temps qui se répète — ici 4. Dans ce morceau, <b>un accord par mesure</b>.</dd>
+
+    <dt id="tempo">Tempo</dt>
+    <dd>La <b>vitesse</b> des temps. Se règle avec le métronome des leçons.</dd>
+
+    <dt id="bpm">BPM <span class="en">battements par minute</span></dt>
+    <dd>L'unité du tempo. 60 BPM = un temps par seconde.
+      <span class="ex">On travaille toujours lentement d'abord : <b>45–55 BPM</b> pour monter les mains
+      ensemble.</span></dd>
+
+    <dt id="noire">Noire <span class="en">⚠️ à ne pas confondre</span></dt>
+    <dd>Une <b>durée</b> : la note qui vaut un temps. <b>Rien à voir avec une touche noire</b> — c'est
+      une malchance du vocabulaire français, les deux mots existent et veulent dire des choses
+      différentes. Ici « noire » sans « touche » devant = toujours une durée.</dd>
+
+    <dt id="croche">Croche</dt>
+    <dd>Une durée : <b>un demi-temps</b>, donc deux croches par temps → 8 par mesure. C'est le
+      balancement régulier de la main droite dans <i>The Scientist</i>.
+      <span class="ex">On les compte « 1 &amp; 2 &amp; 3 &amp; 4 &amp; ».</span></dd>
+  </dl>
+
+  <h2>Les mains et le geste</h2>
+  <dl>
+    <dt id="basse">Basse</dt>
+    <dd>La note grave jouée par la <b>main gauche</b> : c'est la <a href="#fondamentale">fondamentale</a>
+      de l'accord. Une seule note, sur le temps 1.</dd>
+
+    <dt id="doigte">Doigté</dt>
+    <dd>Quel doigt joue quelle note. Les doigts sont numérotés <b>1 = pouce</b> → <b>5 = auriculaire</b>,
+      aux deux mains.
+      <span class="ex">Triade serrée → 1-3-5. Renversement plus large → 1-2-5. Voir la
+      <a href="position-des-doigts.html">fiche position des doigts</a>.</span></dd>
+
+    <dt id="position5">Position de 5 doigts</dt>
+    <dd>Un doigt par touche, la main posée sans bouger sur cinq blanches voisines. Le point de départ
+      de tout : ton premier accord <b>est</b> cette position, doigts 1-3-5 ensemble.</dd>
+
+    <dt id="gamme">Gamme</dt>
+    <dd>Les notes d'une tonalité jouées à la suite, en montant ou en descendant.
+      <span class="ex">Gamme de Do = Do Ré Mi Fa Sol La Si Do, toutes les blanches.</span></dd>
+
+    <dt id="passagedupouce">Passage du pouce</dt>
+    <dd>Le geste qui permet de jouer plus de 5 notes à la suite : le pouce passe <b>sous</b> la main
+      pour reprendre la suite plus loin. Prérequis des arpèges d'<i>Interstellar</i>.</dd>
+
+    <dt id="legato">Legato</dt>
+    <dd>Jouer <b>lié</b> : aucun silence entre deux notes. La note suivante s'enfonce
+      <i>avant</i> que la précédente soit relâchée.
+      <span class="ex">⚠️ Le legato se mesure en <b>silence</b>, pas en vitesse : on peut jouer très
+      lentement et parfaitement legato.</span></dd>
+
+    <dt id="arpege">Arpège</dt>
+    <dd>Les notes d'un accord jouées <b>l'une après l'autre</b> au lieu d'ensemble. C'est toute la
+      signature d'<i>Interstellar</i>.</dd>
+
+    <dt id="pedale">Pédale <span class="en">de sustain, la droite</span></dt>
+    <dd>Pédale enfoncée = les notes <b>continuent de sonner</b> après que les doigts ont lâché. Sert à
+      lier les accords. On la relâche et la ré-enfonce <b>à chaque changement d'accord</b>, sinon tout
+      se mélange.
+      <span class="ex">Dans les leçons : bouton 🎶 Pédale, barre <b>Espace</b>, ou ta vraie pédale.</span></dd>
+  </dl>
+
+  <h2>Lettres américaines → solfège</h2>
+  <p>On n'utilise <b>pas</b> les lettres dans ce cours. Cette table sert uniquement à décoder une grille
+  d'accords trouvée en ligne — la plupart des tutos pop sont écrits comme ça.</p>
+  <table class="lex">
+    <tr><th class="l">Lettre</th><td class="l">C</td><td class="l">D</td><td class="l">E</td><td class="l">F</td><td class="l">G</td><td class="l">A</td><td class="l">B</td></tr>
+    <tr><th class="l">Solfège</th><td>Do</td><td>Ré</td><td>Mi</td><td>Fa</td><td>Sol</td><td>La</td><td>Si</td></tr>
+  </table>
+  <div class="rule"><b>Les suffixes.</b> Une lettre seule = <a href="#majeur">majeur</a>.
+  Un <b>m</b> collé derrière = <a href="#mineur">mineur</a>. Un <b>♭</b> = bémol.
+  <span style="display:block;margin-top:6px">Donc la grille de <i>The Scientist</i>, écrite
+  <b>Dm – B♭ – F – C</b>, se lit : <b>Ré mineur – Si♭ majeur – Fa majeur – Do majeur</b>.</span></div>
+
+  <div class="rule ok"><b>Une question ?</b> Demande-moi. Si un mot du cours te paraît flou, ou si tu en
+  croises un ailleurs (dans un tuto, sur une partition), dis-le-moi : je l'explique et je l'ajoute
+  ici.</div>
+
+  <p class="noprint">Astuce : Ctrl/Cmd + P pour imprimer cette fiche. ·
+    Autres fiches : <a href="keyboard-map.html">carte du clavier</a> ·
+    <a href="accords-majeur-mineur.html">majeur / mineur</a> ·
+    <a href="position-des-doigts.html">position des doigts</a> ·
+    <a href="premier-clavier-et-branchement.html">clavier &amp; branchement</a></p>
+</div>
+</body>
+</html>

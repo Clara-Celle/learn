@@ -48,10 +48,21 @@
   - **⚠️ Plage :** les leçons affichent Do3→Do6 (MIDI 48-84), le GXP61 va de Do2 à Do7.
     Les notes hors plage sont ignorées (message dans le témoin) → **lui apprendre le bouton
     Octave**, ce qui servira aussi pour les graves d'*Interstellar*.
-  - Le ghosting du clavier PC et l'astuce « deux surfaces » (bass-pad mobile) sont désormais
-    **inutiles** — les deux mains sur un seul vrai clavier, autant de notes qu'elle veut.
+  - Le ghosting du clavier PC et l'astuce « deux surfaces » sont désormais **inutiles** — les deux
+    mains sur un seul vrai clavier, autant de notes qu'elle veut. **`lessons/bass-pad.html` supprimé
+    (août 2026, décision de Clara)** ; les deux leçons qui y renvoyaient sont nettoyées, et la
+    justification « les claviers PC ne gèrent pas 4 touches » de la leçon main gauche est remplacée
+    par la vraie raison (autonomie des deux mains). Le bouton « Tu joues » reste, lui est utile.
 - **`lib/sheet.css`** = style commun des fiches `reference/*.html` (écran + impression).
   Les schémas propres à une fiche restent en `<style>` local.
+- **`reference/glossaire.html` (août 2026)** = le vocabulaire du cours, 29 entrées, en solfège.
+  **Une fois créé, un glossaire fait autorité** : tout mot employé dans une leçon doit y figurer avec
+  ce sens-là. Contient le piège « noire (durée) ≠ touche noire », et la table lettres → solfège pour
+  décoder une grille pop. Y ajouter tout mot que Clara signale comme flou.
+- **La liste des fiches vit dans le tableau `REFS` de `lib/nav.js`** (comme `LESSONS` pour l'ordre).
+  Elle alimente **le sommaire ET la page d'accueil** — avant, les deux listaient les fiches
+  séparément et deux fiches n'apparaissaient nulle part. Ajouter une fiche = une ligne dans `REFS`.
+  `selftest.js` vérifie que chaque fiche listée existe.
 - **1re session sur vrai clavier prévue : rejouer The Scientist en entier**, pour transférer
   l'acquis du clavier PC vers un vrai toucher.
 
@@ -59,6 +70,11 @@
 1. The Scientist — Coldplay (accords Dm – Bb – F – C). Le plus accessible → bon 1er objectif.
 2. Happy Ending — Mika (ballade piano, accords).
 3. Interstellar Main Theme — Hans Zimmer (arpège iconique).
+4. **Katyusha — Blanter (ajouté août 2026, apporté par Clara).** Ré mineur, **2/4**, accords
+   Ré m – Sol m – La7. Premier morceau qu'elle amène elle-même, et premier accord à **4 notes**.
+   ⚠️ **Mélodie non fournie et à ne pas fournir** : œuvre protégée (Blanter †1990), et surtout
+   c'est le blocage qui motive la leçon de lecture de portée (learning-record 0020).
+   `midi/katyusha-accompagnement-*.mid` = basse + accords seulement.
 
 ## Pédagogie
 - Une leçon = UNE chose, gain rapide et tangible, boucle de feedback serrée.
@@ -75,6 +91,20 @@
   **🎯 Guide** = surlignage des prochaines touches ; **✋ Doigtés** = ronds numérotés dessus.
   Les deux sont de simples classes CSS (`pk-noguide`, `pk-nofing`) → une leçon appelle
   `guide()`/`target()` sans se soucier de l'état choisi par Clara.
+- **`piano.held()`** = les touches **physiquement enfoncées** (souris ou MIDI), lues depuis `.pk-press`.
+  ⚠️ **Une touche tenue ne renvoie jamais un second `onNote`.** Tout exercice qui compte des note-on
+  pour valider un accord est donc faux dès que la cible change pendant que les doigts sont posés :
+  les notes déjà tenues ne peuvent plus jamais être comptées. Les leçons « accord mineur » et
+  « renversements » avaient ce bug (août 2026). **Toute nouvelle détection d'accord doit partir de
+  `held()`, pas seulement des `onNote`.**
+- **⛔ Ne jamais exiger un ORDRE de notes dans un accord.** Quand Clara plaque les 3 notes d'un bloc —
+  ce que la leçon « un accord d'un seul bloc » lui apprend justement à faire — les messages MIDI
+  arrivent dans l'ordre où les doigts touchent, donc **imprévisible**. La leçon majeur/mineur exigeait
+  bas→haut : un bloc correct était compté faux une fois sur deux. Elle accepte maintenant les deux
+  (l'ordre reste la voie guidée, le bloc est validé via `held()`).
+- **⛔ Ne pas rejouer l'accord après une réussite.** Les touches sont encore enfoncées et sonnent ;
+  un `playChord` par-dessus s'entend comme un écho parasite (signalé par Clara). Retiré des leçons
+  majeur/mineur, accord mineur et bonus. Le bouton 🔊 Écouter suffit.
 - **`onRelease(midi, el)`** (option de `create`, jumelle de `onNote`) : la lib remonte les
   **relâchements**. Indispensable pour toute mesure de **legato**, qui est un intervalle
   relâché→enfoncé. ⚠️ **Ne jamais mesurer une liaison en début→début** : ça mesure le tempo, pas le
@@ -149,14 +179,22 @@ API : `prompt / button / target / hit / miss / verdict / measure / streak / pane
    une règle alors que ça ne vaut qu'en Do/Fa/Sol. **Majeur = 4+3, mineur = 3+4, total 7.**
    ⚠️ Seul exercice du cours où le guide ne montre **que la fondamentale** — tout surligner
    donnerait la réponse. Bouton 👀 Montrer en secours (ne compte pas dans la série).
-5. Accord mineur & The Scientist
-6. Un accord d'un seul bloc
-7. Les renversements
-8. Le rythme
+   ⚠️ Accepte l'accord **plaqué d'un bloc** via `held()` : exiger un ordre était un bug.
+5. **Les renversements** ← remonté de la 7e place (août 2026, décision de Clara : « les accords
+   finaux dès le début »). Elle **introduit Si♭ majeur** elle-même (§2), sinon la leçon parlerait
+   d'un accord jamais présenté. 3 modes : ① Découvrir (Do) · ② Écoute le Si♭ (ses 3 hauteurs,
+   comparaison à l'oreille) · ③ Le cycle (mesure les demi-tons parcourus).
+6. Accord mineur & The Scientist — **voicings liés** (Si♭ = Ré·Fa·Si♭, Fa = Do·Fa·La)
+7. Un accord d'un seul bloc — **voicings liés**
+8. Le rythme — tableau de bord « À jouer / Tu as joué » (chips ✓ vert, ✗ rouge)
 9. La main gauche : la basse
 10. Le balancier (croches)
 11. The Scientist : assemblage
 ★ Bonus Canon de Pachelbel
+
+**⚠️ La position fondamentale ne survit que là où on la CONSTRUIT** (leçon majeur/mineur : compter
+4+3 depuis la fondamentale l'exige). Partout où Clara *joue*, ce sont les voicings liés. Ne pas
+« réharmoniser » la leçon majeur/mineur : elle enseigne la théorie, pas le doigté final.
 
 ### ⚠️ AVANT DE DIRE QUE C'EST FINI : `node lib/selftest.js`
 Vérifier la **syntaxe** (`new Function`) NE SUFFIT PAS. Une variable supprimée par erreur ne casse
@@ -166,7 +204,11 @@ C'est exactement le bug de juillet 2026 (la suppression du clavier d'ordinateur 
 Web MIDI). `lib/selftest.js` exécute les libs sur un faux DOM et l'attrape en 200 ms.
 
 ### Vérifications à relancer après tout renommage/réordonnancement
-- Le vérificateur de liens (script node jetable, cf. learning-record 0015) — **95 liens** au dernier passage.
+- Le vérificateur de liens (script node jetable, cf. learning-record 0015) — **92 liens internes,
+  0 cassé** au dernier passage (août 2026, après suppression de `bass-pad.html`).
+- **`grep -rn "\bL[0-9]\b" lessons/*.html reference/*.html index.html`** → doit ne rien renvoyer.
+  Les ancrages `data-lnum` ne sont pas le seul endroit où un numéro peut se cacher : quatre `L7`/`L8`/`L9`
+  vivaient dans la **prose** et sont devenus faux à l'insertion de la leçon majeur/mineur (record 0019).
 - `lib/test-midi.html` : auto-tests MIDI **+ auto-tests du composant et de l'ordre**.
 
 ### Fichiers MIDI pour Synthesia — `python3 tools/make-midi.py` → `midi/`
@@ -182,13 +224,21 @@ sont du JS dans du HTML.)
 - **Où elle en est (août 2026)** : passage du pouce (le mouvement vient), puis arrivée sur l'accord
   mineur → a buté sur majeur/mineur, d'où la nouvelle leçon « compte les demi-tons » insérée avant.
   Prochaine étape : la faire, puis reprendre « accord mineur & The Scientist » avec la vraie règle.
-- **⚠️ Chercher les autres raccourcis non datés** (cf. learning-record 0018) : toute phrase du type
-  « pour l'instant, retiens… » sans leçon programmée derrière est une erreur en attente.
+- **✅ Chasse aux raccourcis non datés faite (août 2026, record 0018).** `grep -rniE "pour l'instant|
+  plus tard|retiens juste|contente-toi|en gros|à ce stade"` sur `lessons/` + `reference/` → 6 hits,
+  **un seul vrai défaut** : `keyboard-map.html` disait les touches noires « étudiées plus tard » alors
+  que Clara joue du Si♭ depuis la leçon de l'accord mineur. Corrigé. Les autres sont datés (ils
+  pointent une leçon) ou bornés par la mission (le diminué, hors programme assumé). **Relancer ce grep
+  après chaque nouvelle leçon.**
 - **Rejouer The Scientist en entier au vrai clavier, avec le doigté** (test de transfert).
 - Au choix : fignoler The Scientist (accord cassé + mélodie) OU démarrer **Interstellar**
   (arpèges en La mineur — le passage du pouce est le prérequis, désormais couvert). Demander à Clara.
 - Lecture de la portée (clé de Sol), trouver Do central.
-- **Décision en attente :** harmoniser les voicings d'accords entre la leçon « un accord d'un seul
-  bloc »/« assemblage » (Si♭ [65,70,74], Fa [65,69,72]) et la leçon « renversements »
-  (Si♭ [62,65,70], Fa [60,65,69]). Question posée à Clara, pas de réponse → on ne touche à rien.
+- **✅ Voicings tranchés (août 2026, cf. learning-record 0019).** Coupure **à la leçon des
+  renversements** : *avant* elle (accord mineur, un accord d'un seul bloc) → position fondamentale,
+  c'est le bon stade ; *après* elle (rythme, main gauche, balancier, assemblage) → **voicings liés**,
+  Si♭ = [62,65,70] (Ré·Fa·Si♭), Fa = [60,65,69] (Do·Fa·La). 12 demi-tons par tour au lieu de 36.
+  Sinon le cours enseigne l'économie de mouvement puis fait pratiquer les sauts. `tools/make-midi.py`
+  (`SCI`) mis à jour et relancé. Ne pas « réharmoniser » les leçons d'avant : la différence est
+  voulue.
 - **Travail restant (non bloquant) :** migrer vers `Exercise` les 7 leçons encore bespoke.

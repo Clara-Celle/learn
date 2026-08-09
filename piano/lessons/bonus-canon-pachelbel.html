@@ -174,7 +174,8 @@
 
   <div class="ask">
     <p style="margin:0"><b>Je suis ton prof — pose-moi des questions !</b> Les dièses (Fa♯, Do♯) te
-    bloquent ? Tu veux la version avec la <b>basse à la main gauche</b> (comme la L8), ou le célèbre
+    bloquent ? Tu veux la version avec la <b>basse à la main gauche</b> (comme dans la leçon sur la
+    main gauche), ou le célèbre
     <b>thème mélodique</b> par-dessus ? Demande-moi et je te prépare l'étape suivante. 🎶</p>
   </div>
 
@@ -247,7 +248,7 @@
         setTimeout(function(){ selectChord(PROG[step]); }, 600);
       }
     } else {
-      setTimeout(function(){ piano.playChord(c.notes); },120);
+      // idem leçon accord mineur : pas d'écho par-dessus les touches tenues
       tfeedback.textContent='✓ '+c.name+' !'; tfeedback.className='tfeedback ok';
     }
   }

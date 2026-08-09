@@ -254,6 +254,11 @@
       midiState:function(){ return midiState; },
       onMidiState:function(f){ midiListeners.push(f); f(midiState); },
       midiMessage:function(bytes){ handleMidi({data:bytes}); },   // injection manuelle (diagnostic / tests)
+      // Touches physiquement enfoncées, souris comme MIDI (.pk-press est posé par press()).
+      // Une touche DÉJÀ tenue ne renverra jamais de nouveau onNote : sans ça, un exercice qui
+      // change de cible pendant que les doigts sont posés ne peut plus jamais compter ces notes.
+      held:function(){ return Array.prototype.map.call(piano.querySelectorAll('.pk-press'),
+        function(el){ return parseInt(el.dataset.midi); }); },
       setLabels:setLabels, toggleLabels:function(){ setLabels(!labelsOn); return labelsOn; },
       setSound:setSound, toggleSound:function(){ soundOn=!soundOn; return soundOn; }, isSound:function(){ return soundOn; },
       setGuide:setGuide, toggleGuide:function(){ setGuide(!guideOn); return guideOn; }, isGuide:function(){ return guideOn; },

@@ -156,8 +156,9 @@
   </div>
 
   <h2>6. Le lien avec <i>The Scientist</i></h2>
-  <p>Il te manque l'accord <b>mineur</b> et un accord avec une touche noire — c'est la leçon suivante,
-  et la chanson sera à portée de doigts.</p>
+  <p>Il te manque l'accord <b>mineur</b> et un accord avec une touche noire — c'est
+  <a href="accord-mineur-et-the-scientist.html">la leçon sur l'accord mineur</a>, et la chanson sera
+  à portée de doigts.</p>
 
   <details class="aside">
     <summary>Pourquoi « majeur » ?</summary>
@@ -310,6 +311,8 @@ function nextChord(){
   var c=CHORDS[PROG[progStep]];
   ex.prompt(c.name, c.sol+' — doigté 1 – 3 – 5, les trois doigts ensemble.');
   ex.target(c.notes, [1,3,5]);
+  // une touche déjà tenue ne renverra pas de nouveau onNote : on compte les doigts déjà posés
+  kb.held().forEach(function(m){ if(c.notes.indexOf(m)>=0 && !got[m]){ got[m]=1; ex.hit(m); } });
   drawPanel();
 }
 

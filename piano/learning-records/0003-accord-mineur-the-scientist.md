@@ -9,7 +9,7 @@ pour la même touche ; on raisonne en bémol pour le mineur). Comparaison A/B Do
 Fa majeur → Do majeur, via l'exercice d'enchaînement. Si♭ majeur introduit comme le seul accord
 de la chanson avec une touche noire (Si♭ = noire entre La et Si). Voir [[MISSION.md]], [[0002-accords-triade-majeure]].
 
-**Statut :** *contenu livré, maîtrise pas encore prouvée.* À valider quand Jeffy boucle la
+**Statut :** *contenu livré, maîtrise pas encore prouvée.* À valider quand Clara boucle la
 progression The Scientist sans regarder les noms.
 
 **Prochaine étape prévue :** le **rythme** + la **main gauche (basse)** pour que The Scientist

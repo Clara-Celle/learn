@@ -4,9 +4,9 @@ Première leçon **rendue possible par l'instrument** (cf. [[0010-clavier-branch
 Le doigté était explicitement hors de portée depuis le début : le clavier PC a une disposition
 décalée, non transférable ([[0001-point-de-depart]]). Verrou levé.
 
-## Le choix pédagogique : mesurer ce que l'oreille de débutant ne sait pas juger
+## Le choix pédagogique : mesurer ce que l'oreille d'une débutante ne sait pas juger
 
-Une appli **ne peut pas voir quels doigts** il utilise. Plutôt que de faire semblant, la leçon
+Une appli **ne peut pas voir quels doigts** Clara utilise. Plutôt que de faire semblant, la leçon
 mesure deux **proxys objectifs** que seul le MIDI fournit :
 
 1. **L'écart de temps** entre la 1re et la dernière note d'un accord (< 40 ms = « d'un seul bloc »,

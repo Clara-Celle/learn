@@ -1,6 +1,6 @@
 # Leçon 09 livrée : la position de cinq doigts (et 1re mélodie)
 
-Jeffy a demandé « les bases de la position des doigts ». La Leçon 08 venait de couvrir le doigté
+Clara a demandé « les bases de la position des doigts ». La Leçon 08 venait de couvrir le doigté
 **d'un accord** (1-3-5, trois notes ensemble) — mais la base plus fondamentale manquait :
 **un doigt par touche, la main immobile**. Lacune réelle : **tout le cours jusqu'ici était en
 accords**, jamais note à note.
@@ -17,7 +17,7 @@ accords**, jamais note à note.
 
 ## Boucles de feedback
 
-1. **Le jeu des numéros** : l'appli annonce un numéro de doigt, il joue la touche. Bascule
+1. **Le jeu des numéros** : l'appli annonce un numéro de doigt, elle joue la touche. Bascule
    main droite / main gauche. Feedback distinct pour « bonne note, mauvaise octave » (protège
    contre une confusion avec le bouton Octave).
 2. **Bouton « 🙈 Masquer le clavier »** — difficulté désirable délibérée : retire le repère visuel

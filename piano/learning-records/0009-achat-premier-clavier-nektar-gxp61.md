@@ -1,6 +1,6 @@
 # Achat du premier clavier : Nektar Impact GXP61 (juillet 2026)
 
-Jeffy a le budget et arrive avec **deux options déjà choisies** : Nektar Impact GXP61 (206 €)
+Clara a le budget et arrive avec **deux options déjà choisies** : Nektar Impact GXP61 (206 €)
 vs Arturia KeyLab Essential 61 mk3 (215 €) — un ami lui avait conseillé le Nektar.
 
 **Constat qui n'était pas dans sa question :** ce sont deux **contrôleurs MIDI**, pas des pianos.
@@ -28,7 +28,7 @@ Aucun son, aucun haut-parleur, aucune mécanique à marteaux. Ça contredit la r
   *Soft Piano* — timbre feutré très proche de *The Scientist*. Route « je m'assois et je joue ».
   Attention latence → ASIO4ALL si ça traîne sous Windows.
 - **Attente à cadrer :** pas de marteaux → la force de doigts et les nuances ne se travailleront
-  que partiellement. À lui redire quand il touchera un vrai piano, pour qu'il ne lise pas ça
+  que partiellement. À lui redire quand elle touchera un vrai piano, pour qu'elle ne lise pas ça
   comme une régression.
 - **61 touches** : OK pour *The Scientist* et *Happy Ending* ; pour *Interstellar*, prévoir
   d'enseigner le **bouton Octave** pour atteindre les graves.

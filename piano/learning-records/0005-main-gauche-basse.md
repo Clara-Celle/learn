@@ -14,7 +14,7 @@ mains (main gauche en bas, accords sur la rangée du milieu).
 
 Basses de The Scientist : Ré3(50), Si♭3(58), Fa3(53), Do3(48). Voir [[MISSION.md]], [[0004-rythme-metronome]].
 
-**Statut :** *contenu livré, maîtrise pas encore prouvée.* À valider quand Jeffy tient la
+**Statut :** *contenu livré, maîtrise pas encore prouvée.* À valider quand Clara tient la
 progression mains ensemble, lentement et régulièrement (pastilles vertes sur la frise).
 
 **Prochaine leçon prévue (06) :** le **motif rythmique de la main droite** (croches répétées,

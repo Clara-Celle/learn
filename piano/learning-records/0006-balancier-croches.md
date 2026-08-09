@@ -9,7 +9,7 @@ Atelier : métronome en **croches** (clic accentué temps 1, medium sur les temp
 « et »), **8 pastilles** (1 & 2 & 3 & 4 &), **frise** avec grille en croches (trait fin pour le
 « et »), play-along (accord surligné qui change par mesure) + démo « balancier ».
 
-**Statut :** *contenu livré, maîtrise pas encore prouvée.* À valider quand Jeffy tient le balancier
+**Statut :** *contenu livré, maîtrise pas encore prouvée.* À valider quand Clara tient le balancier
 régulier sur toute la progression à un tempo confortable.
 
 **Prochaine leçon prévue (07) :** **assemblage final** de The Scientist — main gauche (basse, L5)

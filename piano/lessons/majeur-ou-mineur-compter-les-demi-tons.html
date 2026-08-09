@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Majeur ou mineur : compte les demi-tons</title>
+<link rel="stylesheet" href="../lib/lesson.css">
+<link rel="stylesheet" href="../lib/piano.css">
+<style>
+  /* compteur de demi-tons — propre à cette leçon */
+  .cnt{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin:12px 0}
+  .cnt>b{min-width:86px;font-family:var(--serif);font-size:18px;color:var(--ink)}
+  .cnt .s{display:inline-flex;align-items:center;justify-content:center;min-width:44px;height:34px;
+    border:1px solid var(--line);border-radius:7px;background:#15110f;color:var(--muted);
+    font-size:13.5px;font-weight:600}
+  .cnt .s.blk{background:#0d0b0a;color:var(--violet)}
+  .cnt .s.hit{border-color:var(--accent);color:var(--accent);background:#2a211a}
+  .cnt em{color:var(--muted);font-size:14.5px;font-style:normal}
+  .cnt em b{color:var(--ink)}
+
+  table.rec{width:100%;border-collapse:collapse;margin:18px 0;font-size:16px}
+  table.rec th,table.rec td{border:1px solid var(--line);padding:9px 12px;text-align:center}
+  table.rec th{background:#15110f;color:var(--muted);font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+  table.rec td.l{text-align:left}
+  table.rec .num{font-family:var(--serif);font-size:20px;font-weight:700;color:var(--accent)}
+  table.rec tr.min .num{color:var(--violet)}
+  table.rec tr.dim td{color:var(--muted)}
+  .maj{color:var(--accent);font-weight:700} .min{color:var(--violet);font-weight:700}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <p class="kicker" data-lnum></p>
+    <h1>Majeur ou mineur : compte les demi-tons</h1>
+    <p class="mission">La règle « <b>saute une touche</b> » t'a emmenée jusqu'ici. Elle est fausse.
+    Voici la vraie — celle qui explique pourquoi <b>Ré · Fa · La n'est pas le majeur de Ré</b>, et qui
+    te permet de construire <b>n'importe quel accord</b> sans rien mémoriser.</p>
+  </header>
+
+  <p class="lead">Do · Mi · Sol est majeur. Ré · Fa · La a <b>exactement la même forme</b> — pars d'une
+  blanche, saute une blanche, saute une blanche — et pourtant c'est un accord <span class="min">mineur</span>.
+  Ce n'est pas une exception. C'est que la forme n'a jamais été ce qui décide.</p>
+
+  <h2>1. Pourquoi la forme ment</h2>
+  <p>Les touches blanches <b>ne sont pas régulièrement espacées</b>. Entre <b>Mi et Fa</b> il n'y a
+  aucune touche noire — elles se touchent. Pareil entre <b>Si et Do</b>. Partout ailleurs, une noire
+  s'intercale.</p>
+  <p>Donc « sauter une blanche » ne parcourt pas toujours la même distance. Compte les
+  <b>demi-tons</b> — chaque touche, noire ou blanche, compte pour un&nbsp;:</p>
+
+  <div class="card">
+    <div class="cnt"><b>Do → Mi</b>
+      <span class="s blk">Do♯</span><span class="s">Ré</span><span class="s blk">Ré♯</span><span class="s hit">Mi</span>
+      <em><b>4 demi-tons</b></em></div>
+    <div class="cnt"><b>Ré → Fa</b>
+      <span class="s blk">Ré♯</span><span class="s">Mi</span><span class="s hit">Fa</span>
+      <em><b>3 demi-tons</b> — il manque une marche, celle qui n'existe pas entre Mi et Fa.</em></div>
+  </div>
+
+  <div class="tip"><b>C'est tout le mystère.</b> Ta main a fait le même geste, mais l'oreille, elle,
+  n'entend pas des gestes : elle entend des <b>distances</b>. Et la distance n'était pas la même.</div>
+
+  <h2>2. La vraie recette</h2>
+  <p>Un accord de trois notes, c'est <b>deux étages empilés</b> depuis la note du bas. Seule la
+  hauteur du premier étage change&nbsp;:</p>
+
+  <table class="rec">
+    <tr><th class="l">Accord</th><th>bas → milieu</th><th>milieu → haut</th><th>bas → haut</th></tr>
+    <tr><td class="l"><span class="maj">Majeur</span> — lumineux</td>
+        <td class="num">4</td><td class="num">3</td><td>7</td></tr>
+    <tr class="min"><td class="l"><span class="min">Mineur</span> — sombre</td>
+        <td class="num">3</td><td class="num">4</td><td>7</td></tr>
+  </table>
+
+  <div class="tip"><b>Le total fait toujours 7.</b> C'est pour ça que la note du haut ne bouge jamais,
+  que ta main garde la même forme, et qu'<b>une seule note</b> — celle du milieu — sépare la joie de
+  la mélancolie. Tu l'avais déjà vu dans la
+  <a href="accord-mineur-et-the-scientist.html">leçon sur l'accord mineur</a> : « baisse la note du
+  milieu d'un demi-ton ». Voilà pourquoi ça marche.</div>
+
+  <h2>3. La réponse à ta question</h2>
+  <div class="card">
+    <p style="margin:0 0 10px"><b>Ré majeur</b> = Ré, puis <b>+4</b> → Ré♯, Mi, <b>Fa♯</b>. Puis <b>+3</b> → La.<br>
+    <span style="font-size:19px">Ré · <span class="min">Fa♯</span> · La</span></p>
+    <p style="margin:0"><b>Ré mineur</b> = Ré, puis <b>+3</b> → <b>Fa</b>. Puis <b>+4</b> → La.<br>
+    <span style="font-size:19px">Ré · Fa · La</span></p>
+  </div>
+  <p>Ré · Fa · La est donc bien <span class="min">mineur</span> — et le majeur de Ré <b>exige une
+  touche noire</b>. Ce n'est pas un piège : c'est que Do est la seule tonalité où le majeur tombe
+  entièrement sur les blanches.</p>
+
+  <h2>4. Les sept accords « tout blanc »</h2>
+  <p>Prends chaque blanche, applique la forme « saute une touche », et compte. Le résultat n'est pas
+  au hasard — il ne <i>peut pas</i> être au hasard&nbsp;:</p>
+
+  <table class="rec">
+    <tr><th class="l">Depuis</th><th>Notes</th><th>bas→mil.</th><th>mil.→haut</th><th class="l">Couleur</th></tr>
+    <tr><td class="l">Do</td><td>Do · Mi · Sol</td><td class="num">4</td><td class="num">3</td><td class="l"><span class="maj">majeur</span></td></tr>
+    <tr class="min"><td class="l">Ré</td><td>Ré · Fa · La</td><td class="num">3</td><td class="num">4</td><td class="l"><span class="min">mineur</span></td></tr>
+    <tr class="min"><td class="l">Mi</td><td>Mi · Sol · Si</td><td class="num">3</td><td class="num">4</td><td class="l"><span class="min">mineur</span></td></tr>
+    <tr><td class="l">Fa</td><td>Fa · La · Do</td><td class="num">4</td><td class="num">3</td><td class="l"><span class="maj">majeur</span></td></tr>
+    <tr><td class="l">Sol</td><td>Sol · Si · Ré</td><td class="num">4</td><td class="num">3</td><td class="l"><span class="maj">majeur</span></td></tr>
+    <tr class="min"><td class="l">La</td><td>La · Do · Mi</td><td class="num">3</td><td class="num">4</td><td class="l"><span class="min">mineur</span></td></tr>
+    <tr class="dim"><td class="l">Si</td><td>Si · Ré · Fa</td><td class="num">3</td><td class="num">3</td><td class="l">ni l'un ni l'autre</td></tr>
+  </table>
+
+  <details class="aside">
+    <summary>Le septième, celui qui fait 3 + 3 ?</summary>
+    <p>Il s'appelle <b>diminué</b>. Son total fait 6 au lieu de 7 : même la note du haut est resserrée,
+    donc la main ne garde pas sa forme. Il sonne instable, comme une question sans réponse — les films
+    d'angoisse en abusent. Tu n'en as besoin dans aucun de tes trois morceaux ; retiens juste qu'il
+    existe, et pourquoi il détonne.</p>
+  </details>
+
+  <h2>5. À toi : construis, ne mémorise pas</h2>
+  <p>L'appli te donne un nom d'accord et surligne <b>uniquement la note de départ</b>. À toi de
+  compter, et de jouer les trois notes <b>de bas en haut</b>. Si tu te trompes, elle te dit
+  combien de demi-tons tu as joués — c'est là qu'est l'apprentissage.</p>
+
+  <div id="ex"></div>
+
+  <div class="win hidden" id="win">
+    <p style="margin:0"><b>Cinq accords construits d'affilée. 🎯</b> Tu ne récites plus une liste :
+    tu <i>fabriques</i> l'accord. C'est la même opération pour les 24 accords majeurs et mineurs qui
+    existent — y compris ceux d'<i>Interstellar</i>, qui vit en La mineur.</p>
+  </div>
+
+  <h2>6. Le réflexe à installer</h2>
+  <p>Devant un accord inconnu, ne cherche pas la forme : <b>pose le pouce sur la fondamentale et
+  compte 4 ou 3</b>. Deux secondes de calcul aujourd'hui, zéro dans un mois — le comptage devient un
+  coup d'œil, exactement comme tu ne déchiffres plus les lettres d'un mot.</p>
+
+  <div class="ask">
+    <p style="margin:0 0 8px"><b>Source à consulter :</b>
+    <a href="https://www.musictheory.net/lessons/40" target="_blank">musictheory.net — Generic Intervals</a>
+    puis <a href="https://www.musictheory.net/lessons/43" target="_blank">Specific Intervals</a> :
+    c'est précisément la distinction « même forme, distances différentes », avec des exercices.</p>
+    <p style="margin:0"><b>Une question ?</b> Demande-moi. Celle-ci était la bonne — le cours
+    présentait « saute une touche » comme une règle alors que ce n'était qu'un raccourci valable
+    en Do. Tu as trouvé la fissure toute seule.</p>
+  </div>
+
+  <footer>
+    <nav data-lprevnext></nav>
+    <p>Fiches : <a href="../reference/accords-majeur-mineur.html">majeur / mineur en demi-tons</a> ·
+    <a href="../reference/keyboard-map.html">carte du clavier</a> ·
+    <a href="../reference/position-des-doigts.html">position des doigts</a></p>
+    <p class="src">Intervalles et qualité des accords d'après
+    <a href="https://www.musictheory.net/lessons/43" target="_blank">musictheory.net</a>.</p>
+  </footer>
+</div>
+
+<script src="../lib/piano.js"></script>
+<script src="../lib/exercise.js"></script>
+<script src="../lib/nav.js"></script>
+<script>
+/* Noms solfège. La touche noire du milieu s'écrit ♯ dans un accord majeur (on a monté la
+   tierce) et ♭ dans un mineur (on l'a baissée) — c'est la seule orthographe juste ici. */
+var BLANC={0:'Do',2:'Ré',4:'Mi',5:'Fa',7:'Sol',9:'La',11:'Si'};
+var DIESE={1:'Do♯',3:'Ré♯',6:'Fa♯',8:'Sol♯',10:'La♯'};
+var BEMOL={1:'Ré♭',3:'Mi♭',6:'Sol♭',8:'La♭',10:'Si♭'};
+function nom(m,maj){ var c=((m%12)+12)%12; return BLANC[c]||(maj?DIESE[c]:BEMOL[c]); }
+
+// fondamentales blanches uniquement : leur quinte (+7) tombe alors toujours sur une blanche.
+var RACINES=[60,62,64,65,67,69];
+function accord(r,maj){
+  var notes=[r, r+(maj?4:3), r+7];
+  return {r:r, maj:maj, notes:notes,
+          nom:BLANC[r%12]+(maj?' majeur':' mineur'),
+          noms:notes.map(function(m){ return nom(m,maj); })};
+}
+var POOL=[]; RACINES.forEach(function(r){ POOL.push(accord(r,true)); POOL.push(accord(r,false)); });
+
+var ex=Exercise.create({mount:'#ex',
+  hint:'Main droite. Seule la <b>fondamentale</b> est surlignée — les deux autres, c\'est toi qui les trouves.'});
+var kb=PianoKeyboard.create({mount:ex.pianoMount, octaves:3, startOctave:3, onNote:onNote});
+ex.attach(kb);
+
+var winBox=document.getElementById('win');
+var cur=null, pos=0, streak=0, revele=false, prec=null;
+
+function tirer(){
+  var c; do{ c=POOL[Math.floor(Math.random()*POOL.length)]; }while(POOL.length>1 && c===prec);
+  prec=c; cur=c; pos=0; revele=false;
+  ex.reset();
+  ex.target([c.r],[1]);                       // la note de DÉPART, pas la réponse
+  ex.prompt(c.nom, 'Depuis <b>'+c.noms[0]+'</b> : monte de <b>'+(c.maj?4:3)+'</b> demi-tons, puis de <b>'
+    +(c.maj?3:4)+'</b>. Joue les trois notes de bas en haut.');
+}
+
+function reveler(){
+  if(!cur||revele) return;
+  revele=true; ex.target(cur.notes);
+  ex.verdict('meh','👀 '+cur.nom, cur.noms.join(' · ')+' — rejoue-le en comptant, puis passe au suivant.');
+}
+
+ex.button('🔀 Nouvel accord', function(){ streak=0; ex.streak(0,5,'Construits d\'affilée'); tirer(); }, {primary:true});
+ex.button('👀 Montrer', reveler);
+ex.button('🔊 Écouter', function(){ if(cur) kb.playChord(cur.notes); });
+
+function onNote(midi){
+  if(!cur) return;
+  var want=cur.notes[pos];
+  if(midi===want){
+    ex.hit(midi); pos++;
+    if(pos<cur.notes.length){
+      // on ne dévoile toujours pas la suite : on rappelle l'écart qui reste à franchir
+      var reste=cur.notes[pos]-cur.notes[pos-1];
+      ex.verdict('ok','✓ '+cur.noms.slice(0,pos).join(' · '),
+        'Maintenant <b>+'+reste+'</b> demi-ton'+(reste>1?'s':'')+' depuis là.');
+      return;
+    }
+    ex.verdict('ok','✓ '+cur.nom, cur.noms.join(' · ')+' — '+(cur.maj?'4 puis 3':'3 puis 4')+'.');
+    setTimeout(function(){ kb.playChord(cur.notes); },120);
+    if(!revele){ streak++; ex.streak(streak,5,'Construits d\'affilée'); if(streak>=5) winBox.classList.remove('hidden'); }
+    setTimeout(tirer, 1400);
+    return;
+  }
+
+  // faux : on chiffre l'erreur au lieu de dire « non »
+  ex.miss(midi);
+  streak=0; ex.streak(0,5,'Construits d\'affilée');
+  var depuis=cur.notes[Math.max(pos-1,0)];       // la dernière note juste : le point de comptage
+  var joue=midi-depuis, attendu=want-depuis;
+  if(pos===0){
+    ex.verdict('no','Ce n\'est pas la fondamentale','Repars de <b>'+cur.noms[0]+'</b>, la touche surlignée.');
+  }else if(joue>0 && joue<13){
+    ex.verdict('no', nom(midi,cur.maj)+' = '+joue+' demi-ton'+(joue>1?'s':''),
+      'Il en faut <b>'+attendu+'</b> depuis '+nom(depuis,cur.maj)+' — '
+      +(joue<attendu?'monte encore de '+(attendu-joue):'redescends de '+(joue-attendu))+'.');
+  }else{
+    ex.verdict('no','Trop loin','Compte les demi-tons <b>un par un</b> depuis '+nom(depuis,cur.maj)+', noires comprises.');
+  }
+}
+
+ex.streak(0,5,'Construits d\'affilée');
+tirer();
+</script>
+</body>
+</html>

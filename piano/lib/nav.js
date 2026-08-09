@@ -20,6 +20,8 @@
      d:"Un doigt par touche, une mélodie — puis 1-3-5 ensemble : ton premier accord."},
     {t:'Le passage du pouce',                f:'passage-du-pouce.html', k:'Technique',
      d:"Sortir du camp de base sans trou dans le son — la porte des gammes."},
+    {t:'Majeur ou mineur : compte les demi-tons', f:'majeur-ou-mineur-compter-les-demi-tons.html', k:'Harmonie',
+     d:"Pourquoi Ré·Fa·La n'est pas le majeur de Ré : 4+3 contre 3+4."},
     {t:'Accord mineur & The Scientist',      f:'accord-mineur-et-the-scientist.html', k:'Harmonie',
      d:"L'accord mineur, puis les 4 accords de The Scientist."},
     {t:'Un accord d\'un seul bloc',           f:'accord-dun-seul-bloc.html', k:'Technique',

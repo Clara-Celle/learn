@@ -1,6 +1,6 @@
 # Leçon 02 livrée : la triade majeure (forme « saute une touche »)
 
-Après la Leçon 01 (géographie du clavier), Jeffy a dit « on peut continuer » → passage aux
+Après la Leçon 01 (géographie du clavier), Clara a dit « on peut continuer » → passage aux
 **accords**. Leçon 02 enseigne la **triade majeure** via la forme « saute une touche blanche »
 (root + saute + note + saute + note), appliquée aux trois accords tout-blancs :
 **Do majeur** (Do-Mi-Sol), **Fa majeur** (Fa-La-Do), **Sol majeur** (Sol-Si-Ré).
@@ -9,7 +9,7 @@ trouvée → joue l'accord).
 
 **Ancrage mission :** Fa majeur et Do majeur sont 2 des 4 accords de *The Scientist*. Voir [[MISSION.md]].
 
-**Statut :** *contenu livré, maîtrise pas encore prouvée.* À valider quand Jeffy enchaîne les 3
+**Statut :** *contenu livré, maîtrise pas encore prouvée.* À valider quand Clara enchaîne les 3
 accords sans regarder les noms.
 
 **Prochaine leçon prévue :** l'accord **mineur** (baisser la tierce d'un demi-ton → touche noire)

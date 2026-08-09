@@ -71,7 +71,7 @@ Contraintes réelles : **~1 m de largeur max** + **budget ~200 €** → 88 touc
   de piano numérique, questions techniques détaillées.
 
 ## Gaps
-- Pas encore de ressource francophone validée (Do Ré Mi) — à chercher si Jeffy préfère du
+- Pas encore de ressource francophone validée (Do Ré Mi) — à chercher si Clara préfère du
   contenu en français. Piste à explorer : chaînes YouTube FR de piano débutant.
-- Budget d'achat encore indéfini (Jeffy n'a pas voulu fixer de fourchette). Reste : place
+- Budget d'achat encore indéfini (Clara n'a pas voulu fixer de fourchette). Reste : place
   limitée + connexion PC souhaitée. Reproposer le guide d'achat chiffré quand il aura un budget.

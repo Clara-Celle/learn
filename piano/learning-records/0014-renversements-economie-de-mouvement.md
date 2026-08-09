@@ -1,6 +1,6 @@
-# Leçon 11 livrée : les renversements, née d'une bonne question de Jeffy
+# Leçon 11 livrée : les renversements, née d'une bonne question de Clara
 
-Jeffy a demandé : « la position des doigts pour l'accord — j'imagine que je dois lever la main
+Clara a demandé : « la position des doigts pour l'accord — j'imagine que je dois lever la main
 pour passer d'un accord à l'autre ? » **Excellente intuition, mauvaise conclusion.** Il a senti le
 problème (les enchaînements sont inconfortables) sans connaître la solution. C'est exactement la
 définition de la zone proximale de développement.
@@ -38,12 +38,12 @@ n'est pas de reproduire une position imposée mais de **chercher la plus proche*
 
 Les **Leçons 06 et 10 utilisent d'autres voicings** (Si♭ = [65,70,74], Fa = [65,69,72]), choisis à
 l'époque pour la plage du clavier AZERTY. Les voicings liés de la Leçon 11 sont meilleurs, mais
-changer les leçons 06/10 modifierait un contenu que Jeffy a **déjà pratiqué**.
+changer les leçons 06/10 modifierait un contenu que Clara a **déjà pratiqué**.
 
-→ **Décision laissée à Jeffy** (question posée en fin de session). La fiche
+→ **Décision laissée à Clara** (question posée en fin de session). La fiche
 `reference/position-des-doigts.html` documente **les deux** en attendant, avec la distinction
 explicite : table « accords isolés (L05/06/10) » vs « cycle lié (L11) ».
-Si Jeffy dit oui, l'édition est bon marché : un objet `CHORDS` par leçon, les basses ne changent pas.
+Si Clara dit oui, l'édition est bon marché : un objet `CHORDS` par leçon, les basses ne changent pas.
 
 ## Suite
 

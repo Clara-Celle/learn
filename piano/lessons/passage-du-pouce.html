@@ -83,12 +83,17 @@
   </details>
 
   <h2>3. L'exercice : sans trou</h2>
-  <p>Joue la gamme montante. L'appli vérifie les notes <b>et mesure le trou</b> au moment du
-  pivot : le silence entre le Mi et le Fa. C'est la seule chose qui compte ici.</p>
+  <p>Joue la gamme montante. L'appli vérifie les notes <b>et mesure le silence</b> au moment du
+  pivot : le temps entre l'instant où tu <b>relâches le Mi</b> et l'instant où tu <b>enfonces le
+  Fa</b>. C'est la seule chose qui compte ici.</p>
   <ul>
-    <li><b>Moins de 60 ms</b> → lié, on n'entend pas la jointure.</li>
-    <li><b>Plus de 150 ms</b> → la main a sauté. Prépare le pouce plus tôt, dès le Ré.</li>
+    <li><b>Chevauchement</b> (le Mi sonne encore quand le Fa part) → liaison parfaite. C'est la cible.</li>
+    <li><b>Moins de 30 ms</b> de silence → inaudible, c'est lié.</li>
+    <li><b>Plus de 120 ms</b> → la main a sauté. Prépare le pouce plus tôt, dès le Ré.</li>
   </ul>
+  <div class="tip"><b>La mesure ne dépend pas de ta vitesse.</b> C'est un silence, pas un délai entre
+  deux notes : joue aussi lentement que tu veux, tant que le Mi reste enfoncé jusqu'au Fa, le chiffre
+  est bon. Ralentir <i>aide</i>, ça ne pénalise jamais.</div>
 
   <div id="ex"></div>
 
@@ -127,18 +132,24 @@
 <script src="../lib/nav.js"></script>
 <script>
 var UP  ={notes:[60,62,64,65,67,69,71,72], doigts:[1,2,3,1,2,3,4,5], pivot:3, lab:'↑ Montée',
-          noms:['Do','Ré','Mi','Fa','Sol','La','Si','Do']};
+          noms:['Do','Ré','Mi','Fa','Sol','La','Si','Do'],
+          conseil:'glisse le pouce sous la main dès le <b>Ré</b>'};
 var DOWN={notes:[72,71,69,67,65,64,62,60], doigts:[5,4,3,2,1,3,2,1], pivot:5, lab:'↓ Descente',
-          noms:['Do','Si','La','Sol','Fa','Mi','Ré','Do']};
+          noms:['Do','Si','La','Sol','Fa','Mi','Ré','Do'],
+          conseil:'prépare le <b>3</b> par-dessus le pouce dès le <b>Sol</b>'};
 // à la descente c'est le 3 qui passe PAR-DESSUS le pouce : le pivot est au Mi (index 5).
 
 var ex=Exercise.create({mount:'#ex',
   hint:'Main droite, à partir du <b>Do central</b>. Le pivot est signalé en violet.'});
-var kb=PianoKeyboard.create({mount:ex.pianoMount, octaves:3, startOctave:3, onNote:onNote});
+var kb=PianoKeyboard.create({mount:ex.pianoMount, octaves:3, startOctave:3,
+                             onNote:onNote, onRelease:onRelease});
 ex.attach(kb); ex.showPanel(true);
 
 var winBox=document.getElementById('win');
-var dir=UP, running=false, pos=0, streak=0, tPrev=null, gapMs=null;
+var dir=UP, running=false, pos=0, streak=0, gapMs=null;
+// Le legato se mesure entre le RELÂCHEMENT de la note précédente et l'ENFONCEMENT du pivot.
+// (Mesurer début→début reviendrait à mesurer le tempo : injouable à vitesse normale.)
+var lastNote=null, lastOff=null;      // lastOff=null → la note précédente est encore tenue
 
 function draw(){
   ex.panel.innerHTML='<div class="seq">'+dir.notes.map(function(m,k){
@@ -147,7 +158,7 @@ function draw(){
   }).join('')+'</div>';
 }
 function goLabel(){ return running?'■ Arrêter':(dir===UP?'▶ Monter la gamme':'▶ Descendre la gamme'); }
-function reset(){ pos=0; tPrev=null; gapMs=null; ex.reset(); draw(); }
+function reset(){ pos=0; lastNote=null; lastOff=null; gapMs=null; ex.reset(); draw(); }
 
 var bGo=ex.button('▶ Monter la gamme', function(b){
   running=!running; b.innerHTML=goLabel(); b.classList.toggle('primary',!running);
@@ -167,6 +178,10 @@ ex.button('🔊 Écouter', function(){
   dir.notes.forEach(function(m,k){ kb.playNote(m, t+k*0.38); });
 });
 
+function onRelease(midi){
+  if(running && midi===lastNote) lastOff=performance.now();
+}
+
 function onNote(midi){
   if(!running) return;
   var want=dir.notes[pos], now=performance.now();
@@ -176,8 +191,10 @@ function onNote(midi){
       +(pos===dir.pivot?' — c\'est le pivot : le pouce passe sous la main.':'.'));
     return;
   }
-  if(pos===dir.pivot && tPrev!=null) gapMs=Math.round(now-tPrev);   // le trou qui compte
-  tPrev=now; ex.hit(midi); pos++;
+  // le trou qui compte : silence entre le relâchement d'avant et ce pivot.
+  // < 0 (sentinelle −1) = la note précédente sonne encore → liaison parfaite.
+  if(pos===dir.pivot && lastNote!=null) gapMs=(lastOff==null)?-1:Math.round(now-lastOff);
+  lastNote=midi; lastOff=null; ex.hit(midi); pos++;
 
   if(pos<dir.notes.length){
     ex.verdict('ok','✓', dir.noms.slice(0,pos).join(' '));
@@ -187,17 +204,22 @@ function onNote(midi){
 
   running=false; draw(); bGo.innerHTML=goLabel(); bGo.classList.add('primary'); ex.clearKeys();
 
+  var prev=dir.noms[dir.pivot-1];                     // la note à tenir pendant le passage
   if(gapMs==null){ ex.verdict('','Gamme complète','Rejoue-la d\'un trait pour mesurer le passage.'); return; }
-  if(gapMs<60){
+  if(gapMs<0){
     streak++;
-    ex.measure('ok', gapMs+' ms', 'trou au passage du pouce — <b>lié</b>, on n\'entend pas la jointure.');
-  }else if(gapMs<150){
+    ex.measure('ok','chevauchement','le '+prev+' sonnait <b>encore</b> quand le pivot est parti — liaison parfaite.');
+  }else if(gapMs<30){
+    streak++;
+    ex.measure('ok', gapMs+' ms', 'de silence au passage du pouce — <b>lié</b>, on n\'entend pas la jointure.');
+  }else if(gapMs<120){
     streak=0;
-    ex.measure('meh', gapMs+' ms', 'ça s\'entend un peu — glisse le pouce dès le <b>Ré</b>, pas au dernier moment.');
+    ex.measure('meh', gapMs+' ms', 'de silence — ça s\'entend un peu : '+dir.conseil
+      +', pas au dernier moment.');
   }else{
     streak=0;
-    ex.measure('no', gapMs+' ms', 'la main a sauté — garde le '+(dir===UP?'Mi':'Sol')
-      +' enfoncé pendant que le pouce se déplace.');
+    ex.measure('no', gapMs+' ms', 'de silence — la main a sauté. Garde le <b>'+prev
+      +'</b> enfoncé pendant que le pouce se déplace.');
   }
   ex.streak(streak,3,'Gammes liées');
   if(streak>=3) winBox.classList.remove('hidden');

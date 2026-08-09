@@ -15,6 +15,9 @@
      midi         : écouter un vrai clavier USB-MIDI (défaut true) — exige http://localhost
      onNote       : fonction(midi, element, info) appelée à chaque note jouée
                     info = {velocity: 1-127 ou null, source: 'midi'|'clic'}
+     onRelease    : fonction(midi, element) appelée quand la touche est RELÂCHÉE.
+                    Sans elle, une leçon ne peut mesurer que des débuts de notes —
+                    donc pas le legato, qui est un intervalle relâché→enfoncé.
    }
 
    api : el, whites, blacks, midiToEl(m), playNote, playChord,
@@ -43,6 +46,7 @@
     var guideOn=opts.guide!==false, fingersOn=opts.fingers!==false;
     var labelsOn=opts.labels!==false;
     var onNote=opts.onNote||function(){};
+    var onRelease=opts.onRelease||function(){};
 
     var scroll=document.createElement('div'); scroll.className='pk-scroll';
     var piano=document.createElement('div'); piano.className='pk-piano';
@@ -158,7 +162,8 @@
     function release(el){
       if(!el) return;
       el.classList.remove('pk-press');
-      noteOff(parseInt(el.dataset.midi));
+      var midi=parseInt(el.dataset.midi);
+      noteOff(midi); onRelease(midi,el);
     }
     function bindKey(k){
       k.addEventListener('pointerdown',function(e){ e.preventDefault(); press(k); });

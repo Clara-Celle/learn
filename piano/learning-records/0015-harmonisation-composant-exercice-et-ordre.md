@@ -1,6 +1,6 @@
 # Grande harmonisation : composant d'exercice, ordre calculé, fusion 5 doigts + 1er accord
 
-Demande de Jeffy en trois volets : structurer les composants d'exercice pour avoir **toujours la
+Demande de Clara en trois volets : structurer les composants d'exercice pour avoir **toujours la
 même chose à l'écran**, rendre **l'ordre des leçons facile à modifier**, et **fusionner** la
 position des doigts avec le premier accord.
 
@@ -62,5 +62,5 @@ même chose à l'écran ».
 - **Migrer les 7 leçons bespoke vers `Exercise`** : leur logique (métronome, frise, modes
   d'accompagnement) est spécifique et fonctionne. Les alias CSS donnent l'uniformité visuelle
   pour un risque nul. À faire leçon par leçon, quand l'une d'elles doit changer de toute façon.
-- **Harmoniser les voicings d'accords** entre leçons : question posée à Jeffy, sans réponse.
-  Ne rien toucher tant qu'il n'a pas tranché — modifier une leçon déjà pratiquée est un coût réel.
+- **Harmoniser les voicings d'accords** entre leçons : question posée à Clara, sans réponse.
+  Ne rien toucher tant qu'elle n'a pas tranché — modifier une leçon déjà pratiquée est un coût réel.

@@ -1,6 +1,6 @@
 # Leçon bonus livrée : le Canon de Pachelbel (révision en Ré majeur)
 
-Demandée par Jeffy. Leçon **bonus** (hors arc principal The Scientist) :
+Demandée par Clara. Leçon **bonus** (hors arc principal The Scientist) :
 `lessons/bonus-canon-pachelbel.html`. Révise/consolide accords majeurs + mineurs + enchaînement
 sur la célèbre progression du **Canon en Ré** : **Ré – La – Si m – Fa♯ m – Sol – Ré – Sol – La**.
 

@@ -1,6 +1,6 @@
 # Réordonnancement du cours : hypothèse « piano dès le premier jour »
 
-Jeffy a demandé un ordre de leçons qui tienne debout **en supposant l'instrument présent dès le
+Clara a demandé un ordre de leçons qui tienne debout **en supposant l'instrument présent dès le
 départ**. L'ancien ordre était une **conséquence de la contrainte « pas d'instrument »**
 ([[0001-point-de-depart]]) : accords d'abord (le clavier PC pouvait les approcher), doigté et jeu
 note à note relégués en fin de parcours. Cette contrainte est morte
@@ -60,9 +60,9 @@ Dette annoncée en [[0012-position-de-cinq-doigts]], maintenant payée.
 - Ancrage mission : l'arpège d'*Interstellar* est un passage du pouce répété.
 - Fiche `reference/position-des-doigts.html` complétée avec le doigté de la gamme de Do.
 
-## Où en est Jeffy
+## Où en est Clara
 
-Son avancement **réel** ne change pas : il a déjà fait l'équivalent des leçons 01, 04, 05, 07, 08,
+Son avancement **réel** ne change pas : elle a déjà fait l'équivalent des leçons 01, 04, 05, 07, 08,
 09, 10 (ancienne numérotation 01→07) et assemblé *The Scientist*. Ce qui lui **manque dans le
 nouvel ordre**, ce sont précisément **02, 03 et 06** — le bloc « corps » que l'ancien ordre avait
 rejeté à la fin. C'est donc son chemin immédiat, et il est cohérent avec le test de transfert

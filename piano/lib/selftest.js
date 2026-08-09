@@ -92,13 +92,15 @@ kb.setGuide(true);
 kb.setFingersVisible(false); check('bouton Doigtés → classe pk-nofing', kb.el._cls.has('pk-nofing'));
 kb.setFingersVisible(true);
 
-let got=null;
+let got=null, rel=null;
 const kb2 = window.PianoKeyboard.create({mount:new El('div'), octaves:3, startOctave:3, midi:false,
-  onNote:(m,el,info)=>{ got={m,info}; }});
+  onNote:(m,el,info)=>{ got={m,info}; }, onRelease:m=>{ rel=m; }});
 kb2.midiMessage([0x90,67,42]);
 check('Web MIDI : note ON décodée, vélocité transmise',
   got && got.m===67 && got.info.velocity===42 && got.info.source==='midi');
 kb2.midiMessage([0x80,67,0]);
+// sans onRelease, aucune leçon ne peut mesurer un legato (intervalle relâché→enfoncé)
+check('note OFF remonte à la leçon via onRelease', rel===67);
 kb2.midiMessage([0x90,127,100]);
 check('note hors plage → message d\'aide, pas de plantage',
   kb2.midiState().text.indexOf('hors de la plage')>=0);

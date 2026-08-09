@@ -1,8 +1,8 @@
 # Suppression du clavier d'ordinateur & contrôles uniformes
 
-Jeffy a un vrai piano MIDI depuis [[0010-clavier-branche-web-midi]]. Tout l'échafaudage
-« jouer au clavier d'ordinateur », construit quand il n'avait pas d'instrument
-([[0001-point-de-depart]]), est devenu du poids mort. Il a demandé sa suppression.
+Clara a un vrai piano MIDI depuis [[0010-clavier-branche-web-midi]]. Tout l'échafaudage
+« jouer au clavier d'ordinateur », construit quand elle n'avait pas d'instrument
+([[0001-point-de-depart]]), est devenu du poids mort. Elle a demandé sa suppression.
 
 ## Supprimé
 
@@ -25,7 +25,7 @@ dans `lib/`, `lessons/` ou `index.html`.
 - **✋ Doigtés** = ronds numérotés posés dessus.
 
 **Implémentés en CSS pure** (`pk-noguide`, `pk-nofing` sur la racine du clavier) : une leçon appelle
-`guide()`/`target()` sans jamais tester l'état. Le choix de Jeffy gagne toujours — corollaire
+`guide()`/`target()` sans jamais tester l'état. Le choix de Clara gagne toujours — corollaire
 important : `guide()` **ne doit pas** retirer `pk-noguide`, sinon le bouton serait écrasé à chaque
 changement d'accord. (Piège rencontré et corrigé.)
 
@@ -43,7 +43,7 @@ un `sed`, et elles gagnent les ronds de doigté sans autre changement.
 
 ## La question Angular : non
 
-Jeffy proposait de basculer sur Angular « si ça devient trop compliqué ». Refusé, et c'est
+Clara proposait de basculer sur Angular « si ça devient trop compliqué ». Refusé, et c'est
 argumenté : le dépôt fait **12 pages statiques + 4 fichiers de lib**, sans build, sans
 dépendance, ouvrables en double-clic. La complexité réelle de cette session était de la
 **suppression** — Angular en aurait ajouté (build, bundler, composants, routing) pour résoudre un
@@ -53,14 +53,14 @@ problème qu'on n'a pas. Le signal qui justifierait d'y revenir : un état parta
 ## Reste
 
 - `lessons/bass-pad.html` (pad de basse mobile, astuce « deux surfaces ») est **obsolète** depuis
-  le vrai clavier. Encore lié depuis deux leçons. Non supprimé : Jeffy ne l'a pas demandé.
+  le vrai clavier. Encore lié depuis deux leçons. Non supprimé : Clara ne l'a pas demandé.
 - Migration des 6 leçons bespoke vers `Exercise` : toujours en attente, non bloquante.
 
 ---
 
 ## ⚠️ Régression introduite puis corrigée : le bloc Web MIDI supprimé par erreur
 
-Jeffy : « l'outil clavier a l'air identique, mais j'ai perdu tous les exercices. »
+Clara : « l'outil clavier a l'air identique, mais j'ai perdu tous les exercices. »
 
 **Cause.** La suppression du clavier d'ordinateur découpait `piano.js` entre deux marqueurs de
 commentaire. Entre ces deux marqueurs il n'y avait pas que le clavier d'ordinateur : **le bloc

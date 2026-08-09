@@ -1,7 +1,7 @@
 # Le clavier est là et relié aux leçons (Web MIDI) — juillet 2026
 
 Le Nektar Impact GXP61 est reçu et branché. Le plan Web MIDI esquissé depuis juin
-(cf. [[0009-achat-premier-clavier-nektar-gxp61]]) est **livré**. Jeffy a **un vrai instrument
+(cf. [[0009-achat-premier-clavier-nektar-gxp61]]) est **livré**. Clara a **un vrai instrument
 sous les doigts pour la première fois** — bascule majeure pour la mission [[MISSION.md]].
 
 ## Ce qui a été construit

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Référence — Majeur / mineur en demi-tons</title>
+<link rel="stylesheet" href="../lib/sheet.css">
+<style>
+  .num{font-family:'Iowan Old Style',Georgia,serif;font-size:20px;font-weight:700;color:var(--accent)}
+  tr.min .num{color:#7a4fb5}
+  .maj{color:var(--accent);font-weight:700}
+  .min{color:#7a4fb5;font-weight:700}
+  .dim{color:var(--muted)}
+  .steps{display:flex;gap:5px;flex-wrap:wrap;align-items:center;margin:8px 0}
+  .steps .s{border:1px solid var(--line);border-radius:6px;padding:5px 9px;background:#fff;font-size:13px}
+  .steps .s.blk{background:#2a2421;color:#fff;border-color:#2a2421}
+  .steps .s.hit{border-color:var(--accent);color:var(--accent);font-weight:700}
+  table.g td.l,table.g th.l{text-align:left}
+</style>
+</head>
+<body>
+<div class="sheet">
+  <h1>🎨 Majeur ou mineur</h1>
+  <p class="sub">Fiche de référence · Piano · compter, pas mémoriser</p>
+
+  <h2>La règle, en une ligne</h2>
+  <div class="rule"><b>Ce n'est pas la forme de la main qui décide, c'est la distance en demi-tons.</b>
+  Un demi-ton = la touche <i>juste à côté</i>, noire ou blanche, sans rien entre les deux.</div>
+
+  <table class="g">
+    <tr><th class="l">Accord</th><th>bas → milieu</th><th>milieu → haut</th><th>bas → haut</th><th class="l">Couleur</th></tr>
+    <tr><td class="l"><span class="maj">Majeur</span></td><td class="num">4</td><td class="num">3</td><td>7</td><td class="l">lumineux</td></tr>
+    <tr class="min"><td class="l"><span class="min">Mineur</span></td><td class="num">3</td><td class="num">4</td><td>7</td><td class="l">sombre</td></tr>
+    <tr><td class="l"><span class="dim">Diminué</span></td><td class="num">3</td><td class="num">3</td><td>6</td><td class="l dim">instable (hors programme)</td></tr>
+  </table>
+
+  <div class="rule ok"><b>Le total fait toujours 7</b> pour majeur et mineur. La note du haut ne bouge
+  donc jamais : <b>une seule note</b>, celle du milieu, sépare les deux couleurs. C'est pourquoi la
+  main garde exactement la même forme.</div>
+
+  <h2>Pourquoi « saute une touche » ne suffit pas</h2>
+  <p>Les blanches ne sont pas régulièrement espacées : <b>entre Mi et Fa</b>, et <b>entre Si et Do</b>,
+  il n'y a pas de touche noire. Le même geste ne parcourt donc pas toujours la même distance.</p>
+  <div class="steps"><b>Do → Mi&nbsp;:</b>
+    <span class="s blk">Do♯</span><span class="s">Ré</span><span class="s blk">Ré♯</span><span class="s hit">Mi</span>
+    <span>= <b>4</b> demi-tons</span></div>
+  <div class="steps"><b>Ré → Fa&nbsp;:</b>
+    <span class="s blk">Ré♯</span><span class="s">Mi</span><span class="s hit">Fa</span>
+    <span>= <b>3</b> demi-tons</span></div>
+
+  <h2>Les sept triades « tout blanc »</h2>
+  <table class="g">
+    <tr><th class="l">Depuis</th><th class="l">Notes</th><th>bas→mil.</th><th>mil.→haut</th><th class="l">Couleur</th></tr>
+    <tr><td class="l">Do</td><td class="l">Do · Mi · Sol</td><td class="num">4</td><td class="num">3</td><td class="l"><span class="maj">majeur</span></td></tr>
+    <tr class="min"><td class="l">Ré</td><td class="l">Ré · Fa · La</td><td class="num">3</td><td class="num">4</td><td class="l"><span class="min">mineur</span></td></tr>
+    <tr class="min"><td class="l">Mi</td><td class="l">Mi · Sol · Si</td><td class="num">3</td><td class="num">4</td><td class="l"><span class="min">mineur</span></td></tr>
+    <tr><td class="l">Fa</td><td class="l">Fa · La · Do</td><td class="num">4</td><td class="num">3</td><td class="l"><span class="maj">majeur</span></td></tr>
+    <tr><td class="l">Sol</td><td class="l">Sol · Si · Ré</td><td class="num">4</td><td class="num">3</td><td class="l"><span class="maj">majeur</span></td></tr>
+    <tr class="min"><td class="l">La</td><td class="l">La · Do · Mi</td><td class="num">3</td><td class="num">4</td><td class="l"><span class="min">mineur</span></td></tr>
+    <tr><td class="l dim">Si</td><td class="l dim">Si · Ré · Fa</td><td class="num">3</td><td class="num">3</td><td class="l dim">diminué</td></tr>
+  </table>
+  <div class="rule"><b>Do est la seule tonalité dont le majeur tombe entièrement sur les blanches</b>
+  (avec Fa et Sol). Partout ailleurs, le majeur réclame une touche noire — <b>Ré majeur</b> = Ré ·
+  <b>Fa♯</b> · La, alors que <b>Ré mineur</b> = Ré · Fa · La est tout blanc.</div>
+
+  <h2>Comment écrire la note du milieu</h2>
+  <div class="rule">Touche noire au milieu : on l'écrit avec un <b>♯</b> dans un accord majeur (la
+  tierce a été montée) et avec un <b>♭</b> dans un mineur (elle a été baissée). Même touche, deux noms.
+  <br>Ré majeur → <b>Fa♯</b> · Do mineur → <b>Mi♭</b> · Fa mineur → <b>La♭</b> · Sol mineur → <b>Si♭</b>.</div>
+
+  <h2>Les accords des morceaux cibles</h2>
+  <table class="g">
+    <tr><th class="l">Accord</th><th class="l">Notes</th><th>Écarts</th><th class="l">Où</th></tr>
+    <tr class="min"><td class="l">Ré mineur</td><td class="l">Ré · Fa · La</td><td class="num">3 + 4</td><td class="l"><i>The Scientist</i></td></tr>
+    <tr><td class="l">Si♭ majeur</td><td class="l">Si♭ · Ré · Fa</td><td class="num">4 + 3</td><td class="l"><i>The Scientist</i></td></tr>
+    <tr><td class="l">Fa majeur</td><td class="l">Fa · La · Do</td><td class="num">4 + 3</td><td class="l"><i>The Scientist</i></td></tr>
+    <tr><td class="l">Do majeur</td><td class="l">Do · Mi · Sol</td><td class="num">4 + 3</td><td class="l"><i>The Scientist</i></td></tr>
+    <tr class="min"><td class="l">La mineur</td><td class="l">La · Do · Mi</td><td class="num">3 + 4</td><td class="l"><i>Interstellar</i></td></tr>
+  </table>
+
+  <p class="noprint">Fiches liées :
+    <a href="position-des-doigts.html">position des doigts</a> ·
+    <a href="keyboard-map.html">carte du clavier</a>.
+    Leçons liées :
+    <a href="../lessons/majeur-ou-mineur-compter-les-demi-tons.html">majeur ou mineur : compte les demi-tons</a> ·
+    <a href="../lessons/accord-mineur-et-the-scientist.html">l’accord mineur &amp; The Scientist</a>.
+    Une question ? Demande à ton prof.</p>
+</div>
+</body>
+</html>

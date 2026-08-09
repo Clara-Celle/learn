@@ -9,7 +9,7 @@ Atelier : **métronome** intégré (Web Audio, scheduler à lookahead, clic acce
 4 pastilles de temps, tempo 40–120 BPM) + mode **play-along** « Guide les accords » qui fait
 défiler la progression de *The Scientist* un accord par mesure (surligné sur le piano).
 
-**Statut :** *contenu livré, maîtrise pas encore prouvée.* À valider quand Jeffy enchaîne la
+**Statut :** *contenu livré, maîtrise pas encore prouvée.* À valider quand Clara enchaîne la
 progression sans décrocher du métronome à un tempo confortable.
 
 **Prochaine leçon prévue (05) :** la **main gauche / la basse** (jouer la fondamentale de chaque

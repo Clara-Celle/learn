@@ -14,4 +14,4 @@ l'accès à un vrai clavier pour les deux mains réelles). Voir [[MISSION.md]].
 
 **Suite possible :** fignoler The Scientist (accord « cassé » + mélodie), OU démarrer le morceau
 suivant — **Interstellar** (arpèges, en La mineur) — ce qui introduirait les **arpèges** (accords
-cassés) et la lecture, encore non couverts. Demander à Jeffy ce qu'il préfère.
+cassés) et la lecture, encore non couverts. Demander à Clara ce qu'elle préfère.

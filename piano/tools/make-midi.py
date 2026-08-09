@@ -15,6 +15,27 @@ import struct, pathlib
 
 TPQ = 480                      # ticks par noire
 
+# ---------- doigtés ----------
+# MIDI n'a AUCUN champ pour le doigté. Synthesia les stocke dans un fichier .synthesia
+# séparé, avec cet encodage : 1-5 = main GAUCHE doigts 1-5, 6-9 puis 0 = main DROITE
+# doigts 1-5, appliqués aux notes dans l'ordre physique de la piste, « - » saute une note.
+#   https://github.com/Synthesia-LLC/metadata-editor/wiki/Finger-Hints
+# On ne fabrique pas le conteneur XML (format non vérifié) : on écrit la CHAÎNE à coller
+# dans l'éditeur de métadonnées, dans midi/doigtes.md, à côté du tableau lisible.
+RH = {1: '6', 2: '7', 3: '8', 4: '9', 5: '0'}     # main droite → caractère Synthesia
+LH = {1: '1', 2: '2', 3: '3', 4: '4', 5: '5'}     # main gauche → caractère Synthesia
+SOLF = ['Do', 'Do♯', 'Ré', 'Mi♭', 'Mi', 'Fa', 'Fa♯', 'Sol', 'La♭', 'La', 'Si♭', 'Si']
+
+
+def nom(m):
+    return SOLF[m % 12]
+
+
+def doigte_triade(notes):
+    """Même règle que piano.js : triade serrée (≤ quinte) → 1-3-5, plus large → 1-2-5."""
+    ecart = max(notes) - min(notes)
+    return [1, 3, 5] if ecart <= 7 else [1, 2, 5]
+
 
 # ---------- écriture MIDI ----------
 def vlq(n):
@@ -49,11 +70,30 @@ def track(events, name, tempo_bpm=None, first=False, sig=(4, 4)):
     return b'MTrk' + struct.pack('>I', len(body)) + bytes(body)
 
 
+DOIGTES = []                   # collecté par write(), rendu dans midi/doigtes.md
+
+
+def _hints(spec, table):
+    """Chaîne de doigtés Synthesia pour une piste.
+    Ordre supposé : par tick croissant, puis par hauteur croissante dans un accord.
+    (« ordre physique des évènements » d'après le wiki — non vérifié dans Synthesia.)"""
+    out = []
+    for e in sorted(spec, key=lambda e: (e[0], min(e[2]))):
+        notes, fg = e[2], (e[4] if len(e) > 4 else None)
+        if not fg:
+            out.append('-' * len(notes))
+        else:
+            out.append(''.join(table.get(f, '-') for f in fg))
+    return ''.join(out)
+
+
 def write(path, right, left, bpm, title, sig=(4, 4)):
-    """right/left = [(beat_start, beat_len, [notes], velocity)]"""
+    """right/left = [(beat_start, beat_len, [notes], velocity[, [doigts]])]
+    Les doigts sont parallèles aux notes TRIÉES par hauteur croissante."""
     def to_events(notes_spec, chan):
         ev = []
-        for start, length, notes, vel in notes_spec:
+        for entry in notes_spec:
+            start, length, notes, vel = entry[:4]
             t0 = int(round(start * TPQ))
             t1 = int(round((start + length) * TPQ)) - 2      # 2 ticks de respiration
             for n in notes:
@@ -66,8 +106,13 @@ def write(path, right, left, bpm, title, sig=(4, 4)):
         chunks.append(track(to_events(left, 1), 'Main gauche'))
     header = b'MThd' + struct.pack('>IHHH', 6, 1, len(chunks), TPQ)
     path.write_bytes(header + b''.join(chunks))
-    bars = max([s + l for s, l, _, _ in right + left] or [0]) / sig[0]
+    bars = max([e[0] + e[1] for e in right + left] or [0]) / sig[0]
     n = verify(path)                      # relecture immédiate : pas de fichier douteux livré
+    DOIGTES.append({
+        'file': path.name, 'title': title, 'bpm': bpm, 'sig': sig,
+        'rh': _hints(right, RH), 'lh': _hints(left, LH),
+        'notes': [(e[2], e[4] if len(e) > 4 else None) for e in sorted(right, key=lambda e: e[0])],
+    })
     print(f'  {path.name:44s} {bpm:3d} BPM  {bars:.0f} mesures  {n:3d} notes  — {title}')
 
 
@@ -156,53 +201,156 @@ KAT = {                                    # nom : (accord main droite, basse ma
 KAT_SEQ = ['Rem', 'Solm', 'Rem', 'La7', 'Rem', 'Rem/La', 'La7', 'Rem',
            'Solm', 'Rem/La', 'Solm/Re', 'Rem/La', 'La7', 'Rem', 'La7', 'Rem']
 
+# ---------- Géographie : les repères ----------
+# Les Do du clavier affiché (48-84), puis les 7 blanches d'une octave.
+LES_DO = [48, 60, 72, 84]
+BLANCHES = [60, 62, 64, 65, 67, 69, 71, 72]
+
+# ---------- Majeur / mineur : la paire, sur chaque fondamentale blanche ----------
+# Même palette que la leçon (RACINES du fichier majeur-ou-mineur-*.html).
+MAJMIN = [(r, [r, r + 4, r + 7], [r, r + 3, r + 7]) for r in (60, 62, 64, 65, 67, 69)]
+
+# ---------- Renversements : les 3 hauteurs de Si♭ (mode ② de la leçon) ----------
+SIB_INV = [[58, 62, 65], [62, 65, 70], [65, 70, 74]]
+
+# ---------- Canon de Pachelbel (domaine public — Pachelbel †1706) ----------
+PACH = {
+    'D':   ([62, 66, 69], 50), 'A':  ([61, 64, 69], 57), 'Bm': ([62, 66, 71], 59),
+    'Fim': ([66, 69, 73], 54), 'G':  ([67, 71, 74], 55),
+}
+PACH_SEQ = ['D', 'A', 'Bm', 'Fim', 'G', 'D', 'G', 'A']
+
+# Quel fichier pour quelle leçon. L'ordre des leçons vit dans lib/nav.js — si on en déplace
+# une, seuls les NUMÉROS ci-dessous bougent ; les noms, eux, restent justes.
+PAR_LECON = [
+    ('Géographie du clavier',        ['geographie-les-do-et-loctave-60bpm.mid']),
+    ('Cinq doigts & premier accord', ['cinq-doigts-au-clair-de-la-lune-70bpm.mid',
+                                      'premier-accord-do-fa-sol-do-60bpm.mid']),
+    ('Le passage du pouce',          ['passage-du-pouce-gamme-de-do-60bpm.mid']),
+    ('Majeur ou mineur',             ['majeur-mineur-les-paires-60bpm.mid']),
+    ('Les renversements',            ['renversements-les-3-si-bemol-60bpm.mid',
+                                      'renversements-cycle-lie-60bpm.mid']),
+    ('Accord mineur & The Scientist', ['accord-mineur-progression-the-scientist-55bpm.mid']),
+    ('Un accord d\'un seul bloc',    ['renversements-cycle-lie-60bpm.mid']),   # même matière
+    ('Le rythme',                    ['rythme-accords-en-mesure-50bpm.mid',
+                                      'rythme-accords-en-mesure-60bpm.mid',
+                                      'rythme-accords-en-mesure-80bpm.mid']),
+    ('La main gauche : la basse',    ['main-gauche-basse-et-accords-60bpm.mid']),
+    ('Le balancier (croches)',       ['balancier-croches-main-droite-60bpm.mid']),
+    ('The Scientist : assemblage',   ['the-scientist-mains-ensemble-55bpm.mid',
+                                      'the-scientist-mains-ensemble-75bpm.mid']),
+    ('Bonus : Canon de Pachelbel',   ['bonus-pachelbel-progression-60bpm.mid'], '★'),
+    ('Katyusha (morceau cible)',     ['katyusha-accompagnement-60bpm.mid',
+                                      'katyusha-accompagnement-84bpm.mid'], '♪'),
+]
+
+
+def ecrire_doigtes(out):
+    """midi/doigtes.md — le tableau lisible + la chaîne à coller dans l'éditeur Synthesia."""
+    L = ['# Doigtés des fichiers MIDI', '',
+         'MIDI **n\'a aucun champ pour le doigté** : ce fichier est généré à côté.', '',
+         '- **Le tableau** se lit tel quel — c\'est celui des leçons (1 = pouce … 5 = auriculaire).',
+         '- **La chaîne Synthesia** se colle dans l\'éditeur de métadonnées, qui produit le',
+         '  fichier `.synthesia` accompagnant le MIDI. Encodage : `1`-`5` = main **gauche**',
+         '  doigts 1-5, `6` `7` `8` `9` `0` = main **droite** doigts 1-5, `-` = pas d\'indication.',
+         '  ⚠️ L\'ordre suppose « par temps croissant, puis grave→aigu » — à vérifier au premier essai.',
+         '  Doc : <https://github.com/Synthesia-LLC/metadata-editor/wiki/Finger-Hints>', '',
+         'Régénéré par `python3 tools/make-midi.py`. Ne pas éditer à la main.', '',
+         '## Quel fichier pour quelle leçon', '']
+    connus, n = {d['file'] for d in DOIGTES}, 0
+    for entree in PAR_LECON:
+        titre, fichiers = entree[0], entree[1]
+        if len(entree) > 2:                       # hors numérotation (bonus, morceau cible)
+            num = entree[2]
+        else:
+            n += 1
+            num = f'{n:02d}'
+        for f in fichiers:
+            assert f in connus, f'{f} listé pour « {titre} » mais jamais généré'
+        L.append(f'- **{num} · {titre}** — ' + ' · '.join(f'`{f}`' for f in fichiers))
+    orphelins = connus - {f for e in PAR_LECON for f in e[1]}
+    if orphelins:
+        L.append('')
+        L.append('⚠️ Fichiers générés mais rattachés à aucune leçon : '
+                 + ', '.join(f'`{f}`' for f in sorted(orphelins)))
+    L.append('')
+    for d in DOIGTES:
+        L.append(f'## {d["file"]}')
+        L.append(f'*{d["title"]}* — {d["bpm"]} BPM, mesure {d["sig"][0]}/{d["sig"][1]}')
+        L.append('')
+        vus = []
+        for notes, fg in d['notes']:
+            cle = tuple(sorted(notes))
+            if cle in [v[0] for v in vus]:
+                continue
+            vus.append((cle, fg))
+        if any(fg for _, fg in vus):
+            L.append('| Notes | Doigts (main droite) |')
+            L.append('|---|---|')
+            for cle, fg in vus:
+                noms = ' · '.join(nom(n) for n in cle)
+                L.append(f'| {noms} | {" – ".join(str(f) for f in fg) if fg else "—"} |')
+        else:
+            L.append('*Pas de doigté imposé sur ce fichier.*')
+        L.append('')
+        if d['rh'].strip('-'):
+            L.append(f'Chaîne Synthesia — main droite : `{d["rh"]}`')
+        if d['lh'].strip('-'):
+            L.append(f'Chaîne Synthesia — main gauche : `{d["lh"]}`')
+        L.append('')
+    (out / 'doigtes.md').write_text('\n'.join(L), encoding='utf-8')
+    print(f'\n  {"doigtes.md":44s}          {len(DOIGTES):2d} fichiers documentés')
+
 
 def main():
     out = pathlib.Path(__file__).resolve().parent.parent / 'midi'
     out.mkdir(exist_ok=True)
     print('\nFichiers MIDI générés dans midi/ :\n')
 
-    # — mélodie : une note à la fois, main droite
+    # — mélodie : une note à la fois, main droite. Un doigt par touche = doigt i+1.
     r, t = [], 0.0
     for i, d in zip(MEL, MEL_DUR):
-        r.append((t, d, [POS[i]], 80))
+        r.append((t, d, [POS[i]], 80, [i + 1]))
         t += d
     write(out / 'cinq-doigts-au-clair-de-la-lune-70bpm.mid', r, [], 70,
           'Au clair de la lune (position de cinq doigts)')
 
-    # — gamme : montée + descente, noires
-    r = [(i, 1, [n], 80) for i, n in enumerate(GAMME)]
-    r += [(8 + i, 1, [n], 80) for i, n in enumerate(reversed(GAMME))]
+    # — gamme : montée + descente, noires. Doigtés de la fiche position-des-doigts.
+    MONTEE = [1, 2, 3, 1, 2, 3, 4, 5]
+    DESCENTE = [5, 4, 3, 2, 1, 3, 2, 1]
+    r = [(i, 1, [n], 80, [f]) for i, (n, f) in enumerate(zip(GAMME, MONTEE))]
+    r += [(8 + i, 1, [n], 80, [f]) for i, (n, f) in enumerate(zip(reversed(GAMME), DESCENTE))]
     write(out / 'passage-du-pouce-gamme-de-do-60bpm.mid', r, [], 60,
           'gamme de Do, montée (pouce sous) et descente (3 par-dessus)')
 
     # — triades : Do → Fa → Sol → Do, un accord par mesure
-    r = [(i * 4, 4, ch, 80) for i, ch in enumerate(TRIADES)]
+    r = [(i * 4, 4, ch, 80, doigte_triade(ch)) for i, ch in enumerate(TRIADES)]
     write(out / 'premier-accord-do-fa-sol-do-60bpm.mid', r, [], 60,
           'les trois triades majeures, plaquées')
 
     # — renversements : le cycle lié, un accord par mesure, deux tours
-    r = [(i * 4, 4, CYCLE[i % 4], 80) for i in range(8)]
+    r = [(i * 4, 4, CYCLE[i % 4], 80, doigte_triade(CYCLE[i % 4])) for i in range(8)]
     write(out / 'renversements-cycle-lie-60bpm.mid', r, [], 60,
           'Ré m → Si♭ → Fa → Do en renversements (la main ne saute pas)')
 
-    # — LEÇON 7, rythme : un accord plaqué par mesure, main droite seule
+    # — LEÇON 8, rythme : un accord plaqué par mesure, main droite seule
     for bpm in (50, 60, 80):
-        r = [(i * 4, 4, SCI[i % 4][0], 80) for i in range(8)]
+        r = [(i * 4, 4, SCI[i % 4][0], 80, doigte_triade(SCI[i % 4][0])) for i in range(8)]
         write(out / f'rythme-accords-en-mesure-{bpm}bpm.mid', r, [], bpm,
               'un accord sur le temps 1, tenu 4 temps')
 
-    # — main gauche : basse tenue + accord plaqué
-    r = [(i * 4, 4, SCI[i % 4][0], 80) for i in range(8)]
-    l = [(i * 4, 4, [SCI[i % 4][1]], 85) for i in range(8)]
+    # — main gauche : basse tenue + accord plaqué. La basse se joue du 5 (auriculaire).
+    r = [(i * 4, 4, SCI[i % 4][0], 80, doigte_triade(SCI[i % 4][0])) for i in range(8)]
+    l = [(i * 4, 4, [SCI[i % 4][1]], 85, [5]) for i in range(8)]
     write(out / 'main-gauche-basse-et-accords-60bpm.mid', r, l, 60,
           'basse main gauche sous l\'accord main droite')
 
     # — balancier : main droite en croches
     r = []
     for bar in range(8):
+        ch = SCI[bar % 4][0]
         for e in range(8):
-            r.append((bar * 4 + e * 0.5, 0.5, SCI[bar % 4][0], 72 if e % 2 else 84))
+            r.append((bar * 4 + e * 0.5, 0.5, ch, 72 if e % 2 else 84, doigte_triade(ch)))
     write(out / 'balancier-croches-main-droite-60bpm.mid', r, [], 60,
           'l\'accord répété en croches (8 par mesure)')
 
@@ -210,23 +358,61 @@ def main():
     for bpm in (55, 75):
         r = []
         for bar in range(8):
+            ch = SCI[bar % 4][0]
             for e in range(8):
-                r.append((bar * 4 + e * 0.5, 0.5, SCI[bar % 4][0], 72 if e % 2 else 84))
-        l = [(bar * 4, 4, [SCI[bar % 4][1]], 88) for bar in range(8)]
+                r.append((bar * 4 + e * 0.5, 0.5, ch, 72 if e % 2 else 84, doigte_triade(ch)))
+        l = [(bar * 4, 4, [SCI[bar % 4][1]], 88, [5]) for bar in range(8)]
         write(out / f'the-scientist-mains-ensemble-{bpm}bpm.mid', r, l, bpm,
               'balancier en croches + basse — la chanson complète')
 
     # — Katyusha : accompagnement seul (basse + accords), en 2/4
     for bpm in (60, 84):
         r, l = [], []
-        for bar, nom in enumerate(KAT_SEQ):
-            notes, basse = KAT[nom]
-            r.append((bar * 2, 2, notes, 80))          # accord tenu la mesure entière
-            l.append((bar * 2, 2, [basse], 88))        # basse sur le temps 1
+        for bar, cle in enumerate(KAT_SEQ):
+            notes, basse = KAT[cle]
+            r.append((bar * 2, 2, notes, 80, doigte_triade(notes)))   # accord tenu la mesure
+            l.append((bar * 2, 2, [basse], 88, [5]))                  # basse sur le temps 1
         write(out / f'katyusha-accompagnement-{bpm}bpm.mid', r, l, bpm,
               'Katyusha — accords + basse seuls (pas la mélodie), 2/4', sig=(2, 4))
 
-    print('\nDans Synthesia : « Play a Song » → « Import Songs » → choisis le dossier midi/.\n')
+    # — LEÇON 1, géographie : les Do repères, puis l'octave de blanches
+    r = [(i * 2, 2, [n], 80) for i, n in enumerate(LES_DO)]
+    r += [(8 + i, 1, [n], 80, [f]) for i, (n, f) in enumerate(zip(BLANCHES, [1, 2, 3, 1, 2, 3, 4, 5]))]
+    write(out / 'geographie-les-do-et-loctave-60bpm.mid', r, [], 60,
+          'les 4 Do repères, puis Do→Do en blanches (passage du pouce sur le Fa)')
+
+    # — LEÇON 4, majeur/mineur : la paire sur chaque fondamentale blanche
+    r, t = [], 0.0
+    for _racine, maj, mineur in MAJMIN:
+        r.append((t, 2, maj, 82, [1, 3, 5]))
+        r.append((t + 2, 2, mineur, 82, [1, 3, 5]))
+        t += 4
+    write(out / 'majeur-mineur-les-paires-60bpm.mid', r, [], 60,
+          'majeur puis mineur sur chaque blanche — une seule note change à chaque fois')
+
+    # — LEÇON 5, renversements : les 3 hauteurs de Si♭ (mode ② de la leçon)
+    r = [(i * 4, 4, ch, 80, doigte_triade(ch)) for i, ch in enumerate(SIB_INV)]
+    write(out / 'renversements-les-3-si-bemol-60bpm.mid', r, [], 60,
+          'Si♭ fondamentale → 1er renv. → 2e renv. : le même accord, trois hauteurs')
+
+    # — LEÇON 6, accord mineur : la progression de The Scientist, accords + basse
+    r = [(i * 4, 4, SCI[i % 4][0], 80, doigte_triade(SCI[i % 4][0])) for i in range(8)]
+    l = [(i * 4, 4, [SCI[i % 4][1]], 85, [5]) for i in range(8)]
+    write(out / 'accord-mineur-progression-the-scientist-55bpm.mid', r, l, 55,
+          'Ré m → Si♭ → Fa → Do, accords tenus + basse (voicings liés)')
+
+    # — BONUS, Canon de Pachelbel : 8 accords + basse, deux tours
+    r, l = [], []
+    for bar in range(16):
+        ch, basse = PACH[PACH_SEQ[bar % 8]]
+        r.append((bar * 4, 4, ch, 78, doigte_triade(ch)))
+        l.append((bar * 4, 4, [basse], 86, [5]))
+    write(out / 'bonus-pachelbel-progression-60bpm.mid', r, l, 60,
+          'la progression du Canon en Ré, accords + basse (2 tours)')
+
+    ecrire_doigtes(out)
+    print('\nDans Synthesia : « Play a Song » → « Import Songs » → choisis le dossier midi/.')
+    print('Doigtés : midi/doigtes.md (MIDI n\'a pas de champ pour ça).\n')
 
 
 if __name__ == '__main__':

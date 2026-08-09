@@ -232,6 +232,20 @@ c'est ainsi que Synthesia sépare les mains.
 aussi dans `tools/make-midi.py` puis relancer. (Source unique impossible sans build : les leçons
 sont du JS dans du HTML.)
 
+**Couverture (août 2026) : les 11 leçons + le bonus + Katyusha ont chacun leur fichier.** La table
+`PAR_LECON` fait le lien et **échoue à la génération** si elle cite un fichier qui n'existe pas, ou
+signale les fichiers rattachés à aucune leçon. La leçon « un accord d'un seul bloc » réutilise
+volontairement le fichier des renversements : même matière, pas de doublon.
+
+**Doigtés → `midi/doigtes.md`, généré.** MIDI n'a aucun champ pour le doigté. Synthesia les lit dans
+un fichier **`.synthesia` séparé** ([doc](https://github.com/Synthesia-LLC/metadata-editor/wiki/Finger-Hints)) :
+`1`-`5` = main gauche doigts 1-5, `67890` = main droite doigts 1-5, `-` = rien. On **ne fabrique pas
+ce conteneur XML** (schéma non vérifié) : on écrit la chaîne à coller dans l'éditeur de métadonnées,
+plus un tableau lisible. ⚠️ L'ordre des notes supposé (temps croissant, puis grave→aigu) n'a pas été
+vérifié dans Synthesia — à confirmer au premier essai de Clara.
+Les doigtés d'accords viennent de `doigte_triade()`, **même règle que `piano.guide()`** (≤ quinte →
+1-3-5, plus large → 1-2-5) : si la règle change dans `piano.js`, la changer ici aussi.
+
 ### Suite
 - **Où elle en est (août 2026)** : passage du pouce (le mouvement vient), puis arrivée sur l'accord
   mineur → a buté sur majeur/mineur, d'où la nouvelle leçon « compte les demi-tons » insérée avant.

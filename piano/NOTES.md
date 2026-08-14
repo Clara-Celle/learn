@@ -92,6 +92,15 @@
 - **Sources de recherche : toujours vérifier avant d'écrire une leçon de méthode.** La leçon 10
   contredit le conseil universel (« mains séparées puis on réunit ») sur la foi de trois études
   citées et liées dans la page. Citer, et **dire quand on n'a lu que le résumé**.
+- **📄 `reference/comment-travailler.html` = la méthode, source unique.** Trois règles (une seule
+  chose non automatique à la fois · réduire une dimension jamais la tâche · monter quand c'est
+  ennuyeux) + le protocole en 4 paliers + les sources. **Toute nouvelle leçon y renvoie au lieu de
+  recopier la prose.** Listée dans `REFS` de `nav.js` → présente dans le sommaire de chaque leçon.
+- **⚠️ Les notes et le tempo se disputent la même attention** (Lappe, Lappe & Keller 2018, PLoS ONE
+  13(11) e0207462) : chez des débutants, la synchronisation au métronome ne progresse vraiment que
+  quand le contenu mélodique devient trivial. D'où le **palier « métronome allumé mais pas visé »**
+  (bouton `🎯 Viser le tempo` de la leçon de rythme) — la marche que Clara n'arrivait pas à monter.
+  Ne jamais passer directement de « sans métronome » à « en mesure ».
 - Privilégier les leçons HTML interactives (clavier cliquable) puisqu'il n'y a pas d'instru.
 - Toujours rattacher au moins un morceau cible pour ancrer la théorie.
 

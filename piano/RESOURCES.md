@@ -115,3 +115,10 @@ Sources lues et citées dans la leçon « Les deux mains : pourquoi ça coince �
 - [Distributed Practice and Procedural Memory Consolidation in Musicians' Skill Learning](https://eric.ed.gov/?id=EJ951332)
   *J. Research in Music Education* (2012). Séances espacées de 24 h > massées.
   ⚠️ **Résumé seulement, texte complet non lu** — le chiffre est cité comme ordre de grandeur.
+- [Lappe, Lappe & Keller (2018) — *The influence of pitch feedback on learning of motor-timing and sequencing: a piano study with novices*](https://doi.org/10.1371/journal.pone.0207462)
+  *PLoS ONE* 13(11), e0207462. **Accès libre.** Chez des non-musiciens apprenant une séquence de 15
+  notes au métronome, la synchronisation progresse le plus quand le contenu mélodique est rendu
+  trivial → **les notes et le tempo se disputent la même attention**. Use for: justifier le palier
+  « métronome allumé mais pas visé », et plus généralement l'ordre notes → tempo.
+- [Goebl & Palmer — *Rate effects on timing, key velocity, and finger kinematics in piano performance*](https://doi.org/10.1371/journal.pone.0020518)
+  *PLoS ONE*. Compromis vitesse/justesse au piano. Use for: justifier « ralentis jusqu'à ne plus rater ».

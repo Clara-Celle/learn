@@ -150,6 +150,18 @@
   <p>Démarre le métronome, sens le temps 1 (le clic plus aigu). Puis active <b>« Guide les accords »</b> :
   l'accord à jouer change tout seul à chaque mesure et s'allume sur le piano. Joue-le sur le temps 1 et
   laisse-le sonner. Compte à voix haute : <b>1-2-3-4</b>.</p>
+  <div class="tip"><b>🎯 « Viser le tempo : non » — l'étape que tout le monde saute.</b>
+  Passer d'un coup de « je joue les notes » à « je joue les notes EN MESURE » est une marche trop
+  haute, et ce n'est pas une impression : chez des débutants apprenant une séquence au piano avec un
+  métronome, la synchronisation ne progresse vraiment que lorsque le contenu des notes devient
+  trivial — <b>les notes et le tempo se disputent la même attention</b>
+  (<a href="https://doi.org/10.1371/journal.pone.0207462">Lappe, Lappe &amp; Keller, 2018</a>).
+  <p style="margin:8px 0 0">D'où la marche intermédiaire : laisse le métronome <b>tourner sans le
+  viser</b>. Tes appuis s'affichent en gris sur la frise, rien n'est jugé. Ton oreille prend la
+  pulsation pendant que tes doigts restent libres. Quand tu te surprends à tomber dessus tout seul,
+  bascule sur <b>« viser : oui »</b>. Méthode complète :
+  <a href="../reference/comment-travailler.html">fiche « comment travailler »</a>.</p></div>
+
   <div class="tip"><b>⚠️ Ne fais pas tout en même temps — c'est le piège de cette leçon.</b>
   Tenir le tempo, trouver les notes du bon accord, et changer d'accord chaque mesure, ça fait
   <b>trois choses</b> dont aucune n'est encore automatique chez toi. Ta tête sature, et ce n'est pas
@@ -181,6 +193,7 @@
           <button id="tUp" aria-label="plus vite">+</button>
         </div>
         <button id="btnGuide">🎹 Accords : OFF — rythme seul</button>
+        <button id="btnViser">🎯 Viser le tempo : non</button>
       </div>
       <div class="beatdots" id="beatdots"></div>
       <div class="metro-chord" id="metroChord"><small>Active « Guide les accords » pour jouer la progression.</small></div>
@@ -320,6 +333,8 @@
      Le palier « 1 seul » enlève la seule variable dont on n'a pas besoin pour travailler le rythme. */
   var GLAB=['OFF — rythme seul', '1 seul accord (Ré m)', 'la progression'];
   var gi=0, guide=false, unSeul=false, current=null, barSet=new Set();
+  // Viser ou non le tempo — dimension distincte des accords. Voir reference/comment-travailler.html
+  var viser=false;
   var metroChord=document.getElementById('metroChord');
   var btnGuide=document.getElementById('btnGuide');
   /* ----- tableau de bord de la mesure : ce qu'il faut jouer / ce que tu as joué -----
@@ -371,6 +386,14 @@
     if(barPlayed.length>8) barPlayed.shift();       // une mesure = 4 temps, 8 chips suffisent
     drawPlayed();
   }
+  var btnViser=document.getElementById('btnViser');
+  btnViser.onclick=function(){
+    viser=!viser;
+    btnViser.classList.toggle('on',viser);
+    btnViser.textContent='🎯 Viser le tempo : '+(viser?'oui':'non');
+    clearFrise();
+  };
+
   btnGuide.onclick=function(){
     gi=(gi+1)%3;
     guide=(gi>0); unSeul=(gi===1);
@@ -404,7 +427,10 @@
     var spb=60/tempo;
     var err=t-(Math.round((t-nextNoteTime)/spb)*spb + nextNoteTime);
     var a=Math.abs(err);
-    hits.push({ time:t, color:(a<0.05?'#5cba6b':(a<0.12?'#e8a04e':'#e0625a')) });
+    // Palier « viser : non » — le métronome tourne, tes appuis se placent, mais rien n'est jugé.
+    // Les notes et le tempo se disputent la même attention (Lappe et coll. 2018) : on laisse
+    // d'abord l'oreille prendre la pulsation pendant que les doigts restent libres.
+    hits.push({ time:t, color: viser ? (a<0.05?'#5cba6b':(a<0.12?'#e8a04e':'#e0625a')) : '#7c6f5f' });
   }
   function drawFrise(now){
     var W=fcanvas.clientWidth, H=fcanvas.clientHeight;

@@ -46,6 +46,7 @@
   // Fiches de référence — une seule liste, consommée par le sommaire ET par la page d'accueil.
   // Ajouter une fiche = ajouter une ligne ici, rien d'autre.
   var REFS=[
+    {t:'Fiche : comment travailler',   f:'../reference/comment-travailler.html'},
     {t:'Fiche : carte du clavier',     f:'../reference/keyboard-map.html'},
     {t:'Fiche : position des doigts',  f:'../reference/position-des-doigts.html'},
     {t:'Fiche : majeur / mineur',      f:'../reference/accords-majeur-mineur.html'},

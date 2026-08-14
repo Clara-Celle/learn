@@ -118,9 +118,20 @@
   croches <b>égales</b> (le « et » exactement au milieu, pas collé au temps).</div>
 
   <h2>3. À toi de jouer 🎹</h2>
-  <p>Démarre le métronome (il clique les croches). Active <b>« Guide les accords »</b> : l'accord à
-  répéter s'allume et change à chaque mesure. Joue-le sur chaque croche et surveille la <b>frise</b> :
-  vise une pastille verte sur chaque trait. <b>« Écouter »</b> te joue le balancier.</p>
+  <p>Démarre le métronome (il clique les croches) et surveille la <b>frise</b> : vise une pastille
+  verte sur chaque trait. <b>« Écouter »</b> te joue le balancier.</p>
+
+  <div class="tip"><b>Trois paliers, comme pour le rythme.</b> Répéter des croches régulières, tenir
+  l'accord, et en changer chaque mesure font <b>trois</b> tâches non automatiques. Le bouton
+  <b>🎹 Accords</b> tourne sur trois crans :
+  <ol style="margin:8px 0 0">
+    <li><b>OFF — une seule note.</b> N'importe quelle touche, répétée en croches. Tu ne travailles
+      que le <b>balancement</b> : le « et » exactement au milieu, pas collé au temps.</li>
+    <li><b>1 seul accord (Ré m).</b> L'accord s'ajoute, mais il ne change jamais.</li>
+    <li><b>La progression.</b> Les quatre accords s'enchaînent.</li>
+  </ol>
+  <p style="margin:8px 0 0">Reste à un cran tant qu'il n'est pas ennuyeux. Détail de la méthode :
+  <a href="../reference/comment-travailler.html">fiche « comment travailler »</a>.</p></div>
 
   <div class="stage">
     <div class="metro">
@@ -131,7 +142,7 @@
           <span id="bpm">60</span><span class="bpmlab">BPM</span>
           <button id="tUp" aria-label="plus vite">+</button>
         </div>
-        <button id="btnGuide">🎹 Guide les accords : OFF</button>
+        <button id="btnGuide">🎹 Accords : OFF — une seule note</button>
         <button id="btnDemo">🔊 Écouter le balancier</button>
       </div>
       <div class="beatdots" id="beatdots"></div>
@@ -259,21 +270,30 @@
   document.getElementById('tUp').onclick=function(){ tempo=Math.min(120,tempo+5); bpmEl.textContent=tempo; };
   document.getElementById('tDown').onclick=function(){ tempo=Math.max(40,tempo-5); bpmEl.textContent=tempo; };
 
-  /* ----- play-along : l'accord change à chaque mesure, tu le joues en croches ----- */
-  var guide=false, current=null;
+  /* ----- play-along, à trois paliers -----
+     Croches + accord + changement d'accord = trois tâches non automatiques d'un coup.
+     Même remède que la leçon de rythme : on réduit une dimension, jamais la tâche.
+     Voir reference/comment-travailler.html */
+  var GLAB=['OFF — une seule note', '1 seul accord (Ré m)', 'la progression'];
+  var gi=0, guide=false, unSeul=false, current=null;
   var metroChord=document.getElementById('metroChord');
   var btnGuide=document.getElementById('btnGuide');
   function setBar(bar){
-    current=CHORDS[PROG[bar % PROG.length]];
+    current=CHORDS[PROG[unSeul ? 0 : (bar % PROG.length)]];
     piano.clearClass('pk-target'); piano.guide(current.notes);
-    metroChord.innerHTML='Joue en croches : <span class="chordname">'+current.name+'</span> ×8';
+    metroChord.innerHTML='Joue en croches : <span class="chordname">'+current.name+'</span> ×8'
+      +(unSeul?' <small>— le même toute la durée. Occupe-toi du balancement.</small>':'');
   }
   function onNote(midi,el){ if(running) recordHit(); }
   btnGuide.onclick=function(){
-    guide=!guide; btnGuide.classList.toggle('on',guide);
-    btnGuide.textContent='🎹 Guide les accords : '+(guide?'ON':'OFF');
+    gi=(gi+1)%3;
+    guide=(gi>0); unSeul=(gi===1);
+    btnGuide.classList.toggle('on',guide);
+    btnGuide.textContent='🎹 Accords : '+GLAB[gi];
     if(guide){ if(!running) startMetro(); else setBar(schedBar); }
-    else { current=null; piano.clearClass('pk-target'); metroChord.innerHTML='<small>Active « Guide les accords » pour jouer la progression.</small>'; }
+    else { current=null; piano.clearClass('pk-target');
+      metroChord.innerHTML='<small>Répète <b>une seule note</b> en croches, n\'importe laquelle. '
+        +'C\'est le balancement qu\'on travaille, pas l\'accord.</small>'; }
   };
 
   /* ----- démo : le balancier (8 croches par accord) ----- */

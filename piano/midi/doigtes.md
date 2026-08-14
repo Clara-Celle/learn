@@ -13,21 +13,26 @@ Régénéré par `python3 tools/make-midi.py`. Ne pas éditer à la main.
 
 ## Quel fichier pour quelle leçon
 
-- **01 · Géographie du clavier** — `geographie-les-do-et-loctave-60bpm.mid`
-- **02 · Cinq doigts & premier accord** — `cinq-doigts-au-clair-de-la-lune-70bpm.mid` · `premier-accord-do-fa-sol-do-60bpm.mid`
-- **03 · Le passage du pouce** — `passage-du-pouce-gamme-de-do-60bpm.mid`
-- **04 · Majeur ou mineur** — `majeur-mineur-les-paires-60bpm.mid`
-- **05 · Les renversements** — `renversements-les-3-si-bemol-60bpm.mid` · `renversements-cycle-lie-60bpm.mid`
-- **06 · Accord mineur & The Scientist** — `accord-mineur-progression-the-scientist-55bpm.mid`
-- **07 · Un accord d'un seul bloc** — `renversements-cycle-lie-60bpm.mid`
-- **08 · Le rythme** — `rythme-accords-en-mesure-50bpm.mid` · `rythme-accords-en-mesure-60bpm.mid` · `rythme-accords-en-mesure-80bpm.mid`
-- **09 · La main gauche : la basse** — `main-gauche-basse-et-accords-60bpm.mid`
-- **10 · Le balancier (croches)** — `balancier-croches-main-droite-60bpm.mid`
-- **11 · The Scientist : assemblage** — `the-scientist-mains-ensemble-55bpm.mid` · `the-scientist-mains-ensemble-75bpm.mid`
+Les fichiers sont préfixés du **numéro de leçon** : Synthesia trie par nom, la liste
+sort donc dans l'ordre du cours. Un numéro peut manquer — une leçon qui réutilise le
+fichier d'une autre garde le préfixe de la première (07 se travaille avec le fichier 05).
+Les préfixes sont **calculés** depuis l'ordre ci-dessous, jamais écrits à la main.
+
+- **01 · Géographie du clavier** — `01-geographie-les-do-et-loctave-60bpm.mid`
+- **02 · Cinq doigts & premier accord** — `02-cinq-doigts-au-clair-de-la-lune-70bpm.mid` · `02-premier-accord-do-fa-sol-do-60bpm.mid`
+- **03 · Le passage du pouce** — `03-passage-du-pouce-gamme-de-do-60bpm.mid`
+- **04 · Majeur ou mineur** — `04-majeur-mineur-les-paires-60bpm.mid`
+- **05 · Les renversements** — `05-renversements-les-3-si-bemol-60bpm.mid` · `05-renversements-cycle-lie-60bpm.mid`
+- **06 · Accord mineur & The Scientist** — `06-accord-mineur-progression-the-scientist-55bpm.mid`
+- **07 · Un accord d'un seul bloc** — `05-renversements-cycle-lie-60bpm.mid`
+- **08 · Le rythme** — `08-rythme-accords-en-mesure-50bpm.mid` · `08-rythme-accords-en-mesure-60bpm.mid` · `08-rythme-accords-en-mesure-80bpm.mid`
+- **09 · La main gauche : la basse** — `09-main-gauche-basse-et-accords-60bpm.mid`
+- **10 · Le balancier (croches)** — `10-balancier-croches-main-droite-60bpm.mid`
+- **11 · The Scientist : assemblage** — `11-the-scientist-mains-ensemble-55bpm.mid` · `11-the-scientist-mains-ensemble-75bpm.mid`
 - **★ · Bonus : Canon de Pachelbel** — `bonus-pachelbel-progression-60bpm.mid`
 - **♪ · Katyusha (morceau cible)** — `katyusha-accompagnement-60bpm.mid` · `katyusha-accompagnement-84bpm.mid`
 
-## cinq-doigts-au-clair-de-la-lune-70bpm.mid
+## 02-cinq-doigts-au-clair-de-la-lune-70bpm.mid
 *Au clair de la lune (position de cinq doigts)* — 70 BPM, mesure 4/4
 
 | Notes | Doigts (main droite) |
@@ -38,7 +43,7 @@ Régénéré par `python3 tools/make-midi.py`. Ne pas éditer à la main.
 
 Chaîne Synthesia — main droite : `66678768776`
 
-## passage-du-pouce-gamme-de-do-60bpm.mid
+## 03-passage-du-pouce-gamme-de-do-60bpm.mid
 *gamme de Do, montée (pouce sous) et descente (3 par-dessus)* — 60 BPM, mesure 4/4
 
 | Notes | Doigts (main droite) |
@@ -54,7 +59,7 @@ Chaîne Synthesia — main droite : `66678768776`
 
 Chaîne Synthesia — main droite : `6786789009876876`
 
-## premier-accord-do-fa-sol-do-60bpm.mid
+## 02-premier-accord-do-fa-sol-do-60bpm.mid
 *les trois triades majeures, plaquées* — 60 BPM, mesure 4/4
 
 | Notes | Doigts (main droite) |
@@ -65,7 +70,7 @@ Chaîne Synthesia — main droite : `6786789009876876`
 
 Chaîne Synthesia — main droite : `680680680680`
 
-## renversements-cycle-lie-60bpm.mid
+## 05-renversements-cycle-lie-60bpm.mid
 *Ré m → Si♭ → Fa → Do en renversements (la main ne saute pas)* — 60 BPM, mesure 4/4
 
 | Notes | Doigts (main droite) |
@@ -77,7 +82,7 @@ Chaîne Synthesia — main droite : `680680680680`
 
 Chaîne Synthesia — main droite : `680670670680680670670680`
 
-## rythme-accords-en-mesure-50bpm.mid
+## 08-rythme-accords-en-mesure-50bpm.mid
 *un accord sur le temps 1, tenu 4 temps* — 50 BPM, mesure 4/4
 
 | Notes | Doigts (main droite) |
@@ -89,7 +94,7 @@ Chaîne Synthesia — main droite : `680670670680680670670680`
 
 Chaîne Synthesia — main droite : `680670670680680670670680`
 
-## rythme-accords-en-mesure-60bpm.mid
+## 08-rythme-accords-en-mesure-60bpm.mid
 *un accord sur le temps 1, tenu 4 temps* — 60 BPM, mesure 4/4
 
 | Notes | Doigts (main droite) |
@@ -101,7 +106,7 @@ Chaîne Synthesia — main droite : `680670670680680670670680`
 
 Chaîne Synthesia — main droite : `680670670680680670670680`
 
-## rythme-accords-en-mesure-80bpm.mid
+## 08-rythme-accords-en-mesure-80bpm.mid
 *un accord sur le temps 1, tenu 4 temps* — 80 BPM, mesure 4/4
 
 | Notes | Doigts (main droite) |
@@ -113,7 +118,7 @@ Chaîne Synthesia — main droite : `680670670680680670670680`
 
 Chaîne Synthesia — main droite : `680670670680680670670680`
 
-## main-gauche-basse-et-accords-60bpm.mid
+## 09-main-gauche-basse-et-accords-60bpm.mid
 *basse main gauche sous l'accord main droite* — 60 BPM, mesure 4/4
 
 | Notes | Doigts (main droite) |
@@ -126,7 +131,7 @@ Chaîne Synthesia — main droite : `680670670680680670670680`
 Chaîne Synthesia — main droite : `680670670680680670670680`
 Chaîne Synthesia — main gauche : `55555555`
 
-## balancier-croches-main-droite-60bpm.mid
+## 10-balancier-croches-main-droite-60bpm.mid
 *l'accord répété en croches (8 par mesure)* — 60 BPM, mesure 4/4
 
 | Notes | Doigts (main droite) |
@@ -138,7 +143,7 @@ Chaîne Synthesia — main gauche : `55555555`
 
 Chaîne Synthesia — main droite : `680680680680680680680680670670670670670670670670670670670670670670670670680680680680680680680680680680680680680680680680670670670670670670670670670670670670670670670670680680680680680680680680`
 
-## the-scientist-mains-ensemble-55bpm.mid
+## 11-the-scientist-mains-ensemble-55bpm.mid
 *balancier en croches + basse — la chanson complète* — 55 BPM, mesure 4/4
 
 | Notes | Doigts (main droite) |
@@ -151,7 +156,7 @@ Chaîne Synthesia — main droite : `6806806806806806806806806706706706706706706
 Chaîne Synthesia — main droite : `680680680680680680680680670670670670670670670670670670670670670670670670680680680680680680680680680680680680680680680680670670670670670670670670670670670670670670670670680680680680680680680680`
 Chaîne Synthesia — main gauche : `55555555`
 
-## the-scientist-mains-ensemble-75bpm.mid
+## 11-the-scientist-mains-ensemble-75bpm.mid
 *balancier en croches + basse — la chanson complète* — 75 BPM, mesure 4/4
 
 | Notes | Doigts (main droite) |
@@ -188,7 +193,7 @@ Chaîne Synthesia — main gauche : `5555555555555555`
 Chaîne Synthesia — main droite : `680670680670680680670680670680670680670680670680`
 Chaîne Synthesia — main gauche : `5555555555555555`
 
-## geographie-les-do-et-loctave-60bpm.mid
+## 01-geographie-les-do-et-loctave-60bpm.mid
 *les 4 Do repères, puis Do→Do en blanches (passage du pouce sur le Fa)* — 60 BPM, mesure 4/4
 
 | Notes | Doigts (main droite) |
@@ -206,7 +211,7 @@ Chaîne Synthesia — main gauche : `5555555555555555`
 
 Chaîne Synthesia — main droite : `----67867890`
 
-## majeur-mineur-les-paires-60bpm.mid
+## 04-majeur-mineur-les-paires-60bpm.mid
 *majeur puis mineur sur chaque blanche — une seule note change à chaque fois* — 60 BPM, mesure 4/4
 
 | Notes | Doigts (main droite) |
@@ -226,7 +231,7 @@ Chaîne Synthesia — main droite : `----67867890`
 
 Chaîne Synthesia — main droite : `680680680680680680680680680680680680`
 
-## renversements-les-3-si-bemol-60bpm.mid
+## 05-renversements-les-3-si-bemol-60bpm.mid
 *Si♭ fondamentale → 1er renv. → 2e renv. : le même accord, trois hauteurs* — 60 BPM, mesure 4/4
 
 | Notes | Doigts (main droite) |
@@ -237,7 +242,7 @@ Chaîne Synthesia — main droite : `680680680680680680680680680680680680`
 
 Chaîne Synthesia — main droite : `680670670`
 
-## accord-mineur-progression-the-scientist-55bpm.mid
+## 06-accord-mineur-progression-the-scientist-55bpm.mid
 *Ré m → Si♭ → Fa → Do, accords tenus + basse (voicings liés)* — 55 BPM, mesure 4/4
 
 | Notes | Doigts (main droite) |

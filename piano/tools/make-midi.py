@@ -220,8 +220,10 @@ PACH = {
 }
 PACH_SEQ = ['D', 'A', 'Bm', 'Fim', 'G', 'D', 'G', 'A']
 
-# Quel fichier pour quelle leçon. L'ordre des leçons vit dans lib/nav.js — si on en déplace
-# une, seuls les NUMÉROS ci-dessous bougent ; les noms, eux, restent justes.
+# Quel fichier pour quelle leçon. Les noms sont écrits SANS numéro : le préfixe « 01- » … « 11- »
+# est calculé depuis la position dans cette liste (même principe que le tableau LESSONS de nav.js).
+# Réordonner une leçon = déplacer une ligne ici, les fichiers se renomment tout seuls.
+# Les entrées à 3 éléments (bonus, morceau cible) sont hors numérotation et gardent leur nom.
 PAR_LECON = [
     ('Géographie du clavier',        ['geographie-les-do-et-loctave-60bpm.mid']),
     ('Cinq doigts & premier accord', ['cinq-doigts-au-clair-de-la-lune-70bpm.mid',
@@ -245,6 +247,28 @@ PAR_LECON = [
 ]
 
 
+def _prefixes():
+    """base → « 01 », d'après la position dans PAR_LECON. Un fichier partagé par deux leçons
+    garde le préfixe de la PREMIÈRE qui l'utilise (cycle-lie : leçon 05, réutilisé en 07)."""
+    m, n = {}, 0
+    for e in PAR_LECON:
+        if len(e) > 2:                       # hors numérotation : pas de préfixe
+            continue
+        n += 1
+        for base in e[1]:
+            m.setdefault(base, f'{n:02d}')
+    return m
+
+
+PREFIXE = _prefixes()
+
+
+def fic(base):
+    """Nom de fichier final, préfixé du numéro de leçon quand il y en a un."""
+    p = PREFIXE.get(base)
+    return f'{p}-{base}' if p else base
+
+
 def ecrire_doigtes(out):
     """midi/doigtes.md — le tableau lisible + la chaîne à coller dans l'éditeur Synthesia."""
     L = ['# Doigtés des fichiers MIDI', '',
@@ -256,7 +280,11 @@ def ecrire_doigtes(out):
          '  ⚠️ L\'ordre suppose « par temps croissant, puis grave→aigu » — à vérifier au premier essai.',
          '  Doc : <https://github.com/Synthesia-LLC/metadata-editor/wiki/Finger-Hints>', '',
          'Régénéré par `python3 tools/make-midi.py`. Ne pas éditer à la main.', '',
-         '## Quel fichier pour quelle leçon', '']
+         '## Quel fichier pour quelle leçon', '',
+         'Les fichiers sont préfixés du **numéro de leçon** : Synthesia trie par nom, la liste',
+         'sort donc dans l\'ordre du cours. Un numéro peut manquer — une leçon qui réutilise le',
+         'fichier d\'une autre garde le préfixe de la première (07 se travaille avec le fichier 05).',
+         'Les préfixes sont **calculés** depuis l\'ordre ci-dessous, jamais écrits à la main.', '']
     connus, n = {d['file'] for d in DOIGTES}, 0
     for entree in PAR_LECON:
         titre, fichiers = entree[0], entree[1]
@@ -265,10 +293,10 @@ def ecrire_doigtes(out):
         else:
             n += 1
             num = f'{n:02d}'
-        for f in fichiers:
-            assert f in connus, f'{f} listé pour « {titre} » mais jamais généré'
-        L.append(f'- **{num} · {titre}** — ' + ' · '.join(f'`{f}`' for f in fichiers))
-    orphelins = connus - {f for e in PAR_LECON for f in e[1]}
+        for base in fichiers:
+            assert fic(base) in connus, f'{fic(base)} listé pour « {titre} » mais jamais généré'
+        L.append(f'- **{num} · {titre}** — ' + ' · '.join(f'`{fic(b)}`' for b in fichiers))
+    orphelins = connus - {fic(b) for e in PAR_LECON for b in e[1]}
     if orphelins:
         L.append('')
         L.append('⚠️ Fichiers générés mais rattachés à aucune leçon : '
@@ -312,7 +340,7 @@ def main():
     for i, d in zip(MEL, MEL_DUR):
         r.append((t, d, [POS[i]], 80, [i + 1]))
         t += d
-    write(out / 'cinq-doigts-au-clair-de-la-lune-70bpm.mid', r, [], 70,
+    write(out / fic('cinq-doigts-au-clair-de-la-lune-70bpm.mid'), r, [], 70,
           'Au clair de la lune (position de cinq doigts)')
 
     # — gamme : montée + descente, noires. Doigtés de la fiche position-des-doigts.
@@ -320,29 +348,29 @@ def main():
     DESCENTE = [5, 4, 3, 2, 1, 3, 2, 1]
     r = [(i, 1, [n], 80, [f]) for i, (n, f) in enumerate(zip(GAMME, MONTEE))]
     r += [(8 + i, 1, [n], 80, [f]) for i, (n, f) in enumerate(zip(reversed(GAMME), DESCENTE))]
-    write(out / 'passage-du-pouce-gamme-de-do-60bpm.mid', r, [], 60,
+    write(out / fic('passage-du-pouce-gamme-de-do-60bpm.mid'), r, [], 60,
           'gamme de Do, montée (pouce sous) et descente (3 par-dessus)')
 
     # — triades : Do → Fa → Sol → Do, un accord par mesure
     r = [(i * 4, 4, ch, 80, doigte_triade(ch)) for i, ch in enumerate(TRIADES)]
-    write(out / 'premier-accord-do-fa-sol-do-60bpm.mid', r, [], 60,
+    write(out / fic('premier-accord-do-fa-sol-do-60bpm.mid'), r, [], 60,
           'les trois triades majeures, plaquées')
 
     # — renversements : le cycle lié, un accord par mesure, deux tours
     r = [(i * 4, 4, CYCLE[i % 4], 80, doigte_triade(CYCLE[i % 4])) for i in range(8)]
-    write(out / 'renversements-cycle-lie-60bpm.mid', r, [], 60,
+    write(out / fic('renversements-cycle-lie-60bpm.mid'), r, [], 60,
           'Ré m → Si♭ → Fa → Do en renversements (la main ne saute pas)')
 
     # — LEÇON 8, rythme : un accord plaqué par mesure, main droite seule
     for bpm in (50, 60, 80):
         r = [(i * 4, 4, SCI[i % 4][0], 80, doigte_triade(SCI[i % 4][0])) for i in range(8)]
-        write(out / f'rythme-accords-en-mesure-{bpm}bpm.mid', r, [], bpm,
+        write(out / fic(f'rythme-accords-en-mesure-{bpm}bpm.mid'), r, [], bpm,
               'un accord sur le temps 1, tenu 4 temps')
 
     # — main gauche : basse tenue + accord plaqué. La basse se joue du 5 (auriculaire).
     r = [(i * 4, 4, SCI[i % 4][0], 80, doigte_triade(SCI[i % 4][0])) for i in range(8)]
     l = [(i * 4, 4, [SCI[i % 4][1]], 85, [5]) for i in range(8)]
-    write(out / 'main-gauche-basse-et-accords-60bpm.mid', r, l, 60,
+    write(out / fic('main-gauche-basse-et-accords-60bpm.mid'), r, l, 60,
           'basse main gauche sous l\'accord main droite')
 
     # — balancier : main droite en croches
@@ -351,7 +379,7 @@ def main():
         ch = SCI[bar % 4][0]
         for e in range(8):
             r.append((bar * 4 + e * 0.5, 0.5, ch, 72 if e % 2 else 84, doigte_triade(ch)))
-    write(out / 'balancier-croches-main-droite-60bpm.mid', r, [], 60,
+    write(out / fic('balancier-croches-main-droite-60bpm.mid'), r, [], 60,
           'l\'accord répété en croches (8 par mesure)')
 
     # — The Scientist : tout ensemble, deux mains
@@ -362,7 +390,7 @@ def main():
             for e in range(8):
                 r.append((bar * 4 + e * 0.5, 0.5, ch, 72 if e % 2 else 84, doigte_triade(ch)))
         l = [(bar * 4, 4, [SCI[bar % 4][1]], 88, [5]) for bar in range(8)]
-        write(out / f'the-scientist-mains-ensemble-{bpm}bpm.mid', r, l, bpm,
+        write(out / fic(f'the-scientist-mains-ensemble-{bpm}bpm.mid'), r, l, bpm,
               'balancier en croches + basse — la chanson complète')
 
     # — Katyusha : accompagnement seul (basse + accords), en 2/4
@@ -372,13 +400,13 @@ def main():
             notes, basse = KAT[cle]
             r.append((bar * 2, 2, notes, 80, doigte_triade(notes)))   # accord tenu la mesure
             l.append((bar * 2, 2, [basse], 88, [5]))                  # basse sur le temps 1
-        write(out / f'katyusha-accompagnement-{bpm}bpm.mid', r, l, bpm,
+        write(out / fic(f'katyusha-accompagnement-{bpm}bpm.mid'), r, l, bpm,
               'Katyusha — accords + basse seuls (pas la mélodie), 2/4', sig=(2, 4))
 
     # — LEÇON 1, géographie : les Do repères, puis l'octave de blanches
     r = [(i * 2, 2, [n], 80) for i, n in enumerate(LES_DO)]
     r += [(8 + i, 1, [n], 80, [f]) for i, (n, f) in enumerate(zip(BLANCHES, [1, 2, 3, 1, 2, 3, 4, 5]))]
-    write(out / 'geographie-les-do-et-loctave-60bpm.mid', r, [], 60,
+    write(out / fic('geographie-les-do-et-loctave-60bpm.mid'), r, [], 60,
           'les 4 Do repères, puis Do→Do en blanches (passage du pouce sur le Fa)')
 
     # — LEÇON 4, majeur/mineur : la paire sur chaque fondamentale blanche
@@ -387,18 +415,18 @@ def main():
         r.append((t, 2, maj, 82, [1, 3, 5]))
         r.append((t + 2, 2, mineur, 82, [1, 3, 5]))
         t += 4
-    write(out / 'majeur-mineur-les-paires-60bpm.mid', r, [], 60,
+    write(out / fic('majeur-mineur-les-paires-60bpm.mid'), r, [], 60,
           'majeur puis mineur sur chaque blanche — une seule note change à chaque fois')
 
     # — LEÇON 5, renversements : les 3 hauteurs de Si♭ (mode ② de la leçon)
     r = [(i * 4, 4, ch, 80, doigte_triade(ch)) for i, ch in enumerate(SIB_INV)]
-    write(out / 'renversements-les-3-si-bemol-60bpm.mid', r, [], 60,
+    write(out / fic('renversements-les-3-si-bemol-60bpm.mid'), r, [], 60,
           'Si♭ fondamentale → 1er renv. → 2e renv. : le même accord, trois hauteurs')
 
     # — LEÇON 6, accord mineur : la progression de The Scientist, accords + basse
     r = [(i * 4, 4, SCI[i % 4][0], 80, doigte_triade(SCI[i % 4][0])) for i in range(8)]
     l = [(i * 4, 4, [SCI[i % 4][1]], 85, [5]) for i in range(8)]
-    write(out / 'accord-mineur-progression-the-scientist-55bpm.mid', r, l, 55,
+    write(out / fic('accord-mineur-progression-the-scientist-55bpm.mid'), r, l, 55,
           'Ré m → Si♭ → Fa → Do, accords tenus + basse (voicings liés)')
 
     # — BONUS, Canon de Pachelbel : 8 accords + basse, deux tours
@@ -407,8 +435,16 @@ def main():
         ch, basse = PACH[PACH_SEQ[bar % 8]]
         r.append((bar * 4, 4, ch, 78, doigte_triade(ch)))
         l.append((bar * 4, 4, [basse], 86, [5]))
-    write(out / 'bonus-pachelbel-progression-60bpm.mid', r, l, 60,
+    write(out / fic('bonus-pachelbel-progression-60bpm.mid'), r, l, 60,
           'la progression du Canon en Ré, accords + basse (2 tours)')
+
+    # Renommer, c'est laisser l'ancien nom derrière : sans ce ménage, Synthesia afficherait
+    # deux jeux de fichiers. On ne touche qu'aux .mid de midi/, tous régénérés à chaque passage.
+    ecrits = {d['file'] for d in DOIGTES}
+    for vieux in sorted(out.glob('*.mid')):
+        if vieux.name not in ecrits:
+            vieux.unlink()
+            print(f'  {"(supprimé)":44s} {vieux.name}')
 
     ecrire_doigtes(out)
     print('\nDans Synthesia : « Play a Song » → « Import Songs » → choisis le dossier midi/.')

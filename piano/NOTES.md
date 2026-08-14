@@ -237,6 +237,15 @@ sont du JS dans du HTML.)
 signale les fichiers rattachés à aucune leçon. La leçon « un accord d'un seul bloc » réutilise
 volontairement le fichier des renversements : même matière, pas de doublon.
 
+**Fichiers préfixés `01-` … `11-`** (Synthesia trie par nom → la liste sort dans l'ordre du cours).
+⚠️ **Le préfixe est CALCULÉ** depuis la position dans `PAR_LECON`, jamais écrit à la main — même
+principe que le tableau `LESSONS` de `nav.js`. Réordonner = déplacer une ligne, les fichiers se
+renomment seuls. Les noms de base dans `PAR_LECON` s'écrivent **sans numéro**. Bonus et Katyusha
+sont hors numérotation (entrées à 3 éléments) et gardent leur nom.
+Le générateur **supprime les `.mid` de `midi/` qu'il n'a pas écrits** — sans ça, un renommage
+laisserait deux jeux de fichiers dans Synthesia. Ne rien déposer à la main dans `midi/`.
+Un numéro peut manquer dans la liste (07 réutilise le fichier 05) : c'est normal, pas un oubli.
+
 **Doigtés → `midi/doigtes.md`, généré.** MIDI n'a aucun champ pour le doigté. Synthesia les lit dans
 un fichier **`.synthesia` séparé** ([doc](https://github.com/Synthesia-LLC/metadata-editor/wiki/Finger-Hints)) :
 `1`-`5` = main gauche doigts 1-5, `67890` = main droite doigts 1-5, `-` = rien. On **ne fabrique pas
@@ -247,9 +256,15 @@ Les doigtés d'accords viennent de `doigte_triade()`, **même règle que `piano.
 1-3-5, plus large → 1-2-5) : si la règle change dans `piano.js`, la changer ici aussi.
 
 ### Suite
-- **Où elle en est (août 2026)** : passage du pouce (le mouvement vient), puis arrivée sur l'accord
-  mineur → a buté sur majeur/mineur, d'où la nouvelle leçon « compte les demi-tons » insérée avant.
-  Prochaine étape : la faire, puis reprendre « accord mineur & The Scientist » avec la vraie règle.
+- **Où elle en est (août 2026)** : a passé le bloc harmonie (majeur/mineur, renversements, accord
+  mineur) et travaille **le rythme** — d'où les trois paliers du bouton Accords (record 0018 bis,
+  commit `bafdb2e`). Elle a apporté **Katyusha** elle-même et bute sur sa mélodie, qu'elle ne sait
+  pas lire.
+- **➡️ PROCHAINE LEÇON : la lecture de la portée (clé de Sol), construite sur SA partition de
+  Katyusha** — pas sur un exercice abstrait. C'est le dernier point de `MISSION.md` sans leçon, et
+  il vient de devenir le mur qui la bloque sur un morceau qu'elle veut jouer maintenant.
+  ⚠️ **Ne pas lui donner la mélodie de Katyusha par un autre canal** tant que la lecture n'est pas
+  acquise : ce serait retirer la difficulté désirable qui rend la leçon utile (record 0020).
 - **✅ Chasse aux raccourcis non datés faite (août 2026, record 0018).** `grep -rniE "pour l'instant|
   plus tard|retiens juste|contente-toi|en gros|à ce stade"` sur `lessons/` + `reference/` → 6 hits,
   **un seul vrai défaut** : `keyboard-map.html` disait les touches noires « étudiées plus tard » alors
@@ -261,8 +276,9 @@ Les doigtés d'accords viennent de `doigte_triade()`, **même règle que `piano.
   (arpèges en La mineur — le passage du pouce est le prérequis, désormais couvert). Demander à Clara.
 - Lecture de la portée (clé de Sol), trouver Do central.
 - **✅ Voicings tranchés (août 2026, cf. learning-record 0019).** Coupure **à la leçon des
-  renversements** : *avant* elle (accord mineur, un accord d'un seul bloc) → position fondamentale,
-  c'est le bon stade ; *après* elle (rythme, main gauche, balancier, assemblage) → **voicings liés**,
+  renversements**, qui est désormais 5<sup>e</sup> : *avant* elle (majeur ou mineur, qui CONSTRUIT
+  l'accord en comptant 4+3) → position fondamentale, c'est le bon stade ; *après* elle (accord
+  mineur, un accord d'un seul bloc, rythme, main gauche, balancier, assemblage) → **voicings liés**,
   Si♭ = [62,65,70] (Ré·Fa·Si♭), Fa = [60,65,69] (Do·Fa·La). 12 demi-tons par tour au lieu de 36.
   Sinon le cours enseigne l'économie de mouvement puis fait pratiquer les sauts. `tools/make-midi.py`
   (`SCI`) mis à jour et relancé. Ne pas « réharmoniser » les leçons d'avant : la différence est

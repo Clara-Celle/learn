@@ -122,3 +122,13 @@ Sources lues et citées dans la leçon « Les deux mains : pourquoi ça coince �
   « métronome allumé mais pas visé », et plus généralement l'ordre notes → tempo.
 - [Goebl & Palmer — *Rate effects on timing, key velocity, and finger kinematics in piano performance*](https://doi.org/10.1371/journal.pone.0020518)
   *PLoS ONE*. Compromis vitesse/justesse au piano. Use for: justifier « ralentis jusqu'à ne plus rater ».
+- [Mathias & Goldman (2025) — *How does increasing contextual interference in a musical practice session affect acquisition and retention?*](https://journals.sagepub.com/doi/10.1177/00224294231222801)
+  *J. Research in Music Education*. Alterner les tâches au hasard **dégrade la séance** mais
+  **améliore la rétention**. Voir aussi [Carter & Grahn (2016)](https://pubmed.ncbi.nlm.nih.gov/27588014/).
+  Use for: le palier « ordre aléatoire », et prévenir Clara que la sensation ne juge pas la méthode.
+- [Allingham & Wöllner (2022)](https://journals.sagepub.com/doi/10.1177/03057356211073481) et
+  [(2023)](https://journals.sagepub.com/doi/10.1177/03057356221129650) — *Psychology of Music*.
+  ⚠️ **Corrige ce que le cours disait** : le travail lent SEUL ne transfère pas au jeu rapide ;
+  les stratégies efficaces alternent lent et rapide. Use for: l'étape « allers-retours de tempo ».
+- [Imagine, Sing, Play (2021) — *Frontiers in Psychology*](https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2021.757052/full)
+  Mental + chanté + joué > joué seul. Use for: le travail loin du clavier, séances courtes.

@@ -77,9 +77,8 @@
 
   <div class="tip"><b>Le total fait toujours 7.</b> C'est pour ça que la note du haut ne bouge jamais,
   que ta main garde la même forme, et qu'<b>une seule note</b> — celle du milieu — sépare la joie de
-  la mélancolie. Tu l'avais déjà vu dans la
-  <a href="accord-mineur-et-the-scientist.html">leçon sur l'accord mineur</a> : « baisse la note du
-  milieu d'un demi-ton ». Voilà pourquoi ça marche.</div>
+  la mélancolie. C'est aussi ce qui justifie le raccourci « baisse la note du milieu d'un
+  demi-ton » — voilà pourquoi il marche.</div>
 
   <h2>3. La réponse à ta question</h2>
   <div class="card">
@@ -157,12 +156,9 @@
 <script src="../lib/exercise.js"></script>
 <script src="../lib/nav.js"></script>
 <script>
-/* Noms solfège. La touche noire du milieu s'écrit ♯ dans un accord majeur (on a monté la
-   tierce) et ♭ dans un mineur (on l'a baissée) — c'est la seule orthographe juste ici. */
-var BLANC={0:'Do',2:'Ré',4:'Mi',5:'Fa',7:'Sol',9:'La',11:'Si'};
-var DIESE={1:'Do♯',3:'Ré♯',6:'Fa♯',8:'Sol♯',10:'La♯'};
-var BEMOL={1:'Ré♭',3:'Mi♭',6:'Sol♭',8:'La♭',10:'Si♭'};
-function nom(m,maj){ var c=((m%12)+12)%12; return BLANC[c]||(maj?DIESE[c]:BEMOL[c]); }
+/* La touche noire du milieu s'écrit ♯ dans un accord majeur (on a monté la tierce) et ♭ dans un
+   mineur (on l'a baissée) — c'est la seule orthographe juste ici. La lib gère les deux. */
+var nom=PianoKeyboard.nom;
 
 // fondamentales blanches uniquement : leur quinte (+7) tombe alors toujours sur une blanche.
 var RACINES=[60,62,64,65,67,69];

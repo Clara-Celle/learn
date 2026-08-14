@@ -146,17 +146,17 @@ var CHORDS=[
 var ex=Exercise.create({mount:'#ex',
   hint:'Joue sur ton <b>vrai clavier</b> — la mesure de force a besoin du MIDI. '
       +'(À la souris, seul l\'écart de temps est mesuré.)'});
-var kb=PianoKeyboard.create({mount:ex.pianoMount, octaves:3, startOctave:3, onNote:onNote});
+var kb=PianoKeyboard.create({mount:ex.pianoMount, octaves:3, startOctave:3});
 ex.attach(kb);
+kb.onChord(evaluate);              // 400 ms sans nouvelle note = l'accord est « posé »
 
 var winBox=document.getElementById('win');
-var running=false, current=null, buf=[], timer=null, streak=0;
-
-function pcs(l){ return l.map(function(m){ return ((m%12)+12)%12; }).sort(function(a,b){return a-b;}).join(','); }
+var running=false, current=null, streak=0;
+var pcs=PianoKeyboard.pcs;
 
 function pick(){
   var c; do{ c=CHORDS[Math.floor(Math.random()*CHORDS.length)]; }while(current && c.id===current.id);
-  current=c; buf=[];
+  current=c;
   ex.clearKeys(); ex.showPanel(false); ex.panel.innerHTML='';
   ex.prompt(c.name,'Construis-le de mémoire, puis joue les 3 notes ensemble.');
 }
@@ -194,24 +194,17 @@ ex.button('👁 Montre-moi', function(){
 });
 ex.button('🔊 Écouter l\'accord', function(){ if(current) kb.playChord(current.notes); });
 
-function onNote(midi, el, info){
-  if(!running) return;
-  buf.push({midi:midi, t:performance.now(), vel:(info&&info.velocity)||null});
-  clearTimeout(timer);
-  timer=setTimeout(evaluate, 400);   // 400 ms sans nouvelle note = l'accord est « posé »
-}
-
-function evaluate(){
+function evaluate(notes, evts){
   if(!running || !current) return;
   var seen={}, uniq=[];
-  buf.forEach(function(e){ if(!seen[e.midi]){ seen[e.midi]=1; uniq.push(e); } });
-  if(uniq.length<2){ buf=[]; return; }
+  evts.forEach(function(e){ if(!seen[e.midi]){ seen[e.midi]=1; uniq.push(e); } });
+  if(uniq.length<2) return;
 
   if(pcs(uniq.map(function(e){return e.midi;}))!==pcs(current.notes)){
     uniq.forEach(function(e){ if(current.notes.indexOf(e.midi)<0) ex.miss(e.midi); });
     ex.verdict('no','Ce n\'est pas encore '+current.name,
       'Tu as joué '+uniq.length+' note(s). <b>👁 Montre-moi</b> si tu bloques — mais cherche d\'abord seul, c\'est comme ça que ça rentre.');
-    buf=[]; streak=0; ex.streak(0,5);
+    streak=0; ex.streak(0,5);
     return;
   }
   uniq.forEach(function(e){ ex.hit(e.midi); });
@@ -237,7 +230,6 @@ function evaluate(){
 
   ex.streak(streak,5);
   if(streak>=5) winBox.classList.remove('hidden');
-  buf=[];
   setTimeout(function(){ if(running) pick(); }, 1400);
 }
 

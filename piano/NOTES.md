@@ -92,6 +92,16 @@
 - **Sources de recherche : toujours vérifier avant d'écrire une leçon de méthode.** La leçon 10
   contredit le conseil universel (« mains séparées puis on réunit ») sur la foi de trois études
   citées et liées dans la page. Citer, et **dire quand on n'a lu que le résumé**.
+- **⚠️ Deux corrections apportées à mes propres textes (août 2026, après recherche).**
+  1. **Le travail lent seul ne transfère pas au jeu rapide** (Allingham & Wöllner 2022/2023,
+     Psychology of Music). Le cours disait « ralentis » sans jamais dire de remonter. Il faut des
+     **allers-retours de tempo**, pas une montée graduelle.
+  2. **Mes paliers sont de la pratique BLOQUÉE** : optimal pour acquérir, sous-optimal pour retenir.
+     L'**interférence contextuelle** (Mathias & Goldman 2025, J. Research in Music Education) dit que
+     mélanger l'ordre dégrade la séance et améliore la rétention. D'où le palier **« ordre aléatoire »**
+     ajouté en fin de progression. ⚠️ **Prévenir Clara que ça va sembler pire** — c'est le piège le
+     mieux documenté de l'apprentissage moteur : ne pas juger une méthode sur la sensation du moment.
+  Corollaire de méthode : **une leçon adossée à la recherche doit être re-vérifiée**, pas archivée.
 - **📄 `reference/comment-travailler.html` = la méthode, source unique.** Trois règles (une seule
   chose non automatique à la fois · réduire une dimension jamais la tâche · monter quand c'est
   ennuyeux) + le protocole en 4 paliers + les sources. **Toute nouvelle leçon y renvoie au lieu de
@@ -114,6 +124,13 @@
   **🎯 Guide** = surlignage des prochaines touches ; **✋ Doigtés** = ronds numérotés dessus.
   Les deux sont de simples classes CSS (`pk-noguide`, `pk-nofing`) → une leçon appelle
   `guide()`/`target()` sans se soucier de l'état choisi par Clara.
+- **Helpers sans instance : `PianoKeyboard.nom(midi[,diese])` et `PianoKeyboard.pcs(notes)`.**
+  Trois leçons réinventaient leur table de noms de notes, deux recopiaient `pcs()`. Un exemplaire
+  dans la lib. `diese` choisit l'orthographe des noires (Do♯ en majeur, Ré♭ en mineur).
+- **`kb.onChord(fn[, ms])`** = « l'accord est posé » : accumule les notes, appelle `fn(notes, evts)`
+  quand plus rien n'arrive pendant `ms` (400 par défaut). **Inclut les touches encore enfoncées.**
+  Remplace le trio `buf.push` / `clearTimeout` / `setTimeout` recopié dans 3 leçons d'accords.
+  `evts` porte `{midi, t, vel}` — nécessaire à la mesure d'écart et de vélocité.
 - **`piano.held()`** = les touches **physiquement enfoncées** (souris ou MIDI), lues depuis `.pk-press`.
   ⚠️ **Une touche tenue ne renvoie jamais un second `onNote`.** Tout exercice qui compte des note-on
   pour valider un accord est donc faux dès que la cible change pendant que les doigts sont posés :

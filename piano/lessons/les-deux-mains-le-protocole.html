@@ -103,6 +103,11 @@
       mains vaut mieux que huit jouées à une main.</li>
     <li><b>Assez lent pour ne jamais te tromper.</b> Si tu rates, c'est trop rapide. Le tempo juste,
       c'est celui où tu réussis <b>dix fois d'affilée</b> — même s'il te paraît ridicule.</li>
+    <li><b>Puis remonte, et redescends.</b> ⚠️ Rester lent ne suffit pas : le travail lent
+      <i>seul</i> n'améliore pas le jeu rapide. Fais des allers-retours — +5 BPM, retour au lent,
+      +5 encore. C'est l'alternance qui construit, pas la lenteur.
+      (<a href="https://journals.sagepub.com/doi/10.1177/03057356211073481">Allingham &amp;
+      Wöllner, 2022</a>)</li>
     <li><b>Regarde ta main gauche, écoute ta main gauche.</b> C'est elle qui décroche, jamais la
       droite. Compte à voix haute en pensant à la basse.</li>
     <li><b>Court et souvent, avec une nuit entre deux.</b> Dix minutes trois jours de suite battent
@@ -190,11 +195,12 @@ var DECALE=450;                     // ms visés entre les deux mains en mode �
 var ex=Exercise.create({mount:'#ex',
   hint:'Main gauche = la basse (une note, en bas). Main droite = l\'accord. '
       +'Joue sur ton <b>vrai clavier</b> : la mesure d\'écart a besoin des deux mains à la fois.'});
-var kb=PianoKeyboard.create({mount:ex.pianoMount, octaves:3, startOctave:3, onNote:onNote});
+var kb=PianoKeyboard.create({mount:ex.pianoMount, octaves:3, startOctave:3});
 ex.attach(kb);
+kb.onChord(evaluer);              // 400 ms sans nouvelle note = l'accord est « posé »
 
 var winBox=document.getElementById('win');
-var mode='ensemble', pos=0, serie=0, running=false, buf=[], timer=null;
+var mode='ensemble', pos=0, serie=0, running=false;
 
 var bEns=ex.button('① Ensemble', function(){ setMode('ensemble'); });
 var bDec=ex.button('② Décalé',   function(){ setMode('decale'); });
@@ -228,7 +234,7 @@ function demande(){
 }
 
 function setMode(m){
-  mode=m; running=false; pos=0; serie=0; buf=[];
+  mode=m; running=false; pos=0; serie=0;
   bEns.classList.toggle('on', m==='ensemble');
   bDec.classList.toggle('on', m==='decale');
   bGo.innerHTML='▶ Commencer'; bGo.classList.add('primary');
@@ -241,21 +247,15 @@ function setMode(m){
 function onGo(b){
   running=!running;
   b.innerHTML=running?'■ Arrêter':'▶ Commencer'; b.classList.toggle('primary',!running);
-  pos=0; serie=0; buf=[]; winBox.classList.add('hidden');
+  pos=0; serie=0; winBox.classList.add('hidden');
   ex.streak(0,5,'Ensemble d\'affilée');
   if(running){ demande(); balance(null,'','Vas-y.'); }
   else { ex.reset(); ex.prompt('','En pause.'); balance(null,'',''); }
 }
 
-function onNote(midi){
+function evaluer(notes, lu){
   if(!running) return;
-  buf.push({midi:midi, t:performance.now()});
-  clearTimeout(timer); timer=setTimeout(evaluer, 400);
-}
-
-function evaluer(){
-  if(!running) return;
-  var c=PROG[pos], lu=buf; buf=[];
+  var c=PROG[pos];
   // main gauche = la basse attendue ; main droite = les notes de l'accord
   var g=lu.filter(function(e){ return e.midi===c.basse; });
   var d=lu.filter(function(e){ return c.notes.indexOf(e.midi)>=0; });

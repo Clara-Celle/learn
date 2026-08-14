@@ -200,7 +200,7 @@ function move(a,b){   // distance en demi-tons entre deux accords, notes triées
   var s=0; for(var i=0;i<Math.min(x.length,y.length);i++) s+=Math.abs(y[i]-x[i]);
   return s;
 }
-function pcs(l){ return l.map(function(m){ return ((m%12)+12)%12; }).sort(function(a,b){return a-b;}).join(','); }
+var pcs=PianoKeyboard.pcs;
 
 /* tableau de référence en haut de page */
 document.getElementById('ref').innerHTML=CYCLE.map(function(c,i){
@@ -227,12 +227,13 @@ var SIB=[
 var ex=Exercise.create({mount:'#ex',
   hint:'Main droite seule. Les <b>ronds numérotés</b> sur les touches disent quel doigt va où '
       +'(1 = pouce … 5 = auriculaire).'});
-var kb=PianoKeyboard.create({mount:ex.pianoMount, octaves:3, startOctave:3, onNote:onNote});
+var kb=PianoKeyboard.create({mount:ex.pianoMount, octaves:3, startOctave:3});
 ex.attach(kb); ex.showPanel(true);
+kb.onChord(evaluate);              // 400 ms sans nouvelle note = l'accord est « posé »
 
 var winBox=document.getElementById('win');
 var mode='decouvrir', dPos=0, sPos=0;
-var running=false, pos=0, total=0, prev=null, buf=[], timer=null;
+var running=false, pos=0, total=0, prev=null;
 
 var bDec=ex.button('① Découvrir', function(){ setMode('decouvrir'); });
 var bSib=ex.button('② Écoute le Si♭', function(){ setMode('sib'); });
@@ -241,7 +242,7 @@ var bGo =ex.button('▶ Commencer', onGo, {primary:true});
 var bHear=ex.button('🔊 Écouter', onHear);
 
 function setMode(m){
-  mode=m; running=(m==='sib'); pos=0; total=0; prev=null; buf=[]; dPos=0; sPos=0;
+  mode=m; running=(m==='sib'); pos=0; total=0; prev=null; dPos=0; sPos=0;
   bDec.classList.toggle('on', m==='decouvrir');
   bSib.classList.toggle('on', m==='sib');
   bCyc.classList.toggle('on', m==='cycle');
@@ -304,10 +305,10 @@ function onGo(b){
     dPos=(dPos+1)%DISCOVER.length; showDiscover();
     return;
   }
-  if(mode==='sib'){ sPos=0; running=true; buf=[]; ex.reset(); showSib(); return; }
+  if(mode==='sib'){ sPos=0; running=true; ex.reset(); showSib(); return; }
   running=!running;
   b.innerHTML=running?'■ Arrêter':'▶ Commencer le cycle'; b.classList.toggle('primary',!running);
-  pos=0; total=0; prev=null; buf=[]; winBox.classList.add('hidden');
+  pos=0; total=0; prev=null; winBox.classList.add('hidden');
   if(running){ askChord(); showTotal('', 'demi-tons parcourus — on part de zéro.'); }
   else { ex.reset(); ex.prompt('','En pause.'); drawCycle(); }
 }
@@ -319,10 +320,6 @@ function onHear(){
   suite.forEach(function(c,k){ kb.playChord(c.notes, t+k*1.1); });
 }
 
-function onNote(midi){
-  if((mode!=='cycle' && mode!=='sib') || !running) return;
-  buf.push(midi); clearTimeout(timer); timer=setTimeout(evaluate, 400);
-}
 
 function memesNotes(a,b){                       // ici l'octave COMPTE : c'est tout le sujet
   var x=a.slice().sort(function(p,q){return p-q;}), y=b.slice().sort(function(p,q){return p-q;});
@@ -355,14 +352,10 @@ function evalSib(uniq){
   running=false;                                 // petite pause : on laisse le son finir
 }
 
-function evaluate(){
-  if(!running) return;
-  // Cette leçon apprend justement à GARDER les notes communes sous le doigt — or une touche tenue
-  // ne renvoie pas de nouveau onNote. Sans les touches encore enfoncées, l'accord reste incomplet
-  // et l'exercice ne répondait rien du tout.
-  var all=kb.held().concat(buf);
-  var uniq=all.filter(function(m,i){ return all.indexOf(m)===i; });
-  buf=[];
+// onChord inclut les touches encore enfoncées — indispensable ici, où la leçon apprend justement
+// à GARDER les notes communes sous le doigt : une touche tenue ne renvoie pas de nouveau onNote.
+function evaluate(uniq){
+  if(!running || (mode!=='cycle' && mode!=='sib')) return;
   if(uniq.length<3) return;
   if(mode==='sib') return evalSib(uniq);
 

@@ -23,9 +23,10 @@
    api : el, whites, blacks, midiToEl(m), playNote, playChord,
          setLabels/toggleLabels, setSound/toggleSound/isSound,
          setGuide/toggleGuide, setFingersVisible/toggleFingers, setFinger/clearFingers,
-         highlight(notes,cls), addClass, removeClass,
-         clearClass(...cls), mountControls(target, {sound,labels,guide,fingers,pedal,midi}),
+         addClass, removeClass, clearClass(...cls), guide(notes[,doigts]), held(),
+         onChord(fn[,ms]), mountControls(target, {sound,labels,guide,fingers,pedal,midi}),
          midiState(), onMidiState(fn), midiMessage(bytes)
+   statiques : PianoKeyboard.nom(midi[,diese]) · PianoKeyboard.pcs(notes)
 
    Web MIDI : les notes du vrai piano passent par le MÊME chemin que la souris (press/release)
    → aucune leçon n'a besoin d'être modifiée. La pédale de sustain arrive en CC64.
@@ -46,6 +47,7 @@
     var guideOn=opts.guide!==false, fingersOn=opts.fingers!==false;
     var labelsOn=opts.labels!==false;
     var onNote=opts.onNote||function(){};
+    var chordListeners=[];              // abonnés de onChord(), notifiés par press()
     var onRelease=opts.onRelease||function(){};
 
     var scroll=document.createElement('div'); scroll.className='pk-scroll';
@@ -158,6 +160,7 @@
       el.classList.add('pk-press');
       var midi=parseInt(el.dataset.midi);
       noteOn(midi,vel); onNote(midi,el,{velocity:vel||null, source:src||'clic'});
+      chordListeners.forEach(function(f){ try{ f(midi, vel||null); }catch(e){} });
     }
     function release(el){
       if(!el) return;
@@ -250,10 +253,32 @@
       context:function(){ return ensureCtx(); },             // AudioContext partagé (clics + notes = 1 horloge)
       now:function(){ return ensureCtx().currentTime; },
       noteOn:noteOn, noteOff:noteOff,
-      setPedal:setPedal, togglePedal:function(){ setPedal(!pedalLocked); return pedalLocked; }, isPedal:function(){ return pedalLocked; },
+      setPedal:setPedal, togglePedal:function(){ setPedal(!pedalLocked); return pedalLocked; },
       midiState:function(){ return midiState; },
       onMidiState:function(f){ midiListeners.push(f); f(midiState); },
       midiMessage:function(bytes){ handleMidi({data:bytes}); },   // injection manuelle (diagnostic / tests)
+      // onChord(fn[, ms]) — « l'accord est posé ». On accumule les notes jouées, et quand plus
+      // rien n'arrive pendant `ms`, on appelle fn(notes, events) une fois. Sans ça, chaque leçon
+      // d'accords réécrivait le même trio push / clearTimeout / setTimeout.
+      // Les touches ENCORE ENFONCÉES sont incluses : une note tenue depuis l'accord précédent ne
+      // renvoie pas de nouveau onNote, et sans elle l'accord semblerait incomplet.
+      onChord:function(fn, ms){
+        var buf=[], t=null;
+        chordListeners.push(function(midi, vel){
+          buf.push({midi:midi, t:performance.now(), vel:vel});
+          clearTimeout(t);
+          t=setTimeout(function(){
+            var vus={}, notes=[], evts=[];
+            api.held().concat(buf.map(function(e){ return e.midi; })).forEach(function(m){
+              if(!vus[m]){ vus[m]=1; notes.push(m); }
+            });
+            buf.forEach(function(e){ evts.push(e); });
+            buf=[];
+            if(notes.length) fn(notes, evts);
+          }, ms||400);
+        });
+        return api;
+      },
       // Touches physiquement enfoncées, souris comme MIDI (.pk-press est posé par press()).
       // Une touche DÉJÀ tenue ne renverra jamais de nouveau onNote : sans ça, un exercice qui
       // change de cible pendant que les doigts sont posés ne peut plus jamais compter ces notes.
@@ -264,7 +289,6 @@
       setGuide:setGuide, toggleGuide:function(){ setGuide(!guideOn); return guideOn; }, isGuide:function(){ return guideOn; },
       setFingersVisible:setFingersVisible, isFingers:function(){ return fingersOn; },
       toggleFingers:function(){ setFingersVisible(!fingersOn); return fingersOn; },
-      highlight:function(notes,cls){ cls=cls||'pk-target'; notes.forEach(function(m){ var el=midiToEl[m]; if(el) el.classList.add(cls); }); },
       setFinger:setFinger, clearFingers:clearFingers,
       // guide(notes, doigts) = surligne les prochaines touches ET pose les ronds de doigté.
       // `doigts` omis → déduit de l'écart : une triade serrée (≤ une quinte) se joue 1-3-5,
@@ -309,5 +333,27 @@
     return api;
   }
 
-  window.PianoKeyboard={ create:create };
+  /* ----- helpers sans instance -----
+     Les leçons les réinventaient chacune de leur côté (3 tables de noms, 2 copies de pcs).
+     Un seul exemplaire ici : si la règle change, elle change partout. */
+
+  // Nom solfège d'une note, sans l'octave. `diese` choisit l'orthographe des touches noires :
+  // vrai → Do♯ (on est monté), faux → Ré♭ (on est descendu). Un accord majeur monte sa tierce,
+  // un mineur la baisse — d'où le besoin des deux.
+  var NOIRE_D=['Do♯','Ré♯','Fa♯','Sol♯','La♯'], NOIRE_B=['Ré♭','Mi♭','Sol♭','La♭','Si♭'];
+  function nom(midi, diese){
+    var c=((midi%12)+12)%12, i=SEMI.indexOf(c);
+    if(i>=0) return SOL[i];
+    var j=[1,3,6,8,10].indexOf(c);
+    return diese ? NOIRE_D[j] : NOIRE_B[j];
+  }
+
+  // Empreinte d'un accord, octave ignorée : deux renversements du même accord donnent la
+  // même chaîne. Sert à valider « c'est bien cet accord » sans imposer la hauteur.
+  function pcs(notes){
+    return notes.map(function(m){ return ((m%12)+12)%12; })
+                .sort(function(a,b){ return a-b; }).join(',');
+  }
+
+  window.PianoKeyboard={ create:create, nom:nom, pcs:pcs };
 })();

@@ -121,6 +121,19 @@ kb2.midiMessage([0x80,62,0]);
 check('held() oublie la touche relâchée', kb2.held().join()==='65');
 kb2.midiMessage([0x80,65,0]);
 
+// helpers sans instance — 3 leçons les réinventaient chacune de leur côté
+const P=window.PianoKeyboard;
+check('nom() : blanche, dièse et bémol', P.nom(60)==='Do' && P.nom(61,true)==='Do♯' && P.nom(70)==='Si♭');
+check('pcs() : deux renversements du même accord donnent la même empreinte',
+  P.pcs([60,64,67])===P.pcs([64,67,72]) && P.pcs([60,64,67])!==P.pcs([60,63,67]));
+
+// onChord() : « l'accord est posé ». C'est la seule logique neuve à retardement — si elle casse,
+// trois leçons d'accords ne répondent plus rien du tout, sans erreur visible.
+let vuNotes=null;
+const kb4=window.PianoKeyboard.create({mount:new El('div'), octaves:3, startOctave:3, midi:false});
+kb4.onChord(function(notes){ vuNotes=notes.slice().sort((a,b)=>a-b); }, 20);
+kb4.midiMessage([0x90,60,90]); kb4.midiMessage([0x90,64,90]); kb4.midiMessage([0x90,67,90]);
+
 console.log('\nexercise.js');
 const mount=new El('div');
 const ex=window.Exercise.create({mount, hint:'test'});
@@ -154,5 +167,10 @@ check('les fiches de référence sont listées', Array.isArray(R) && R.length>0 
 check('chaque fiche de référence existe sur le disque',
   R.every(x=>fs.existsSync(path.join(LIB,'..','lessons',x.f))));
 
-console.log(fails ? `\n⛔ ${fails} test(s) en échec\n` : '\n✅ tout passe\n');
-process.exit(fails?1:0);
+// onChord est la seule vérification à retardement : on laisse passer son délai avant de conclure.
+setTimeout(() => {
+  check('onChord() groupe les notes et se déclenche une fois l\'accord posé',
+    vuNotes && vuNotes.join()==='60,64,67');
+  console.log(fails ? `\n⛔ ${fails} test(s) en échec\n` : '\n✅ tout passe\n');
+  process.exit(fails?1:0);
+}, 60);

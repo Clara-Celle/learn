@@ -100,3 +100,18 @@ Contraintes réelles : **~1 m de largeur max** + **budget ~200 €** → 88 touc
   exporte en MIDI. Le détour est utile *parce qu'il passe par la lecture* au lieu de l'éviter.
 - Pas de source consultée sur la **pédagogie du transfert clavier virtuel → vrai clavier**, alors que
   c'est exactement la situation de Clara depuis juillet. Chercher si le sujet se pose à nouveau.
+
+## Apprentissage moteur & jeu à deux mains (août 2026)
+Sources lues et citées dans la leçon « Les deux mains : pourquoi ça coince ».
+- [Yokoi, Bai & Diedrichsen (2017) — *Restricted transfer of learning between unimanual and bimanual finger sequences*](https://pubmed.ncbi.nlm.nih.gov/27974447/)
+  *J. Neurophysiol.* 117(3), 1043-1051. **Aucun transfert** une main ↔ deux mains ; représentations
+  séparées. Use for: justifier qu'on ne travaille PAS longtemps mains séparées.
+- [van Vugt & Altenmüller (2019) — *On the one hand or on the other*](https://pmc.ncbi.nlm.nih.gov/articles/PMC6737297/)
+  *Adv. Cogn. Psychol.* 15(3), 216-227. **Accès libre.** À deux mains, la régularité se dégrade
+  **seulement à gauche**, chez des experts. Use for: expliquer à Clara que sa basse molle est normale.
+- [Pang et coll. (2023) — *Piano practice with emphasis on left hand for right handers*](https://doi.org/10.3389/fpsyg.2023.1124508)
+  *Front. Psychol.* 14, 1124508. Mélodie à gauche, gauche plus rapide → l'attention suit. Use for:
+  concevoir de futurs exercices de main gauche.
+- [Distributed Practice and Procedural Memory Consolidation in Musicians' Skill Learning](https://eric.ed.gov/?id=EJ951332)
+  *J. Research in Music Education* (2012). Séances espacées de 24 h > massées.
+  ⚠️ **Résumé seulement, texte complet non lu** — le chiffre est cité comme ordre de grandeur.

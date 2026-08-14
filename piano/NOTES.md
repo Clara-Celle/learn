@@ -84,6 +84,14 @@
   **compter d'abord ce que l'exercice lui demande de tenir à la fois** : c'est presque toujours de la
   surcharge, jamais de l'attention. Le remède est un **palier qui retire une variable**, pas un
   encouragement. Voir aussi le bouton « Tu joues » de la leçon main gauche, même principe.
+- **⚠️ Réduire une DIMENSION, jamais retirer la tâche.** Règle unique derrière les deux corrections
+  d'août 2026 (leçon 8 : paliers d'accords ; leçon 10 : deux mains). Pour le rythme on raccourcit
+  le nombre d'accords ; pour les deux mains on raccourcit la **longueur** et le **tempo** — mais on
+  garde **les deux mains**, parce que l'entraînement à une main **ne se transfère pas** (record 0021,
+  Yokoi et al. 2017). Retirer la tâche entraîne autre chose que ce qu'on veut.
+- **Sources de recherche : toujours vérifier avant d'écrire une leçon de méthode.** La leçon 10
+  contredit le conseil universel (« mains séparées puis on réunit ») sur la foi de trois études
+  citées et liées dans la page. Citer, et **dire quand on n'a lu que le résumé**.
 - Privilégier les leçons HTML interactives (clavier cliquable) puisqu'il n'y a pas d'instru.
 - Toujours rattacher au moins un morceau cible pour ancrer la théorie.
 
@@ -200,8 +208,13 @@ API : `prompt / button / target / hit / miss / verdict / measure / streak / pane
    au travail du rythme. Consigne écrite dans la leçon : **rester à un palier jusqu'à ce qu'il
    soit ennuyeux** — l'ennui signale l'automatisation.
 9. La main gauche : la basse
-10. Le balancier (croches)
-11. The Scientist : assemblage
+10. **Les deux mains : pourquoi ça coince** ← inséré (août 2026, demandé par Clara « je galère »).
+    Adossée à trois études (record 0021). Thèse : **« mains séparées » ne transfère PAS** au jeu à
+    deux mains (Yokoi et al. 2017), et c'est **la main gauche** qui se dégrade, chez les experts
+    aussi (van Vugt & Altenmüller 2019). Mesure inédite dans le cours : **l'écart en ms entre les
+    deux mains, avec le signe** — donc laquelle traîne.
+11. Le balancier (croches)
+12. The Scientist : assemblage
 ★ Bonus Canon de Pachelbel
 
 **⚠️ La position fondamentale ne survit que là où on la CONSTRUIT** (leçon majeur/mineur : compter

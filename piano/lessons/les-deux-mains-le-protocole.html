@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Les deux mains : pourquoi ça coince</title>
+<link rel="stylesheet" href="../lib/lesson.css">
+<link rel="stylesheet" href="../lib/piano.css">
+<style>
+  /* propre à cette leçon : la balance des deux mains */
+  .bal{background:#1d1916;border:1px solid var(--line);border-radius:12px;padding:18px;
+    margin:14px auto;max-width:620px}
+  .bal .axe{position:relative;height:56px;margin:10px 0 4px;
+    background:linear-gradient(90deg,#2a1c1a,#1a2a1e 50%,#2a1c1a);border-radius:8px;overflow:hidden}
+  .bal .zone{position:absolute;top:0;bottom:0;left:44%;width:12%;background:rgba(92,186,107,.22);
+    border-left:1px solid var(--good);border-right:1px solid var(--good)}
+  .bal .mid{position:absolute;top:0;bottom:0;left:50%;width:2px;background:var(--good)}
+  .bal .curseur{position:absolute;top:6px;width:22px;height:44px;margin-left:-11px;border-radius:6px;
+    background:var(--accent);transition:left .18s;display:flex;align-items:center;justify-content:center;
+    font-size:12px;font-weight:700;color:#1a1614}
+  .bal .ends{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted)}
+  .bal .val{font-family:var(--serif);font-size:30px;text-align:center;display:block;line-height:1.2}
+  .bal .val.ok{color:var(--good)} .bal .val.meh{color:var(--accent)} .bal .val.no{color:var(--bad)}
+  .bal .det{text-align:center;color:var(--muted);font-size:14px;min-height:40px}
+  .bal .det b{color:var(--ink)}
+
+  .proto{counter-reset:etape;padding-left:0;list-style:none}
+  .proto li{position:relative;padding-left:46px;margin:14px 0}
+  .proto li::before{counter-increment:etape;content:counter(etape);position:absolute;left:0;top:-2px;
+    width:32px;height:32px;border-radius:50%;background:var(--accent);color:#1a1614;
+    font-family:var(--serif);font-weight:700;font-size:17px;display:flex;align-items:center;justify-content:center}
+  .proto li b{color:var(--ink)}
+
+  .etude{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:16px 0}
+  .etude .who{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent2);font-weight:700}
+  .etude p{margin:6px 0 0;font-size:15px}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <p class="kicker" data-lnum></p>
+    <h1>Les deux mains : pourquoi ça coince</h1>
+    <p class="mission">Tu as la basse à gauche, les accords à droite, et chaque main marche
+    séparément. Ensemble, c'est la bouillie. <b>C'est normal, et ce n'est pas une question
+    d'entraînement supplémentaire</b> — c'est que la méthode habituelle est fausse sur un point
+    précis. Voici lequel, et quoi faire à la place.</p>
+  </header>
+
+  <p class="lead">Le conseil qu'on entend partout : « travaille chaque main séparément jusqu'à ce
+  que ce soit parfait, puis réunis-les ». La deuxième moitié de cette phrase ne marche pas comme
+  on le croit.</p>
+
+  <h2>1. Ce que dit la recherche</h2>
+
+  <div class="etude">
+    <span class="who">Yokoi, Bai &amp; Diedrichsen (2017) · Journal of Neurophysiology</span>
+    <p>Des participants ont appris pendant quatre jours des séquences de doigts, les uns à
+    <b>une main</b>, les autres à <b>deux mains</b>. Puis on a testé le transfert d'un cas à l'autre.
+    Résultat : <b>aucun transfert</b> de l'entraînement à une main vers les deux mains, ni
+    l'inverse. Même en donnant des indices explicites pour montrer que les séquences étaient les
+    mêmes, il ne restait qu'environ <b>10 %</b> du gain. Conclusion des auteurs : les séquences à
+    une main et à deux mains sont stockées dans des <b>représentations séparées</b>.</p>
+  </div>
+
+  <div class="tip"><b>Traduction pour toi :</b> quand tu joues ta main gauche seule, tu n'entraînes
+  pas « la moitié » du morceau à deux mains. Tu entraînes <b>autre chose</b>. Le jour où tu réunis
+  les mains, ton cerveau repart de très bas — d'où l'impression brutale de ne plus rien savoir
+  faire. Ce n'est pas toi qui régresses, c'est une compétence neuve qui commence.</div>
+
+  <div class="etude">
+    <span class="who">van Vugt &amp; Altenmüller (2019) · Advances in Cognitive Psychology</span>
+    <p>Des pianistes experts ont joué des gammes à une main, puis à deux mains. À deux mains, la
+    régularité rythmique se dégrade — <b>mais seulement à la main gauche</b>. La main droite garde
+    exactement la même précision. Autrement dit, le cerveau <b>sacrifie la gauche</b> pour protéger
+    la droite quand la tâche devient lourde. Et ça se produit chez des <i>experts</i>.</p>
+  </div>
+
+  <div class="tip"><b>Traduction :</b> si ta basse te paraît molle ou en retard alors que tu la
+  jouais très bien seule, tu n'as rien perdu — <b>c'est le comportement attendu</b>. Le remède
+  n'est pas de retravailler la gauche toute seule (voir l'étude précédente : ça ne transfère pas),
+  c'est de lui <b>donner ton attention</b> pendant que les deux mains jouent.</div>
+
+  <div class="etude">
+    <span class="who">Pang, Zhao, Wang, Wang &amp; Fang (2023) · Frontiers in Psychology</span>
+    <p>Comment forcer cette attention ? Deux leviers proposés : confier la <b>mélodie à la main
+    gauche</b>, et faire jouer la <b>gauche plus vite que la droite</b>. L'attention suit
+    naturellement la main qui porte le sens et celle qui bouge le plus.</p>
+  </div>
+
+  <h2>2. Le protocole</h2>
+  <p>Ce qui suit découle directement des trois études. Il ne demande pas plus de travail —
+  il en demande <b>moins</b>, mieux placé.</p>
+
+  <ol class="proto">
+    <li><b>Mains séparées : juste pour savoir OÙ aller.</b> Deux ou trois passages, pas plus, le
+      temps de savoir quelles touches et quels doigts. Dès que tu les connais, <b>arrête</b> —
+      continuer n'améliore plus le jeu à deux mains.</li>
+    <li><b>Réunis les mains tout de suite, mais sur UNE mesure.</b> Pas le morceau : une mesure.
+      C'est la longueur qu'on réduit, jamais le nombre de mains. Une mesure jouée proprement à deux
+      mains vaut mieux que huit jouées à une main.</li>
+    <li><b>Assez lent pour ne jamais te tromper.</b> Si tu rates, c'est trop rapide. Le tempo juste,
+      c'est celui où tu réussis <b>dix fois d'affilée</b> — même s'il te paraît ridicule.</li>
+    <li><b>Regarde ta main gauche, écoute ta main gauche.</b> C'est elle qui décroche, jamais la
+      droite. Compte à voix haute en pensant à la basse.</li>
+    <li><b>Court et souvent, avec une nuit entre deux.</b> Dix minutes trois jours de suite battent
+      trente minutes d'un coup. Le progrès se fabrique <b>pendant le sommeil</b>, pas pendant la
+      séance.</li>
+  </ol>
+
+  <details class="aside">
+    <summary>Pourquoi « une nuit entre deux » ?</summary>
+    <p>C'est l'effet de <b>pratique distribuée</b> : des séances espacées produisent une meilleure
+    rétention que la même durée d'un seul bloc, parce que la mémoire procédurale se consolide dans
+    l'intervalle — et particulièrement pendant le sommeil. Chez des musiciens apprenant une séquence
+    au clavier, le gain de précision s'observe chez le groupe dont les séances étaient séparées de
+    <b>24 heures</b>. Source : <i>Distributed Practice and Procedural Memory Consolidation in
+    Musicians' Skill Learning</i>, Journal of Research in Music Education (2012) —
+    <a href="https://eric.ed.gov/?id=EJ951332">fiche ERIC</a>. Je n'ai pu lire que le résumé :
+    prends ce chiffre comme un ordre de grandeur, pas comme une prescription.</p>
+  </details>
+
+  <h2>3. L'exercice : es-tu vraiment ensemble ?</h2>
+  <p>Impossible de juger ça à l'oreille quand on joue — on s'entend toujours plus ensemble qu'on ne
+  l'est. L'appli mesure l'<b>écart en millisecondes</b> entre ta main gauche et ta main droite, et
+  te dit <b>laquelle des deux</b> est en retard.</p>
+  <p>Deux modes. <b>① Ensemble</b> : basse et accord tombent au même instant — c'est la coordination
+  pure. <b>② Décalé</b> : la basse d'abord, l'accord juste après — les mains font deux choses
+  différentes, c'est l'indépendance. Commence par ①.</p>
+
+  <div id="ex"></div>
+
+  <div class="win hidden" id="win">
+    <p style="margin:0"><b>Cinq accords sous 40 ms. 🎯</b> Tes deux mains sont synchronisées.
+    Garde ce tempo une séance entière, dors dessus, et reprends demain — c'est là que ça se fixe.
+    Ensuite seulement, monte le tempo ou passe au mode ②.</p>
+  </div>
+
+  <h2>4. Ce qu'il ne faut PAS faire</h2>
+  <ul>
+    <li><b>Rejouer la main gauche seule quand ça coince à deux mains.</b> C'est le réflexe naturel
+      et c'est le mauvais : tu entraînes une compétence qui ne se transfère pas.</li>
+    <li><b>Monter le tempo parce que ça marche une fois.</b> Une réussite est un accident, dix
+      d'affilée sont une compétence.</li>
+    <li><b>Travailler le morceau en entier.</b> Une mesure. Puis deux. Le morceau vient tout seul.</li>
+  </ul>
+
+  <div class="ask">
+    <p style="margin:0 0 8px"><b>À lire pour aller plus loin :</b>
+    <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6737297/">van Vugt &amp; Altenmüller (2019)</a>
+    est en accès libre et très lisible — c'est celle qui explique pourquoi ta main gauche décroche.</p>
+    <p style="margin:0"><b>Une question ?</b> Demande-moi. Et si après trois séances courtes une
+    mesure ne passe toujours pas, dis-le-moi : ce sera l'exercice qu'il faut découper plus fin,
+    pas ta patience qu'il faut allonger.</p>
+  </div>
+
+  <footer>
+    <nav data-lprevnext></nav>
+    <p>Fiches : <a href="../reference/position-des-doigts.html">position des doigts</a> ·
+    <a href="../reference/glossaire.html">glossaire</a></p>
+    <p class="src">Transfert entre une main et deux mains : Yokoi A., Bai W., Diedrichsen J.,
+    <a href="https://pubmed.ncbi.nlm.nih.gov/27974447/"><i>Restricted transfer of learning between
+    unimanual and bimanual finger sequences</i></a>, J. Neurophysiol. 117(3), 2017 ·
+    dégradation de la main gauche : van Vugt F. T., Altenmüller E.,
+    <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6737297/"><i>On the one hand or on the
+    other</i></a>, Adv. Cogn. Psychol. 15(3), 2019 ·
+    attention à la main faible : Pang J. et coll.,
+    <a href="https://doi.org/10.3389/fpsyg.2023.1124508"><i>Piano practice with emphasis on left
+    hand for right handers</i></a>, Front. Psychol. 14, 2023.</p>
+  </footer>
+</div>
+
+<script src="../lib/piano.js"></script>
+<script src="../lib/exercise.js"></script>
+<script src="../lib/nav.js"></script>
+<script>
+/* Matière : les 4 accords de The Scientist, voicings liés + basse (mêmes données que les
+   leçons « main gauche » et « assemblage »). */
+var PROG=[
+  {name:'Ré mineur',  notes:[62,65,69], basse:50, root:'Ré'},
+  {name:'Si♭ majeur', notes:[62,65,70], basse:58, root:'Si♭'},
+  {name:'Fa majeur',  notes:[60,65,69], basse:53, root:'Fa'},
+  {name:'Do majeur',  notes:[60,64,67], basse:48, root:'Do'}
+];
+var SEUIL_OK=40, SEUIL_MEH=90;      // ms — mêmes paliers que la leçon « un accord d'un seul bloc »
+var DECALE=450;                     // ms visés entre les deux mains en mode ②
+
+var ex=Exercise.create({mount:'#ex',
+  hint:'Main gauche = la basse (une note, en bas). Main droite = l\'accord. '
+      +'Joue sur ton <b>vrai clavier</b> : la mesure d\'écart a besoin des deux mains à la fois.'});
+var kb=PianoKeyboard.create({mount:ex.pianoMount, octaves:3, startOctave:3, onNote:onNote});
+ex.attach(kb);
+
+var winBox=document.getElementById('win');
+var mode='ensemble', pos=0, serie=0, running=false, buf=[], timer=null;
+
+var bEns=ex.button('① Ensemble', function(){ setMode('ensemble'); });
+var bDec=ex.button('② Décalé',   function(){ setMode('decale'); });
+var bGo =ex.button('▶ Commencer', onGo, {primary:true});
+ex.button('🔊 Écouter', function(){
+  var c=PROG[pos];
+  if(mode==='ensemble'){ kb.playChord(c.notes.concat([c.basse])); }
+  else { kb.playChord([c.basse]); kb.playChord(c.notes, kb.now()+DECALE/1000); }
+});
+
+/* Panneau : la balance gauche/droite. Un seul curseur, c'est tout ce qu'il faut voir. */
+function balance(ecart, kind, det){
+  var lim=200;                                   // l'axe couvre ±200 ms
+  var x=Math.max(-lim,Math.min(lim,ecart||0));
+  var pct=50+(x/lim)*50;
+  ex.panel.innerHTML=
+    '<div class="bal">'
+    +'<span class="val '+(kind||'')+'">'+(ecart===null?'—':(ecart>0?'+':'')+ecart+' ms')+'</span>'
+    +'<div class="axe"><div class="zone"></div><div class="mid"></div>'
+    +'<div class="curseur" style="left:'+pct+'%">'+(ecart===null?'?':(ecart>0?'D':'G'))+'</div></div>'
+    +'<div class="ends"><span>◀ main droite en retard</span><span>main gauche en retard ▶</span></div>'
+    +'<div class="det">'+(det||'')+'</div></div>';
+}
+
+function demande(){
+  var c=PROG[pos];
+  ex.target(c.notes.concat([c.basse]));
+  ex.prompt(c.name, mode==='ensemble'
+    ? 'Basse <b>'+c.root+'</b> et accord <b>au même instant</b>. Pense à ta main gauche.'
+    : 'Basse <b>'+c.root+'</b> d\'abord, puis l\'accord juste après — environ une demi-seconde.');
+}
+
+function setMode(m){
+  mode=m; running=false; pos=0; serie=0; buf=[];
+  bEns.classList.toggle('on', m==='ensemble');
+  bDec.classList.toggle('on', m==='decale');
+  bGo.innerHTML='▶ Commencer'; bGo.classList.add('primary');
+  ex.reset(); winBox.classList.add('hidden');
+  ex.streak(0,5,'Ensemble d\'affilée');
+  balance(null,'', 'Clique sur « Commencer », puis joue le premier accord.');
+  ex.prompt('','');
+}
+
+function onGo(b){
+  running=!running;
+  b.innerHTML=running?'■ Arrêter':'▶ Commencer'; b.classList.toggle('primary',!running);
+  pos=0; serie=0; buf=[]; winBox.classList.add('hidden');
+  ex.streak(0,5,'Ensemble d\'affilée');
+  if(running){ demande(); balance(null,'','Vas-y.'); }
+  else { ex.reset(); ex.prompt('','En pause.'); balance(null,'',''); }
+}
+
+function onNote(midi){
+  if(!running) return;
+  buf.push({midi:midi, t:performance.now()});
+  clearTimeout(timer); timer=setTimeout(evaluer, 400);
+}
+
+function evaluer(){
+  if(!running) return;
+  var c=PROG[pos], lu=buf; buf=[];
+  // main gauche = la basse attendue ; main droite = les notes de l'accord
+  var g=lu.filter(function(e){ return e.midi===c.basse; });
+  var d=lu.filter(function(e){ return c.notes.indexOf(e.midi)>=0; });
+  var faux=lu.filter(function(e){ return e.midi!==c.basse && c.notes.indexOf(e.midi)<0; });
+
+  if(faux.length){
+    faux.forEach(function(e){ ex.miss(e.midi); });
+    serie=0; ex.streak(0,5,'Ensemble d\'affilée');
+    ex.verdict('no','Note à côté','Les touches à jouer sont surlignées. On ne mesure l\'écart que '
+      +'si les bonnes notes sont là.');
+    return;
+  }
+  if(!g.length || d.length<c.notes.length){
+    ex.verdict('meh','Il manque une main',
+      (!g.length?'La <b>basse</b> (main gauche) n\'est pas venue.':'L\'<b>accord</b> (main droite) est incomplet.')
+      +' Les deux mains, même lentement.');
+    return;
+  }
+
+  lu.forEach(function(e){ ex.hit(e.midi); });
+  var tg=Math.min.apply(null, g.map(function(e){return e.t;}));
+  var td=Math.min.apply(null, d.map(function(e){return e.t;}));
+  var ecart=Math.round(td-tg);                   // > 0 = la droite est en retard
+  var cible=(mode==='ensemble')?0:DECALE;
+  var erreur=Math.abs(ecart-cible);
+
+  var kind = erreur<SEUIL_OK ? 'ok' : (erreur<SEUIL_MEH ? 'meh' : 'no');
+  var qui = ecart>cible ? 'Ta <b>main droite</b> traîne' : 'Ta <b>main gauche</b> traîne';
+  var det;
+  if(mode==='ensemble'){
+    det = kind==='ok' ? 'Ensemble. C\'est exactement ça — garde ce tempo.'
+        : qui+' de <b>'+erreur+' ms</b>. '
+          +(ecart<0 ? 'C\'est le cas le plus fréquent, et le plus normal : à deux mains, c\'est la '
+                     +'gauche qui se dégrade en premier. Regarde-la.'
+                    : 'Inhabituel — ralentis, ta droite anticipe sans doute l\'accord.');
+  } else {
+    det = kind==='ok' ? 'Bien décalé : tes mains font deux choses différentes sans se coller.'
+        : 'Écart visé ≈ '+DECALE+' ms, tu es à <b>'+Math.abs(ecart)+' ms</b>. '
+          +(erreur>SEUIL_MEH && Math.abs(ecart)<DECALE/2
+              ? 'Tes mains se collent : la gauche entraîne la droite avec elle.'
+              : 'Ajuste, sans accélérer.');
+  }
+  balance(ecart, kind, det);
+  ex.measure(kind, (ecart>0?'+':'')+ecart+' ms', mode==='ensemble'
+    ? 'écart entre tes deux mains · <b>0</b> = parfaitement ensemble'
+    : 'écart entre tes deux mains · cible <b>+'+DECALE+' ms</b>');
+
+  if(kind==='ok'){
+    serie++; ex.streak(serie,5,'Ensemble d\'affilée');
+    if(serie>=5) winBox.classList.remove('hidden');
+  } else { serie=0; ex.streak(0,5,'Ensemble d\'affilée'); }
+
+  pos=(pos+1)%PROG.length;
+  setTimeout(function(){ if(running) demande(); }, 900);
+}
+
+setMode('ensemble');
+</script>
+</body>
+</html>

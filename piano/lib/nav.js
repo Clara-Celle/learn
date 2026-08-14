@@ -32,6 +32,8 @@
      d:"Tenir le tempo et jouer en place avec le métronome."},
     {t:'La main gauche : la basse',           f:'main-gauche-la-basse.html', k:'Mains ensemble',
      d:"Ajouter la basse à la main gauche sous tes accords."},
+    {t:'Les deux mains : pourquoi ça coince', f:'les-deux-mains-le-protocole.html', k:'Mains ensemble',
+     d:"Mains séparées ne transfère pas : le protocole, et la mesure de ton écart en ms."},
     {t:'Le balancier : main droite en croches', f:'balancier-croches.html', k:'Rythme',
      d:"Faire « respirer » l'accord en croches — le vrai mouvement de la chanson."},
     {t:'The Scientist : tout assembler',      f:'the-scientist-assemblage.html', k:'Assemblage',

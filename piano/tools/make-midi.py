@@ -238,6 +238,7 @@ PAR_LECON = [
                                       'rythme-accords-en-mesure-60bpm.mid',
                                       'rythme-accords-en-mesure-80bpm.mid']),
     ('La main gauche : la basse',    ['main-gauche-basse-et-accords-60bpm.mid']),
+    ('Les deux mains : le protocole', ['deux-mains-tres-lent-40bpm.mid']),
     ('Le balancier (croches)',       ['balancier-croches-main-droite-60bpm.mid']),
     ('The Scientist : assemblage',   ['the-scientist-mains-ensemble-55bpm.mid',
                                       'the-scientist-mains-ensemble-75bpm.mid']),
@@ -372,6 +373,13 @@ def main():
     l = [(i * 4, 4, [SCI[i % 4][1]], 85, [5]) for i in range(8)]
     write(out / fic('main-gauche-basse-et-accords-60bpm.mid'), r, l, 60,
           'basse main gauche sous l\'accord main droite')
+
+    # — LEÇON 10, les deux mains : très lent, une mesure par accord, basse ET accord sur le temps 1.
+    #   40 BPM assumé : la leçon dit « assez lent pour ne jamais te tromper ».
+    r = [(i * 4, 4, SCI[i % 4][0], 78, doigte_triade(SCI[i % 4][0])) for i in range(8)]
+    l = [(i * 4, 4, [SCI[i % 4][1]], 92, [5]) for i in range(8)]   # basse plus forte : on l'écoute
+    write(out / fic('deux-mains-tres-lent-40bpm.mid'), r, l, 40,
+          'basse + accord au même instant, très lent — la coordination avant la vitesse')
 
     # — balancier : main droite en croches
     r = []

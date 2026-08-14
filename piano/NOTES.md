@@ -209,7 +209,12 @@ API : `prompt / button / target / hit / miss / verdict / measure / streak / pane
    comparaison à l'oreille) · ③ Le cycle (mesure les demi-tons parcourus).
 6. Accord mineur & The Scientist — **voicings liés** (Si♭ = Ré·Fa·Si♭, Fa = Do·Fa·La)
 7. Un accord d'un seul bloc — **voicings liés**
-8. Le rythme — tableau de bord « À jouer / Tu as joué » (chips ✓ vert, ✗ rouge).
+8. **Le rythme : de la pulsation aux croches** ← **fusion de l'ancienne « rythme » et de l'ancienne
+   « balancier »** (août 2026, demandé par Clara : trop de leçons). Les deux avaient le même
+   métronome, la même frise, le même play-along : le balancier n'était que la même leçon en croches.
+   Devenu le bouton **🎵 Croches** (`sub` = 1 ou 2 pilote l'intervalle, le modulo, les pastilles et
+   la grille de la frise). `balancier-croches.html` supprimé.
+   Tableau de bord « À jouer / Tu as joué » (chips ✓ vert, ✗ rouge).
    ⚠️ **Bouton 🎹 Accords à TROIS paliers** (OFF → 1 seul accord → progression), pas un
    interrupteur. Clara : « j'ai du mal à me concentrer sur le rythme et les accords en même
    temps » — c'était une **surcharge de mémoire de travail**, pas un défaut d'attention.
@@ -222,9 +227,19 @@ API : `prompt / button / target / hit / miss / verdict / measure / streak / pane
     deux mains (Yokoi et al. 2017), et c'est **la main gauche** qui se dégrade, chez les experts
     aussi (van Vugt & Altenmüller 2019). Mesure inédite dans le cours : **l'écart en ms entre les
     deux mains, avec le signe** — donc laquelle traîne.
-11. Le balancier (croches)
-12. The Scientist : assemblage
+11. The Scientist : assemblage
 ★ Bonus Canon de Pachelbel
+
+**Doublons supprimés (août 2026, demande de Clara « il y a beaucoup de leçons »).** Trois blocs de
+prose qui redisaient une autre leçon — dont deux étaient des **contradictions rustinées** par un
+avertissement au lieu d'être résolues :
+- leçon 02, « la règle générale : saute une touche » → c'était le bug d'origine (record 0018) ;
+  elle garde ses trois accords, sans la fausse règle. La leçon 04 est la seule à énoncer la règle.
+- leçon 06, §1 demi-ton + §2 recette du mineur + §3 accords « tout blanc » → tout est dans la
+  leçon 04, qui la précède désormais. Il reste l'**écoute** majeur/mineur, sa vraie compétence.
+- leçon 09, §4 « la méthode : séparé puis ensemble » → enseignait ce que la leçon 10 réfute.
+**Réflexe :** quand une leçon a besoin d'un encadré « ⚠️ en fait ce n'est pas tout à fait vrai »,
+c'est presque toujours qu'elle empiète sur une autre. Supprimer, pas rustiner.
 
 **⚠️ La position fondamentale ne survit que là où on la CONSTRUIT** (leçon majeur/mineur : compter
 4+3 depuis la fondamentale l'exige). Partout où Clara *joue*, ce sont les voicings liés. Ne pas

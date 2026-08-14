@@ -234,12 +234,12 @@ PAR_LECON = [
                                       'renversements-cycle-lie-60bpm.mid']),
     ('Accord mineur & The Scientist', ['accord-mineur-progression-the-scientist-55bpm.mid']),
     ('Un accord d\'un seul bloc',    ['renversements-cycle-lie-60bpm.mid']),   # même matière
-    ('Le rythme',                    ['rythme-accords-en-mesure-50bpm.mid',
-                                      'rythme-accords-en-mesure-60bpm.mid',
-                                      'rythme-accords-en-mesure-80bpm.mid']),
+    ('Le rythme (noires puis croches)', ['rythme-accords-en-mesure-50bpm.mid',
+                                         'rythme-accords-en-mesure-60bpm.mid',
+                                         'rythme-accords-en-mesure-80bpm.mid',
+                                         'rythme-croches-60bpm.mid']),
     ('La main gauche : la basse',    ['main-gauche-basse-et-accords-60bpm.mid']),
     ('Les deux mains : le protocole', ['deux-mains-tres-lent-40bpm.mid']),
-    ('Le balancier (croches)',       ['balancier-croches-main-droite-60bpm.mid']),
     ('The Scientist : assemblage',   ['the-scientist-mains-ensemble-55bpm.mid',
                                       'the-scientist-mains-ensemble-75bpm.mid']),
     ('Bonus : Canon de Pachelbel',   ['bonus-pachelbel-progression-60bpm.mid'], '★'),
@@ -381,14 +381,14 @@ def main():
     write(out / fic('deux-mains-tres-lent-40bpm.mid'), r, l, 40,
           'basse + accord au même instant, très lent — la coordination avant la vitesse')
 
-    # — balancier : main droite en croches
+    # — LEÇON 8, dernier palier : l'accord répété en croches (le balancier, fusionné dans le rythme)
     r = []
     for bar in range(8):
         ch = SCI[bar % 4][0]
         for e in range(8):
             r.append((bar * 4 + e * 0.5, 0.5, ch, 72 if e % 2 else 84, doigte_triade(ch)))
-    write(out / fic('balancier-croches-main-droite-60bpm.mid'), r, [], 60,
-          'l\'accord répété en croches (8 par mesure)')
+    write(out / fic('rythme-croches-60bpm.mid'), r, [], 60,
+          'l\'accord répété en croches (8 par mesure) — le palier « balancier »')
 
     # — The Scientist : tout ensemble, deux mains
     for bpm in (55, 75):

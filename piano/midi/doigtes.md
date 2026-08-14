@@ -25,11 +25,10 @@ Les préfixes sont **calculés** depuis l'ordre ci-dessous, jamais écrits à la
 - **05 · Les renversements** — `05-renversements-les-3-si-bemol-60bpm.mid` · `05-renversements-cycle-lie-60bpm.mid`
 - **06 · Accord mineur & The Scientist** — `06-accord-mineur-progression-the-scientist-55bpm.mid`
 - **07 · Un accord d'un seul bloc** — `05-renversements-cycle-lie-60bpm.mid`
-- **08 · Le rythme** — `08-rythme-accords-en-mesure-50bpm.mid` · `08-rythme-accords-en-mesure-60bpm.mid` · `08-rythme-accords-en-mesure-80bpm.mid`
+- **08 · Le rythme (noires puis croches)** — `08-rythme-accords-en-mesure-50bpm.mid` · `08-rythme-accords-en-mesure-60bpm.mid` · `08-rythme-accords-en-mesure-80bpm.mid` · `08-rythme-croches-60bpm.mid`
 - **09 · La main gauche : la basse** — `09-main-gauche-basse-et-accords-60bpm.mid`
 - **10 · Les deux mains : le protocole** — `10-deux-mains-tres-lent-40bpm.mid`
-- **11 · Le balancier (croches)** — `11-balancier-croches-main-droite-60bpm.mid`
-- **12 · The Scientist : assemblage** — `12-the-scientist-mains-ensemble-55bpm.mid` · `12-the-scientist-mains-ensemble-75bpm.mid`
+- **11 · The Scientist : assemblage** — `11-the-scientist-mains-ensemble-55bpm.mid` · `11-the-scientist-mains-ensemble-75bpm.mid`
 - **★ · Bonus : Canon de Pachelbel** — `bonus-pachelbel-progression-60bpm.mid`
 - **♪ · Katyusha (morceau cible)** — `katyusha-accompagnement-60bpm.mid` · `katyusha-accompagnement-84bpm.mid`
 
@@ -145,8 +144,8 @@ Chaîne Synthesia — main gauche : `55555555`
 Chaîne Synthesia — main droite : `680670670680680670670680`
 Chaîne Synthesia — main gauche : `55555555`
 
-## 11-balancier-croches-main-droite-60bpm.mid
-*l'accord répété en croches (8 par mesure)* — 60 BPM, mesure 4/4
+## 08-rythme-croches-60bpm.mid
+*l'accord répété en croches (8 par mesure) — le palier « balancier »* — 60 BPM, mesure 4/4
 
 | Notes | Doigts (main droite) |
 |---|---|
@@ -157,7 +156,7 @@ Chaîne Synthesia — main gauche : `55555555`
 
 Chaîne Synthesia — main droite : `680680680680680680680680670670670670670670670670670670670670670670670670680680680680680680680680680680680680680680680680670670670670670670670670670670670670670670670670680680680680680680680680`
 
-## 12-the-scientist-mains-ensemble-55bpm.mid
+## 11-the-scientist-mains-ensemble-55bpm.mid
 *balancier en croches + basse — la chanson complète* — 55 BPM, mesure 4/4
 
 | Notes | Doigts (main droite) |
@@ -170,7 +169,7 @@ Chaîne Synthesia — main droite : `6806806806806806806806806706706706706706706
 Chaîne Synthesia — main droite : `680680680680680680680680670670670670670670670670670670670670670670670670680680680680680680680680680680680680680680680680670670670670670670670670670670670670670670670670680680680680680680680680`
 Chaîne Synthesia — main gauche : `55555555`
 
-## 12-the-scientist-mains-ensemble-75bpm.mid
+## 11-the-scientist-mains-ensemble-75bpm.mid
 *balancier en croches + basse — la chanson complète* — 75 BPM, mesure 4/4
 
 | Notes | Doigts (main droite) |

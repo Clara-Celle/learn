@@ -68,11 +68,27 @@ function say(html){
   log.appendChild(d); log.scrollTop=log.scrollHeight;
   while(log.children.length>200) log.removeChild(log.firstChild);
 }
+/* État de l'autorisation : « denied » explique à lui seul un silence complet, et c'est
+   invisible autrement — le prompt Chrome ne se rejoue pas une fois refusé. */
+if(navigator.permissions && navigator.permissions.query){
+  navigator.permissions.query({name:'midi'}).then(function(p){
+    say('🔐 autorisation MIDI : <b>'+p.state+'</b>'
+      + (p.state==='denied'
+          ? ' — clique le cadenas 🔒 dans la barre d\'adresse → Paramètres du site → autorise MIDI, puis recharge'
+          : ''));
+  }).catch(function(){ say('🔐 autorisation MIDI : non interrogeable sur ce navigateur'); });
+}
+say('🌐 ' + navigator.userAgent);
+
 if(navigator.requestMIDIAccess){
   navigator.requestMIDIAccess().then(function(a){
     function watch(){
+      // entrées ET sorties : si les sorties apparaissent mais pas les entrées, le pilote est là
+      // et c'est bien le PORT D'ENTRÉE qui est pris par une autre application.
+      say('📊 entrées : <b>'+a.inputs.size+'</b> · sorties : <b>'+a.outputs.size+'</b>');
       a.inputs.forEach(function(inp){
-        say('🔌 entrée détectée : <b>'+inp.name+'</b> ('+inp.manufacturer+')');
+        say('🔌 entrée détectée : <b>'+inp.name+'</b> ('+inp.manufacturer+')'
+          + ' — état <b>'+inp.state+'</b>, connexion <b>'+inp.connection+'</b>');
         inp.onmidimessage=function(e){
           var d=e.data, c=d[0]&0xf0;
           var what = c===0x90&&d[2]>0 ? 'note ON  '
@@ -82,7 +98,12 @@ if(navigator.requestMIDIAccess){
           say('<b>'+what+'</b> ['+[].join.call(d,' ')+']');
         };
       });
-      if(!a.inputs.size) say('⚠️ aucune entrée MIDI — clavier branché et allumé ?');
+      if(!a.inputs.size) say('⚠️ <b>aucune entrée MIDI.</b> Dans l\'ordre : 1) ferme <b>Synthesia</b> '
+        + 'ET <b>Splice INSTRUMENT</b> (ou tout DAW) — un port MIDI ne s\'ouvre que par UNE '
+        + 'application à la fois ; 2) vérifie que le clavier est bien branché et allumé ; '
+        + '3) si des <i>sorties</i> apparaissent ci-dessus mais aucune entrée, le pilote va bien : '
+        + 'c\'est bien qu\'un autre logiciel tient le port ; 4) débranche/rebranche l\'USB, '
+        + 'puis recharge cette page.');
     }
     a.onstatechange=watch; watch();
   }).catch(function(err){ say('⛔ accès MIDI refusé : '+err.message); });

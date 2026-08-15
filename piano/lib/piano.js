@@ -214,7 +214,7 @@
           // le tient. Sous Windows, un port MIDI n'est ouvrable que par une application à la fois :
           // Synthesia ouvert ⇒ le navigateur ne voit plus rien. Le dire, sinon on cherche ailleurs.
           setMidiState(!!names.length, names.length ? midiState.device
-            : '🎹 Aucun clavier — ferme Synthesia (ou tout logiciel qui l\'utilise), puis recharge');
+            : '🎹 Aucun clavier — ferme Synthesia ET Splice INSTRUMENT, puis recharge (test-midi.html pour le détail)');
         }
         access.onstatechange=bind; bind();                   // branchement/débranchement à chaud
       }).catch(function(){ setMidiState(false,'🎹 MIDI refusé — autorise-le dans le navigateur'); });

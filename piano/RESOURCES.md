@@ -132,3 +132,14 @@ Sources lues et citées dans la leçon « Les deux mains : pourquoi ça coince �
   les stratégies efficaces alternent lent et rapide. Use for: l'étape « allers-retours de tempo ».
 - [Imagine, Sing, Play (2021) — *Frontiers in Psychology*](https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2021.757052/full)
   Mental + chanté + joué > joué seul. Use for: le travail loin du clavier, séances courtes.
+- [Mathias & Goldman (2025) — *How does increasing contextual interference in a musical practice session affect acquisition and retention?*](https://journals.sagepub.com/doi/10.1177/00224294231222801)
+  *J. Research in Music Education*. Alterner les tâches au hasard **dégrade la séance** mais
+  **améliore la rétention**. Use for: justifier le palier « ordre aléatoire » (leçon accord mineur),
+  et le principe « ne pas juger une méthode sur la sensation qu'elle donne pendant la séance ».
+  Voir aussi [Carter & Grahn (2016)](https://pubmed.ncbi.nlm.nih.gov/27588014/), même effet au piano.
+- [Allingham & Wöllner (2022)](https://journals.sagepub.com/doi/10.1177/03057356211073481) et
+  [(2023)](https://journals.sagepub.com/doi/10.1177/03057356221129650) — *Psychology of Music*.
+  Le travail lent **seul** ne transfère pas au jeu rapide ; les stratégies efficaces **alternent**
+  lent et rapide. Use for: corriger « ralentis » en « fais des allers-retours de tempo ».
+- [Imagine, Sing, Play (Frontiers in Psychology, 2021)](https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2021.757052/full)
+  Pratique mentale + chantée + jouée > jouée seule. Use for: le travail loin du clavier.

@@ -338,3 +338,12 @@ Les doigtés d'accords viennent de `doigte_triade()`, **même règle que `piano.
   (`SCI`) mis à jour et relancé. Ne pas « réharmoniser » les leçons d'avant : la différence est
   voulue.
 - **Travail restant (non bloquant) :** migrer vers `Exercise` les 7 leçons encore bespoke.
+
+### ⚠️ « La page ne voit plus mon piano » — la cause n°1
+**Un port MIDI ne s'ouvre que par UNE application à la fois** (Windows, WinMM). Synthesia ouvert
+⇒ Chrome ne voit plus rien, et inversement. Le témoin 🎹 le dit maintenant explicitement
+(« ferme Synthesia, puis recharge »). Ordre de diagnostic si ça revient :
+1. **Fermer Synthesia** (et tout ce qui tient le clavier), puis **recharger la page**.
+2. Vérifier qu'on est sur `http://localhost:8000` ou en HTTPS — jamais `file://`.
+3. Vérifier l'autorisation MIDI du site dans Chrome (icône du cadenas).
+4. `lib/test-midi.html` pour voir les messages bruts.

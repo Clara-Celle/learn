@@ -135,6 +135,7 @@
       <div class="exhead">
         <span class="lab">🎶 Exercice — la progression de <i>The Scientist</i> :</span>
         <button id="btnExercise" class="primary">▶ Démarrer l'enchaînement</button>
+        <button id="btnShuffle">🔀 Ordre : celui de la chanson</button>
       </div>
       <div class="seq" id="seq"></div>
       <div class="exfeedback" id="exfeedback"></div>
@@ -170,6 +171,16 @@
   complète — il n'y aura rien à réapprendre.</div>
   <p>Lance l'<b>exercice d'enchaînement</b> dans l'atelier ci-dessus : il te guide accord par accord
   dans l'ordre de <i>The Scientist</i>. Quand tu boucles les 4 → tu joues le squelette de la chanson. 🎉</p>
+
+  <div class="tip"><b>🔀 Puis mélange l'ordre — le dernier palier.</b> Tant que tu redemandes toujours
+  la même suite, tu retiens <b>la suite</b>, pas les accords. Le bouton
+  <b>« Ordre : au hasard »</b> te les demande dans le désordre. Ça va te sembler <b>pire</b> : tes
+  chronos vont remonter, tu vas hésiter. C'est normal et c'est le but — mélanger les tâches dégrade
+  la séance mais <b>améliore ce que tu sauras encore faire la semaine prochaine</b>
+  (<a href="https://journals.sagepub.com/doi/10.1177/00224294231222801">Mathias &amp; Goldman,
+  2025</a>). N'y passe qu'une fois l'ordre de la chanson confortable.
+  <p style="margin:8px 0 0">Voir la <a href="../reference/comment-travailler.html">fiche « comment
+  travailler »</a>, étape 5.</p></div>
 
   <details class="aside">
     <summary>Pourquoi « baisser le milieu » rend l'accord triste ?</summary>
@@ -287,11 +298,29 @@
   document.getElementById('abMin').onclick=function(){ piano.playChord([60,63,67]); };
 
   /* ----- exercice : progression The Scientist (chrono + historique + auto-restart) ----- */
-  var PROG=['Rem','Sib','Fa','DoM'];
+  var ORDRE=['Rem','Sib','Fa','DoM'];      // l'ordre de la chanson
+  var PROG=ORDRE.slice();
+  var melange=false;
+  /* Interférence contextuelle : tant qu'on redemande toujours la même suite, on retient la SUITE
+     et pas les accords. Mélanger dégrade la séance et améliore la rétention (Mathias & Goldman
+     2025). C'est le dernier palier, une fois l'ordre de la chanson acquis. */
+  function tirerOrdre(){
+    if(!melange){ PROG=ORDRE.slice(); return; }
+    do { PROG=ORDRE.slice().sort(function(){ return Math.random()-0.5; }); }
+    while(PROG.join()===ORDRE.join());     // un « mélange » identique à la chanson n'en est pas un
+  }
   var exerciseOn=false, step=0;
   var attempts=[], startTime=0, rafId=null, restartTo=null, timerStarted=false;
   var seqEl=document.getElementById('seq');
   var exfeedback=document.getElementById('exfeedback');
+  var btnShuffle=document.getElementById('btnShuffle');
+  btnShuffle.onclick=function(){
+    melange=!melange;
+    btnShuffle.classList.toggle('on',melange);
+    btnShuffle.textContent='🔀 Ordre : '+(melange?'au hasard':'celui de la chanson');
+    if(exerciseOn){ haltExercise(); renderSeq(); }
+  };
+
   var btnExercise=document.getElementById('btnExercise');
   var extimer=document.getElementById('extimer');
   var exhistory=document.getElementById('exhistory');
@@ -321,6 +350,7 @@
   function startExercise(){
     if(restartTo){ clearTimeout(restartTo); restartTo=null; }
     exerciseOn=true; step=0; timerStarted=false;
+    tirerOrdre();
     btnExercise.textContent='■ Arrêter'; renderSeq(); selectChord(PROG[0]);
     extimer.textContent='⏱ 0.0 s';
     exfeedback.textContent='Le chrono démarre à ta première note 🎵'; exfeedback.className='exfeedback';

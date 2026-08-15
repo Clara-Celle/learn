@@ -210,7 +210,11 @@
           var names=[];
           access.inputs.forEach(function(inp){ inp.onmidimessage=handleMidi; names.push(inp.name); });
           midiState.device=names.length?('🎹 '+names[0]):'';
-          setMidiState(!!names.length, names.length?midiState.device:'🎹 Aucun clavier détecté');
+          // Liste vide alors que le clavier est branché = presque toujours un AUTRE logiciel qui
+          // le tient. Sous Windows, un port MIDI n'est ouvrable que par une application à la fois :
+          // Synthesia ouvert ⇒ le navigateur ne voit plus rien. Le dire, sinon on cherche ailleurs.
+          setMidiState(!!names.length, names.length ? midiState.device
+            : '🎹 Aucun clavier — ferme Synthesia (ou tout logiciel qui l\'utilise), puis recharge');
         }
         access.onstatechange=bind; bind();                   // branchement/débranchement à chaud
       }).catch(function(){ setMidiState(false,'🎹 MIDI refusé — autorise-le dans le navigateur'); });
@@ -257,6 +261,7 @@
       midiState:function(){ return midiState; },
       onMidiState:function(f){ midiListeners.push(f); f(midiState); },
       midiMessage:function(bytes){ handleMidi({data:bytes}); },   // injection manuelle (diagnostic / tests)
+
       // onChord(fn[, ms]) — « l'accord est posé ». On accumule les notes jouées, et quand plus
       // rien n'arrive pendant `ms`, on appelle fn(notes, events) une fois. Sans ça, chaque leçon
       // d'accords réécrivait le même trio push / clearTimeout / setTimeout.

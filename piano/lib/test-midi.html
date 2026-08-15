@@ -98,12 +98,16 @@ if(navigator.requestMIDIAccess){
           say('<b>'+what+'</b> ['+[].join.call(d,' ')+']');
         };
       });
-      if(!a.inputs.size) say('⚠️ <b>aucune entrée MIDI.</b> Dans l\'ordre : 1) ferme <b>Synthesia</b> '
-        + 'ET <b>Splice INSTRUMENT</b> (ou tout DAW) — un port MIDI ne s\'ouvre que par UNE '
-        + 'application à la fois ; 2) vérifie que le clavier est bien branché et allumé ; '
-        + '3) si des <i>sorties</i> apparaissent ci-dessus mais aucune entrée, le pilote va bien : '
-        + 'c\'est bien qu\'un autre logiciel tient le port ; 4) débranche/rebranche l\'USB, '
-        + 'puis recharge cette page.');
+      if(!a.inputs.size) say('⚠️ <b>aucune entrée MIDI.</b> À faire dans cet ordre :<br>'
+        + '<b>1.</b> Quitte <b>complètement</b> Chrome — toutes les fenêtres, et vérifie la zone de '
+        + 'notification près de l\'horloge. Chrome énumère les ports MIDI au démarrage du processus : '
+        + 'si le port était pris à ce moment-là, recharger la page n\'y change rien.<br>'
+        + '<b>2.</b> Ferme tout ce qui peut tenir le clavier (Synthesia, un DAW, un utilitaire du '
+        + 'fabricant) — un port MIDI ne s\'ouvre que par UNE application à la fois.<br>'
+        + '<b>3.</b> Débranche puis rebranche l\'USB, <b>cette page ouverte</b> : le branchement à '
+        + 'chaud doit s\'afficher ici tout seul. S\'il ne s\'affiche pas, c\'est Chrome qui n\'écoute pas.<br>'
+        + '<b>4.</b> Si des <i>sorties</i> apparaissent plus haut mais aucune entrée, le pilote va '
+        + 'bien : le port d\'entrée est pris par autre chose.');
     }
     a.onstatechange=watch; watch();
   }).catch(function(err){ say('⛔ accès MIDI refusé : '+err.message); });
